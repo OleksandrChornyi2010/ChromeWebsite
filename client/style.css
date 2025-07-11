@@ -1,0 +1,56 @@
+:root{
+    --primary-color: rgb(117, 183, 152);
+    --primary-color-hover: rgb(115, 167, 114);
+    --primary-color-active: rgb(114, 163, 51);
+
+    --primary-color-outline: rgb(94, 188, 86);
+}
+
+.btn-primary{
+    background-color: var(--primary-color) !important;
+    border-color: var(--primary-color)!important;
+}
+.btn-primary:focus{ /*same as normal color*/
+    background-color: var(--primary-color) !important;
+    border-color: var(--primary-color)!important;
+}
+.btn-primary:hover {
+    background-color: var(--primary-color-hover)!important;
+    border-color: var(--primary-color-hover)!important;
+}
+.btn-primary:active {
+    background-color: var(--primary-color-active)!important;
+    border-color: var(--primary-color-active)!important;
+}
+
+.btn-outline-primary{
+    color: var(--primary-color-outline);
+    border-color: var(--primary-color-outline)!important;
+}
+.btn-outline-primary:focus{ /*same as normal color*/
+    color: var(--primary-color-outline);
+    border-color: var(--primary-color-outline)!important;
+}
+.btn-outline-primary:focus:hover{
+    color: white;
+    border-color: var(--primary-color-outline)!important;
+}
+.btn-outline-primary:hover {
+    color: white;
+    background-color: var(--primary-color-hover)!important;
+    border-color: var(--primary-color-hover)!important;
+}
+.btn-outline-primary:active {
+    background-color: var(--primary-color-active)!important;
+    border-color: var(--primary-color-active)!important;
+}
+
+.features-svg-handler{
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+}
+
+#home {
+    scroll-margin-top: 73px; /* header height */
+}
