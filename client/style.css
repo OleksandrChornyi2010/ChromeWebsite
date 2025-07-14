@@ -54,3 +54,8 @@
 #home {
     scroll-margin-top: 73px; /* header height */
 }
+
+.fixed-card {
+    height: 188px;
+    overflow: hidden;
+}

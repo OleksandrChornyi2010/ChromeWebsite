@@ -20,12 +20,12 @@
     </head>
 
     <body>
-        <div class="container fixed-top">
+        <div class="fixed-top border-bottom bg-white">
             <header
-                class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 border-bottom bg-white"
+                class="container d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3"
             >
                 <a
-                    href="/"
+                    href="index.html#home"
                     class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none"
                 >
                     <img
@@ -40,13 +40,15 @@
                     class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0"
                 >
                     <li>
-                        <a href="home.html#home" class="nav-link px-2 link-dark"
+                        <a
+                            href="index.html#home"
+                            class="nav-link px-2 link-dark"
                             >Home</a
                         >
                     </li>
                     <li>
                         <a
-                            href="home.html#features"
+                            href="index.html#features"
                             class="nav-link px-2 link-dark"
                             >Features</a
                         >
@@ -57,7 +59,9 @@
                         >
                     </li>
                     <li>
-                        <a href="#" class="nav-link px-2 link-dark">FAQs</a>
+                        <a href="FAQs.html" class="nav-link px-2 link-dark"
+                            >FAQs</a
+                        >
                     </li>
                     <li>
                         <a href="#" class="nav-link px-2 link-dark">About</a>
@@ -103,12 +107,11 @@
                             aria-labelledby="dropdownMenuButton"
                         >
                             <li>
-                                <a class="dropdown-item" href="#">Профиль</a>
+                                <a class="dropdown-item" href="#">Profile</a>
                             </li>
                             <li>
-                                <a class="dropdown-item" href="#">Настройки</a>
+                                <a class="dropdown-item" href="#">Log out</a>
                             </li>
-                            <li><a class="dropdown-item" href="#">Выход</a></li>
                         </ul>
                     </div>
                 </div>
@@ -138,6 +141,7 @@
                     >
                         <button
                             type="button"
+                            id="download"
                             class="btn btn-primary btn-lg px-4 gap-3"
                         >
                             Download Chrome
@@ -271,13 +275,15 @@
                 </p>
                 <ul class="nav col-md-4 justify-content-end">
                     <li class="nav-item">
-                        <a href="home.html#home" class="nav-link px-2 link-dark"
+                        <a
+                            href="index.html#home"
+                            class="nav-link px-2 link-dark"
                             >Home</a
                         >
                     </li>
                     <li class="nav-item">
                         <a
-                            href="home.html#features"
+                            href="index.html#features"
                             class="nav-link px-2 link-dark"
                             >Features</a
                         >
@@ -290,7 +296,9 @@
                         >
                     </li>
                     <li class="nav-item">
-                        <a href="#" class="nav-link px-2 text-body-secondary"
+                        <a
+                            href="FAQs.html"
+                            class="nav-link px-2 text-body-secondary"
                             >FAQs</a
                         >
                     </li>
@@ -302,6 +310,7 @@
                 </ul>
             </footer>
         </div>
+        <script src="index.js"></script>
         <!-- Bootstrap JavaScript Libraries -->
         <script
             src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
