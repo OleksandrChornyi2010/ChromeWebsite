@@ -57,6 +57,10 @@
     scroll-margin-top: 73px; /* header height */
 }
 
+.anti-header-padding {
+    padding-top: 63px;
+}
+
 .fixed-card {
     height: 188px;
     overflow: hidden;

@@ -29,11 +29,23 @@ app.post("/accounts", async (req, res) => {
     }
 
     if (username.length < 3 || username.length > 32) {
-        return res.status(400).send("Username length should be between 3 and 32");
+        return res.status(400).send("Username length should be between 4 and 31 symbols including both");
     }
 
     if (password.length < 8 || password.length > 32) {
-        return res.status(400).send("Password length should be between 8 and 32");
+        return res.status(400).send("Password length should be between 7 and 31 symbols including both");
+    }
+    // Email: simple check
+    if (
+        email.length < 6 ||
+        email.length > 64 ||
+        !email.includes("@") ||
+        !email.includes(".") ||
+        email.indexOf("@") === 0 ||
+        email.lastIndexOf(".") < email.indexOf("@")
+    ) {
+        // Invalid email
+        return res.status(400).send("Email must be valid");
     }
     try {
         const existingUser = await connection.query(
@@ -58,6 +70,7 @@ app.post("/accounts", async (req, res) => {
         return res.status(500).send("Internal server error");
     }
 });
+
 
 app.listen(port, () => {
     console.log(`Listening on port ${port}`);
