@@ -21,102 +21,118 @@
 
     <body>
         <div class="fixed-top border-bottom bg-white">
-            <header
-                class="container d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3"
-            >
-                <a
-                    href="index.html#home"
-                    class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none"
+            <div class="container">
+                <header
+                    class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3"
                 >
-                    <img
-                        src="images/chrome.svg"
-                        alt="Chrome"
-                        width="40"
-                        height="32"
-                    />
-                </a>
-
-                <ul
-                    class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0"
-                >
-                    <li>
+                    <div class="col-md-3 mb-2 mb-md-0">
                         <a
-                            href="index.html#home"
-                            class="nav-link px-2 link-dark"
-                            >Home</a
+                            href="/"
+                            class="d-inline-flex link-body-emphasis text-decoration-none"
                         >
-                    </li>
-                    <li>
-                        <a
-                            href="index.html#features"
-                            class="nav-link px-2 link-dark"
-                            >Features</a
-                        >
-                    </li>
-                    <li>
-                        <a href="download.html" class="nav-link px-2 link-dark"
-                            >Download</a
-                        >
-                    </li>
-                    <li>
-                        <a href="FAQs.html" class="nav-link px-2 link-dark"
-                            >FAQs</a
-                        >
-                    </li>
-                    <li>
-                        <a href="#" class="nav-link px-2 link-dark">About</a>
-                    </li>
-                </ul>
-
-                <div class="col-md-3 text-end">
-                    <button type="button" class="btn btn-outline-primary me-2">
-                        Login
-                    </button>
-                    <button type="button" class="btn btn-primary me-2">
-                        Sign-up
-                    </button>
-                    <div class="dropdown d-inline-block d-none">
-                        <button
-                            class="btn p-0 border-0 bg-transparent"
-                            type="button"
-                            id="dropdownMenuButton"
-                            data-bs-toggle="dropdown"
-                            aria-expanded="false"
-                            style="color: rgb(0, 0, 0)"
-                        >
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                width="30"
-                                height="30"
-                                fill="currentColor"
-                                class="bi bi-person-circle"
-                                viewBox="0 0 16 16"
-                            >
-                                <path
-                                    d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"
-                                ></path>
-                                <path
-                                    fill-rule="evenodd"
-                                    d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 
-               4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"
-                                ></path>
-                            </svg>
-                        </button>
-                        <ul
-                            class="dropdown-menu"
-                            aria-labelledby="dropdownMenuButton"
-                        >
-                            <li>
-                                <a class="dropdown-item" href="#">Profile</a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item" href="#">Log out</a>
-                            </li>
-                        </ul>
+                            <img
+                                src="images/chrome.svg"
+                                alt="Chrome"
+                                width="40"
+                                height="32"
+                            />
+                        </a>
                     </div>
-                </div>
-            </header>
+
+                    <ul
+                        class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0"
+                    >
+                        <li>
+                            <a
+                                href="index.html#home"
+                                class="nav-link px-2 link-dark"
+                                >Home</a
+                            >
+                        </li>
+                        <li>
+                            <a
+                                href="index.html#features"
+                                class="nav-link px-2 link-dark"
+                                >Features</a
+                            >
+                        </li>
+                        <li>
+                            <a
+                                href="download.html"
+                                class="nav-link px-2 link-dark"
+                                >Download</a
+                            >
+                        </li>
+                        <li>
+                            <a href="FAQs.html" class="nav-link px-2 link-dark"
+                                >FAQs</a
+                            >
+                        </li>
+                        <li>
+                            <a
+                                href="ask_a_question.html"
+                                class="nav-link px-2 link-dark"
+                                >Ask a question</a
+                            >
+                        </li>
+                    </ul>
+
+                    <div class="col-md-3 text-end">
+                        <a
+                            href="sign-in.html"
+                            class="btn btn-outline-primary me-2"
+                            >Sign-in</a
+                        >
+                        <a href="sign-up.html" class="btn btn-primary"
+                            >Sign-up</a
+                        >
+                        <div class="dropdown d-inline-block d-none">
+                            <button
+                                class="btn p-0 border-0 bg-transparent"
+                                type="button"
+                                id="dropdownMenuButton"
+                                data-bs-toggle="dropdown"
+                                aria-expanded="false"
+                            >
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width="30"
+                                    height="30"
+                                    fill="currentColor"
+                                    class="bi bi-person-circle"
+                                    viewBox="0 0 16 16"
+                                >
+                                    <path
+                                        d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"
+                                    ></path>
+                                    <path
+                                        fill-rule="evenodd"
+                                        d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 
+                            4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"
+                                    ></path>
+                                </svg>
+                            </button>
+                            <ul
+                                class="dropdown-menu"
+                                aria-labelledby="dropdownMenuButton"
+                            >
+                                <li>
+                                    <a class="dropdown-item" href="#"
+                                        >Profile</a
+                                    >
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="#"
+                                        >Log out</a
+                                    >
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </header>
+            </div>
         </div>
+
         <main>
             <div class="px-4 py-5 my-5 text-center" id="home">
                 <img
@@ -289,22 +305,20 @@
                         >
                     </li>
                     <li class="nav-item">
-                        <a
-                            href="download.html"
-                            class="nav-link px-2 text-body-secondary"
+                        <a href="download.html" class="nav-link px-2 link-dark"
                             >Dowload</a
                         >
                     </li>
                     <li class="nav-item">
-                        <a
-                            href="FAQs.html"
-                            class="nav-link px-2 text-body-secondary"
+                        <a href="FAQs.html" class="nav-link px-2 link-dark"
                             >FAQs</a
                         >
                     </li>
                     <li class="nav-item">
-                        <a href="#" class="nav-link px-2 text-body-secondary"
-                            >About</a
+                        <a
+                            href="ask_a_question.html"
+                            class="nav-link px-2 link-dark"
+                            >Ask a question</a
                         >
                     </li>
                 </ul>

@@ -134,122 +134,147 @@
         </div>
 
         <main>
-            <div class="container px-4 py-4">
-                <div
-                    class="row flex-lg-row-reverse align-items-center g-5 py-5"
-                >
-                    <div class="col-10 col-sm-8 col-lg-6">
-                        <img
-                            src="images/chrome_new_tab.png"
-                            class="d-block mx-lg-auto img-fluid"
-                            alt="Chrome"
-                            width="700"
-                            height="500"
-                            loading="lazy"
-                        />
-                    </div>
-                    <div class="col-lg-6">
-                        <h1
-                            class="display-5 fw-bold text-body-emphasis lh-1 mb-3"
-                        >
-                            Browse as you like
-                        </h1>
-                        <div class="d-flex">
-                            <p class="lead">
-                                Start your journey by selecting OS and clicking
-                                Download button
-                            </p>
-                            <select
-                                id="osSelect"
-                                class="form-select w-auto mb-3 btn-outline-primary"
-                            >
-                                <option selected disabled>Select OS</option>
-                                <option value="windows">Windows</option>
-                                <option value="linux">Linux</option>
-                                <option value="macos">macOS</option>
-                            </select>
+            <div class="container py-5">
+                <div class="py-5 text-center">
+                    <h1 class="h2">Ask a question</h1>
+                    <p class="lead">
+                        Below is a form you need to fill in order to submit your
+                        question. You can cancel just by leaving the page.
+                    </p>
+                </div>
+                <div class="row g-3">
+                    <div class="d-flex justify-content-center">
+                        <div class="col-md-7 col-lg-8">
+                            <h4 class="mb-3">Billing address</h4>
+                            <form class="needs-validation" novalidate="">
+                                <div class="row g-3">
+                                    <div class="col-sm-6">
+                                        <label
+                                            for="firstName"
+                                            class="form-label"
+                                            >First name</label
+                                        >
+                                        <input
+                                            type="text"
+                                            class="form-control"
+                                            id="firstName"
+                                            placeholder=""
+                                            value=""
+                                            required=""
+                                        />
+                                        <div class="invalid-feedback">
+                                            Valid first name is required.
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label for="lastName" class="form-label"
+                                            >Last name</label
+                                        >
+                                        <input
+                                            type="text"
+                                            class="form-control"
+                                            id="lastName"
+                                            placeholder=""
+                                            value=""
+                                            required=""
+                                        />
+                                        <div class="invalid-feedback">
+                                            Valid last name is required.
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <label for="email" class="form-label"
+                                            >Email</label
+                                        >
+                                        <input
+                                            type="email"
+                                            class="form-control"
+                                            id="email"
+                                            placeholder="you@example.com"
+                                            required
+                                        />
+                                        <div class="invalid-feedback">
+                                            Please enter a valid email address.
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <label for="country" class="form-label"
+                                            >Language</label
+                                        >
+                                        <select
+                                            class="form-select"
+                                            id="country"
+                                            required=""
+                                        >
+                                            <option value="" selected disabled>
+                                                Please choose your language...
+                                            </option>
+                                            <option>
+                                                English (United States)
+                                            </option>
+                                            <option>
+                                                English (Great Britian)
+                                            </option>
+                                            <option>Ukranian (Ukraine)</option>
+                                        </select>
+                                        <div class="invalid-feedback">
+                                            Please select your language.
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <label for="question" class="form-label"
+                                            >Enter your question</label
+                                        >
+                                        <textarea
+                                            class="form-control"
+                                            id="question"
+                                            placeholder="Enter question"
+                                            rows="5"
+                                            required
+                                        ></textarea>
+                                        <div class="invalid-feedback">
+                                            Please enter a valid question.
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr class="my-4" />
+                                <div class="form-check">
+                                    <input
+                                        class="form-not-check-input"
+                                        type="checkbox"
+                                        id="notify-when-answered"
+                                    />
+                                    <label
+                                        class="form-check-label"
+                                        for="notify-when-answered"
+                                        >Notify me when the answer is
+                                        available</label
+                                    >
+                                </div>
+                                <div class="form-check">
+                                    <input
+                                        class="form-not-check-input"
+                                        type="checkbox"
+                                        id="save-info"
+                                    />
+                                    <label
+                                        class="form-check-label"
+                                        for="save-info"
+                                        >Save this information for next
+                                        time</label
+                                    >
+                                </div>
+                                <hr class="my-4" />
+                                <button
+                                    class="w-100 btn btn-primary btn-lg"
+                                    type="submit"
+                                >
+                                    Submit
+                                </button>
+                            </form>
                         </div>
-                        <hr />
-                        <div
-                            class="d-grid gap-2 d-md-flex justify-content-md-start"
-                        >
-                            <button
-                                type="button"
-                                class="btn btn-primary btn-lg px-4 me-md-2"
-                            >
-                                Download
-                            </button>
-                            <button
-                                type="button"
-                                class="btn btn-outline-secondary btn-lg px-4"
-                            >
-                                See other versions
-                            </button>
-                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="container marketing">
-                <h1 class="text-center">Installation guide</h1>
-                <hr />
-                <!-- START THE FEATURETTES -->
-                <div class="row featurette">
-                    <div class="col-md-7">
-                        <h2 class="featurette-heading fw-normal lh-1">
-                            Launch the installer
-                        </h2>
-                        <p class="lead">
-                            Launch the installer by double clicking on the file.
-                        </p>
-                    </div>
-                    <div class="col-md-5">
-                        <img
-                            class="img-fluid rounded-4 shadow-lg"
-                            src="images/Step-1.png"
-                            alt="Chrome installation"
-                        />
-                    </div>
-                </div>
-                <hr class="featurette-divider" />
-                <div class="row featurette">
-                    <div class="col-md-7 order-md-2">
-                        <h2 class="featurette-heading fw-normal lh-1">
-                            Allow admin privileges
-                        </h2>
-                        <p class="lead">
-                            Click "Yes" in this dialogue window. This is needed
-                            to install chrome.
-                        </p>
-                    </div>
-                    <div class="col-md-5 order-md-1">
-                        <img
-                            src="images/Step-2.png"
-                            class="img-fluid rounded-top"
-                            alt=""
-                        />
-                    </div>
-                </div>
-                <hr class="featurette-divider" />
-                <div class="row featurette">
-                    <div class="col-md-7">
-                        <h2 class="featurette-heading fw-normal lh-1">
-                            Wait for the installation to finish.
-                        </h2>
-                        <p class="lead">
-                            This can take up to a minute. After the installer is
-                            done you can go ahead and use Chrome on your PC!
-                        </p>
-                    </div>
-                    <div class="col-md-5">
-                        <img
-                            class="img-fluid rounded-4 shadow"
-                            src="images/Step-3.jpg"
-                            alt="Chrome installation"
-                        />
-                    </div>
-                </div>
-                <hr class="featurette-divider" />
-                <!-- /END THE FEATURETTES -->
             </div>
         </main>
         <div class="container">
@@ -300,6 +325,7 @@
                 </ul>
             </footer>
         </div>
+        <script src="ask_a_question.js"></script>
         <!-- Bootstrap JavaScript Libraries -->
         <script
             src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
