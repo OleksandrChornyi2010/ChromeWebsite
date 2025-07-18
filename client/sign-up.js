@@ -2,7 +2,11 @@
     "use strict";
 
     const form = document.querySelector(".needs-validation");
-
+    const urlParams = new URLSearchParams(window.location.search);
+    const source = urlParams.get("source");
+    if (source == "login") {
+        document.querySelector("#title-text").textContent = "Such account doesn't exist! Register first!"
+    }
     form.addEventListener("submit", async (event) => {
         event.preventDefault();
         event.stopPropagation();
@@ -67,7 +71,7 @@
         form.classList.add("was-validated");
 
         try {
-            const response = await axios.post("http://localhost:3000/accounts", {
+            const response = await axios.post("http://localhost:3000/register", {
                 username,
                 email,
                 password
