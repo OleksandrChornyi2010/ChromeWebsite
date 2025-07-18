@@ -190,8 +190,8 @@ app.post("/questions", async (req, res) => {
     }
     try {
         await connection.query(
-            `INSERT INTO questions (first_name, last_name, language, question) VALUES ($1, $2, $3, $4)`,
-            [firstName, lastName, language, question]
+            `INSERT INTO questions (username, email, first_name, last_name, language, question) VALUES ($1, $2, $3, $4, $5, $6)`,
+            [userSession.username, userSession.email, firstName, lastName, language, question]
         );
     } catch (err) {
         console.error("Database error:", err.stack);

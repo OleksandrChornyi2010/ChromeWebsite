@@ -6,6 +6,7 @@
         if (response.status === 200) {
             console.log("You are still logged in as:", response.data.username);
             document.querySelector("#dropdown").classList.remove("d-none");
+            window.userSession = response.data;
         } else if (response.status === 204) {
             console.log("Not logged in");
             document.querySelectorAll("#header-button").forEach((element) => {
