@@ -1,6 +1,6 @@
 (() => {
     "use strict";
-
+    let redirectLocation = "index.html#home"
     const form = document.querySelector(".needs-validation");
     const urlParams = new URLSearchParams(window.location.search);
     const source = urlParams.get("source");
@@ -78,7 +78,7 @@
             });
 
             console.log("Account created:", response.data);
-            // redirect or message here
+            location.href = redirectLocation;
 
         } catch (err) {
             if (err.response && err.response.status === 409) {

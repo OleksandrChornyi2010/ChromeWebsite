@@ -124,7 +124,7 @@
                                 aria-labelledby="dropdownMenuButton"
                             >
                                 <li>
-                                    <a class="dropdown-item" href="#"
+                                    <a class="dropdown-item" href="account.html"
                                         >Profile</a
                                     >
                                 </li>
@@ -158,11 +158,13 @@
                             type="username"
                             class="form-control"
                             id="floatingUsername"
+                            name="username"
+                            autocomplete="username"
                             placeholder=""
                             value=""
                             required=""
                         />
-                        <label for="floatingInput">Username</label>
+                        <label for="floatingUsername">Username</label>
                         <div class="invalid-feedback" id="usernameFeedback">
                             Please enter a valid username.
                         </div>
@@ -172,11 +174,13 @@
                             type="email"
                             class="form-control"
                             id="floatingEmail"
+                            name="email"
+                            autocomplete="email"
                             placeholder=""
                             value=""
                             required=""
                         />
-                        <label for="floatingInput">Email address</label>
+                        <label for="floatingEmail">Email address</label>
                         <div class="invalid-feedback" id="emailFeedback">
                             Please enter a valid email.
                         </div>
@@ -186,6 +190,8 @@
                             type="password"
                             class="form-control"
                             id="floatingPassword"
+                            name="current-password"
+                            autocomplete="current-password"
                             placeholder=""
                             value=""
                             required=""

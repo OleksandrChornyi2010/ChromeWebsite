@@ -19,7 +19,7 @@
         <link rel="stylesheet" href="style.css" />
     </head>
 
-    <body>
+    <body style="padding-top: 83px">
         <div class="fixed-top border-bottom bg-white">
             <div class="container">
                 <header
@@ -139,126 +139,131 @@
                 </header>
             </div>
         </div>
-
-        <main>
-            <div class="container px-4 py-4">
-                <div
-                    class="row flex-lg-row-reverse align-items-center g-5 py-5"
+        <!-- Main -->
+        <div class="p-0 container border border-secondary">
+            <header
+                class="navbar bg-dark flex-md-nowrap p-0 mb-2"
+                data-bs-theme="dark"
+            >
+                <a
+                    class="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-6 text-white"
+                    href="#"
+                    >Your profile</a
                 >
-                    <div class="col-10 col-sm-8 col-lg-6">
-                        <img
-                            src="images/chrome_new_tab.png"
-                            class="d-block mx-lg-auto img-fluid"
-                            alt="Chrome"
-                            width="700"
-                            height="500"
-                            loading="lazy"
-                        />
-                    </div>
-                    <div class="col-lg-6">
-                        <h1
-                            class="display-5 fw-bold text-body-emphasis lh-1 mb-3"
+                <ul class="navbar-nav flex-row d-md-none">
+                    <li class="nav-item text-nowrap">
+                        <button
+                            class="nav-link px-3 text-white"
+                            type="button"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#navbarSearch"
+                            aria-controls="navbarSearch"
+                            aria-expanded="false"
+                            aria-label="Toggle search"
                         >
-                            Browse as you like
-                        </h1>
-                        <div class="d-flex">
-                            <p class="lead">
-                                Start your journey by selecting OS and clicking
-                                Download button
-                            </p>
-                            <select
-                                id="osSelect"
-                                class="form-select w-auto mb-3 btn-outline-primary"
-                            >
-                                <option selected disabled>Select OS</option>
-                                <option value="windows">Windows</option>
-                                <option value="linux">Linux</option>
-                                <option value="macos">macOS</option>
-                            </select>
-                        </div>
-                        <hr />
-                        <div
-                            class="d-grid gap-2 d-md-flex justify-content-md-start"
+                            <svg class="bi" aria-hidden="true">
+                                <use xlink:href="#search"></use>
+                            </svg>
+                        </button>
+                    </li>
+                    <li class="nav-item text-nowrap">
+                        <button
+                            class="nav-link px-3 text-white"
+                            type="button"
+                            data-bs-toggle="offcanvas"
+                            data-bs-target="#sidebarMenu"
+                            aria-controls="sidebarMenu"
+                            aria-expanded="false"
+                            aria-label="Toggle navigation"
                         >
-                            <button
-                                type="button"
-                                class="btn btn-primary btn-lg px-4 me-md-2"
-                            >
-                                Download
-                            </button>
-                            <button
-                                type="button"
-                                class="btn btn-outline-secondary btn-lg px-4"
-                            >
-                                See other versions
-                            </button>
-                        </div>
-                    </div>
+                            <svg class="bi" aria-hidden="true">
+                                <use xlink:href="#list"></use>
+                            </svg>
+                        </button>
+                    </li>
+                </ul>
+                <div id="navbarSearch" class="navbar-search w-100 collapse">
+                    <input
+                        class="form-control w-100 rounded-0 border-0"
+                        type="text"
+                        placeholder="Search"
+                        aria-label="Search"
+                    />
                 </div>
-            </div>
-            <div class="container marketing">
-                <h1 class="text-center">Installation guide</h1>
-                <hr />
-                <!-- START THE FEATURETTES -->
-                <div class="row featurette">
-                    <div class="col-md-7">
-                        <h2 class="featurette-heading fw-normal lh-1">
-                            Launch the installer
-                        </h2>
-                        <p class="lead">
-                            Launch the installer by double clicking on the file.
-                        </p>
+            </header>
+            <main class="d-flex p-3" style="min-height: 100vh">
+                <!-- Sidebar -->
+                <nav class="bg-light border-end" style="width: 250px">
+                    <div class="list-group list-group-flush" id="sidebar">
+                        <a
+                            href="#"
+                            class="list-group-item list-group-item-action active"
+                            data-content="dashboard"
+                            data-target="section1"
+                            >Asked questions</a
+                        >
+                        <a
+                            href="#"
+                            class="list-group-item list-group-item-action"
+                            data-content="profile"
+                            data-target="section2"
+                            >Profile</a
+                        >
+                        <a
+                            href="#"
+                            class="list-group-item list-group-item-action"
+                            data-content="settings"
+                            data-target="section3"
+                            >Settings</a
+                        >
+                        <a
+                            href="#"
+                            class="list-group-item list-group-item-action"
+                            data-content="help"
+                            data-target="section4"
+                            >Help</a
+                        >
                     </div>
-                    <div class="col-md-5">
-                        <img
-                            class="img-fluid rounded-4 shadow-lg"
-                            src="images/Step-1.png"
-                            alt="Chrome installation"
-                        />
-                    </div>
-                </div>
-                <hr class="featurette-divider" />
-                <div class="row featurette">
-                    <div class="col-md-7 order-md-2">
-                        <h2 class="featurette-heading fw-normal lh-1">
-                            Allow admin privileges
-                        </h2>
-                        <p class="lead">
-                            Click "Yes" in this dialogue window. This is needed
-                            to install chrome.
-                        </p>
-                    </div>
-                    <div class="col-md-5 order-md-1">
-                        <img
-                            src="images/Step-2.png"
-                            class="img-fluid rounded-top"
-                            alt=""
-                        />
-                    </div>
-                </div>
-                <hr class="featurette-divider" />
-                <div class="row featurette">
-                    <div class="col-md-7">
-                        <h2 class="featurette-heading fw-normal lh-1">
-                            Wait for the installation to finish.
-                        </h2>
-                        <p class="lead">
-                            This can take up to a minute. After the installer is
-                            done you can go ahead and use Chrome on your PC!
-                        </p>
-                    </div>
-                    <div class="col-md-5">
-                        <img
-                            class="img-fluid rounded-4 shadow"
-                            src="images/Step-3.jpg"
-                            alt="Chrome installation"
-                        />
-                    </div>
-                </div>
-                <hr class="featurette-divider" />
-                <!-- /END THE FEATURETTES -->
-            </div>
-        </main>
+                </nav>
+
+                <!-- Content area -->
+                <section class="flex-fill p-4" id="section1">
+                    <h1>Asked questions</h1>
+                    <p>Manage your questions.</p>
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">First</th>
+                                <th scope="col">Last</th>
+                                <th scope="col">Handle</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th scope="row">1</th>
+                                <td>Mark</td>
+                                <td>Otto</td>
+                                <td>@mdo</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">2</th>
+                                <td>Jacob</td>
+                                <td>Thornton</td>
+                                <td>@fat</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">3</th>
+                                <td>John</td>
+                                <td>Doe</td>
+                                <td>@social</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
+            </main>
+        </div>
+
         <div class="container">
             <footer
                 class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top"
@@ -307,6 +312,7 @@
                 </ul>
             </footer>
         </div>
+
         <!-- Bootstrap JavaScript Libraries -->
         <script
             src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
@@ -325,6 +331,7 @@
             crossorigin="anonymous"
             referrerpolicy="no-referrer"
         ></script>
+        <script src="account.js"></script>
         <script src="session-check.js"></script>
     </body>
 </html>

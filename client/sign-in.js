@@ -1,8 +1,13 @@
 (() => {
     "use strict";
-
+    let redirectLocation = "index.html#home"
     const form = document.querySelector(".needs-validation");
-
+    const urlParams = new URLSearchParams(window.location.search);
+    const source = urlParams.get("source");
+    if (source == "question") {
+        document.querySelector("#title-text").textContent = "You need to login to submit a question!"
+        redirectLocation = "ask_a_question.html"
+    }
     form.addEventListener("submit", async (event) => {
         event.preventDefault();
         event.stopPropagation();
@@ -74,7 +79,7 @@
             });
 
             console.log("Succesfull login:", response.data);
-            // redirect or message here
+            location.href = redirectLocation;
 
         } catch (err) {
             if (err.response && err.response.status === 404) {

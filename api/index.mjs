@@ -80,6 +80,13 @@ app.post("/register", async (req, res) => {
 
 app.post("/login", async (req, res) => {
     const ip = req.ip
+    // Check session
+    for (const user of openedSessions) {
+        if (user.ip === ip) {
+            // User found
+            return res.status(409).send("You are already logged in.");
+        }
+    }
     const { username, email, password } = req.body; // Unpacking
     if (!username || !email || !password) {
         return res.status(400).send("Bad request: empty username, email or password");
@@ -141,14 +148,57 @@ app.get("/session", async (req, res) => {
     for (const user of openedSessions) {
         if (user.ip === ip) {
             // User found
-            console.log(`User ip ${ip}, saved ip ${user.ip}`);
+            //console.log(`User ip ${ip}, saved ip ${user.ip}`);
             return res.status(200).json({ username: user.username, email: user.email });
         }
     }
     // User is not found
-    return res.status(204).send("Such account doesn't exist.");
+    return res.status(204).send("No opened session at your ip address.");
 });
 
+app.post("/questions", async (req, res) => {
+    const ip = req.ip
+    const { firstName, lastName, language, question } = req.body; // Unpacking
+    let userSession
+    // Check session
+    for (const user of openedSessions) {
+        if (user.ip === ip) {
+            // User found
+            userSession = user;
+            break;
+        }
+    }
+    if (!userSession) {
+        return res.status(204).send("No opened session at your IP address.");
+    }
+    // First name: 3-31 characters
+    if (firstName.length < 2 || firstName.length > 32) {
+        return res.status(400).send("First name must be between 3 and 31 characters including both.")
+    }
+
+    // Last name: 9-31 characters
+    if (lastName.length < 2 || lastName.length > 32) {
+        return res.status(400).send("Last name must be between 3 and 31 characters including both.")
+    }
+    // Language must be not 0:
+    if (language === 0) {
+        return res.status(400).send("Select valid language.")
+    }
+    // Question: 6-350 characters
+    if (question.length < 7 || question.length > 351) {
+        return res.status(400).send("Question must be between 6 and 350 characters including both.")
+    }
+    try {
+        await connection.query(
+            `INSERT INTO questions (first_name, last_name, language, question) VALUES ($1, $2, $3, $4)`,
+            [firstName, lastName, language, question]
+        );
+    } catch (err) {
+        console.error("Database error:", err.stack);
+        return res.status(500).send("Internal server error");
+    }
+    return res.status(200).send("Question has been received successfully")
+})
 
 function openSession(ip, username, email) {
     openedSessions.push({ ip: ip, username: username, email: email })
