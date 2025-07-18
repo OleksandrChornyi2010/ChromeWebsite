@@ -32,7 +32,7 @@
         passwordInput.classList.remove("is-invalid");
 
         // Username: 4-31 characters
-        if (username.length <= 3 || username.length >= 32) {
+        if (username.length < 3 || username.length > 32) {
             usernameInput.classList.remove("is-valid");
             usernameInput.classList.add("is-invalid");
             usernameFeedback.textContent = "Username must be between 4 and 31 characters including both.";
@@ -40,10 +40,10 @@
         }
 
         // Password: 9-31 characters
-        if (password.length <= 8 || password.length >= 32) {
+        if (password.length < 8 || password.length > 32) {
             passwordInput.classList.remove("is-valid");
             passwordInput.classList.add("is-invalid");
-            passwordFeedback.textContent = "Password must be between 9 and 31 characters including both.";
+            passwordFeedback.textContent = "Password must be between 7 and 31 characters including both.";
             isValid = false;
         }
 
@@ -54,7 +54,7 @@
             !email.includes("@") ||
             !email.includes(".") ||
             email.indexOf("@") === 0 ||
-            email.lastIndexOf(".") < email.indexOf("@")
+            email.lastIndexOf(".") < email.indexOf("@") // There must be "." after "@" sign
         ) {
             // Invalid email
             emailInput.classList.remove("is-valid");

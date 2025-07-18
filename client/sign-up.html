@@ -80,13 +80,20 @@
                     <div class="col-md-3 text-end">
                         <a
                             href="sign-in.html"
-                            class="btn btn-outline-primary me-2"
+                            class="btn btn-outline-primary me-2 d-none"
+                            id="header-button"
                             >Sign-in</a
                         >
-                        <a href="sign-up.html" class="btn btn-primary"
+                        <a
+                            href="sign-up.html"
+                            class="btn btn-primary d-none"
+                            id="header-button"
                             >Sign-up</a
                         >
-                        <div class="dropdown d-inline-block d-none">
+                        <div
+                            class="dropdown d-inline-block d-none"
+                            id="dropdown"
+                        >
                             <button
                                 class="btn p-0 border-0 bg-transparent"
                                 type="button"
@@ -258,7 +265,6 @@
             </div>
         </div>
         <!-- Bootstrap JavaScript Libraries -->
-        <script src="sign-up.js"></script>
         <script
             src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
             integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
@@ -276,5 +282,7 @@
             crossorigin="anonymous"
             referrerpolicy="no-referrer"
         ></script>
+        <script src="sign-up.js"></script>
+        <script src="session-check.js"></script>
     </body>
 </html>

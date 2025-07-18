@@ -99,7 +99,7 @@ app.post("/login", async (req, res) => {
         !email.includes("@") ||
         !email.includes(".") ||
         email.indexOf("@") === 0 ||
-        email.lastIndexOf(".") < email.indexOf("@")
+        email.lastIndexOf(".") < email.indexOf("@") // There must be "." after "@" sign
     ) {
         // Invalid email
         return res.status(400).send("Email must be valid");
@@ -134,6 +134,21 @@ app.post("/login", async (req, res) => {
         return res.status(500).send("Internal server error");
     }
 })
+
+app.get("/session", async (req, res) => {
+    const ip = req.ip;
+
+    for (const user of openedSessions) {
+        if (user.ip === ip) {
+            // User found
+            console.log(`User ip ${ip}, saved ip ${user.ip}`);
+            return res.status(200).json({ username: user.username, email: user.email });
+        }
+    }
+    // User is not found
+    return res.status(204).send("Such account doesn't exist.");
+});
+
 
 function openSession(ip, username, email) {
     openedSessions.push({ ip: ip, username: username, email: email })

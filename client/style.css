@@ -6,6 +6,14 @@
     --primary-color-outline: rgb(94, 188, 86);
 }
 
+.btn {
+    transition: all 0.3s ease;
+}
+
+.btn:hover {
+    transform: scale(1.04);
+}
+
 .btn-primary {
     background-color: var(--primary-color) !important;
     border-color: var(--primary-color) !important;
