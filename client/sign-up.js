@@ -1,6 +1,6 @@
 (() => {
     "use strict";
-    let redirectLocation = "index.html#home"
+    let redirectLocation = "account.html"
     const form = document.querySelector(".needs-validation");
     const urlParams = new URLSearchParams(window.location.search);
     const source = urlParams.get("source");

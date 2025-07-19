@@ -1,11 +1,11 @@
 (() => {
     "use strict";
-    let redirectLocation = "index.html#home"
+    let redirectLocation = "account.html"
     const form = document.querySelector(".needs-validation");
     const urlParams = new URLSearchParams(window.location.search);
     const source = urlParams.get("source");
     if (source == "question") {
-        document.querySelector("#title-text").textContent = "You need to login to submit a question!"
+        document.querySelector("#title-text").textContent = "You need to login to ask a question!"
         redirectLocation = "ask_a_question.html"
     }
     form.addEventListener("submit", async (event) => {
@@ -89,7 +89,6 @@
                 passwordInput.classList.remove("is-valid");
                 passwordInput.classList.add("is-invalid");
                 passwordFeedback.textContent = "Passwords does not match.";
-                // Нужно ли тут ставить isValid на false
             }
             else {
                 console.error("Unexpected error:", err);

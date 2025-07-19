@@ -1,12 +1,15 @@
+window.userSession = "";
 (async () => {
     // Are we logged into an account form this ip?
     try {
-        const response = await axios.get("http://localhost:3000/session");
+        const response = await axios.get("http://localhost:3000/get-session");
         console.log(response.data)
         if (response.status === 200) {
             console.log("You are still logged in as:", response.data.username);
             document.querySelector("#dropdown").classList.remove("d-none");
+            document.querySelector("#dropdown-header-text").textContent = response.data.email;
             window.userSession = response.data;
+            window.dispatchEvent(new Event('userSessionReady'));
         } else if (response.status === 204) {
             console.log("Not logged in");
             document.querySelectorAll("#header-button").forEach((element) => {

@@ -142,7 +142,7 @@ app.post("/login", async (req, res) => {
     }
 })
 
-app.get("/session", async (req, res) => {
+app.get("/get-session", async (req, res) => {
     const ip = req.ip;
 
     for (const user of openedSessions) {
@@ -199,6 +199,39 @@ app.post("/questions", async (req, res) => {
     }
     return res.status(200).send("Question has been received successfully")
 })
+
+app.post("/change-password", async (req, res) => {
+    const ip = req.ip;
+    const newPassword = req.body.newPassword;
+    let userSession;
+    // Check session
+    for (const user of openedSessions) {
+        if (user.ip === ip) {
+            // User found
+            userSession = user;
+            break;
+        }
+    }
+    if (!userSession) {
+        return res.status(204).send("No opened session at your IP address.");
+    }
+    if (!newPassword) {
+        return res.status(400).send("Bad request: empty password");
+    }
+    if (newPassword.length < 8 || newPassword.length > 32) {
+        return res.status(400).send("Password length should be between 7 and 31 symbols including both");
+    }
+    try {
+        await connection.query("UPDATE users SET password = $1 WHERE username = $2 AND email = $3", [newPassword, userSession.username, userSession.email]);
+
+    }
+    catch (err) {
+        console.error("Database error:", err.stack);
+        return res.status(500).send("Internal server error");
+    }
+    return res.status(200).send("Your password has been updated.")
+})
+
 
 function openSession(ip, username, email) {
     openedSessions.push({ ip: ip, username: username, email: email })
