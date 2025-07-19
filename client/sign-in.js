@@ -88,7 +88,7 @@
             else if (err.response && err.response.status === 401) {
                 passwordInput.classList.remove("is-valid");
                 passwordInput.classList.add("is-invalid");
-                passwordFeedback.textContent = "Passwords does not match.";
+                passwordFeedback.textContent = "Passwords do not match.";
             }
             else {
                 console.error("Unexpected error:", err);

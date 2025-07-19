@@ -125,9 +125,9 @@ app.post("/login", async (req, res) => {
                 openSession(ip, username, email);
                 return res.status(200).send("User logined");
             }
-            // Passwords doesn't match
+            // Passwords don't match!
             else {
-                return res.status(401).send("Passwords doesn't match!")
+                return res.status(401).send("Passwords don't match!")
             }
 
         }
@@ -223,7 +223,7 @@ app.post("/change-password", async (req, res) => {
     }
     try {
         await connection.query("UPDATE users SET password = $1 WHERE username = $2 AND email = $3", [newPassword, userSession.username, userSession.email]);
-
+        closeSessions(userSession.email)
     }
     catch (err) {
         console.error("Database error:", err.stack);
@@ -236,6 +236,18 @@ app.post("/change-password", async (req, res) => {
 function openSession(ip, username, email) {
     openedSessions.push({ ip: ip, username: username, email: email })
     console.log(`New session ${username}, ${email} from ${ip} has been succesfully opened!`)
+}
+function closeSessions(email) {
+    const initialLength = openedSessions.length;
+    openedSessions = openedSessions.filter(session => session.email !== email);
+
+    if (openedSessions.length < initialLength) {
+        console.log(`All sessions for email ${email} have been successfully closed!`);
+        return true;
+    } else {
+        console.warn(`No active sessions were found for email ${email}.`);
+        return false;
+    }
 }
 
 app.listen(port, () => {

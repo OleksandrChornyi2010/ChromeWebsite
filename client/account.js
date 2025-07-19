@@ -60,9 +60,6 @@ window.addEventListener('userSessionReady', () => {
             const response = await axios.post("http://localhost:3000/change-password", {
                 newPassword
             });
-            if (response.status === 204) {
-                window.location.href = "sign-in.html?source=question";
-            }
             console.log("Password has been changed succesfully");
             location.href = "password-update.html"
 
