@@ -148,143 +148,81 @@
             </div>
         </div>
 
-        <main>
-            <div class="container py-5">
-                <div class="py-5 text-center">
-                    <h1 class="h2" id="title-text">Question #</h1>
-                </div>
-                <div class="row g-3">
-                    <div class="d-flex justify-content-center">
-                        <div class="col-md-7 col-lg-8">
-                            <form class="needs-validation" novalidate="">
-                                <div class="row g-3">
-                                    <div class="col-sm-6">
-                                        <label
-                                            for="firstName"
-                                            class="form-label"
-                                            >First name</label
-                                        >
-                                        <input
-                                            type="text"
-                                            class="form-control"
-                                            disabled
-                                            id="firstName"
-                                            placeholder=""
-                                            value=""
-                                            required=""
-                                        />
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <label for="lastName" class="form-label"
-                                            >Last name</label
-                                        >
-                                        <input
-                                            type="text"
-                                            class="form-control"
-                                            disabled
-                                            id="lastName"
-                                            placeholder=""
-                                            value=""
-                                            required=""
-                                        />
-                                    </div>
-                                    <div class="col-12">
-                                        <label for="country" class="form-label"
-                                            >Language</label
-                                        >
-                                        <select
-                                            class="form-select"
-                                            disabled
-                                            id="language"
-                                            required=""
-                                        >
-                                            <option value="" selected disabled>
-                                                Please choose your language...
-                                            </option>
-                                            <option>
-                                                English (United States)
-                                            </option>
-                                            <option>
-                                                English (Great Britian)
-                                            </option>
-                                            <option>Ukranian (Ukraine)</option>
-                                        </select>
-                                    </div>
-                                    <div class="col-12">
-                                        <label for="question" class="form-label"
-                                            >Your question</label
-                                        >
-                                        <textarea
-                                            class="form-control"
-                                            disabled
-                                            id="question"
-                                            placeholder="Enter question"
-                                            rows="5"
-                                            required
-                                        ></textarea>
-                                    </div>
-                                </div>
-                                <hr class="my-4" />
-                                <button
-                                    class="w-100 btn btn-danger btn-lg"
-                                    id="cancel-button"
-                                    type="submit"
-                                >
-                                    Cancel question
-                                </button>
-                            </form>
+        <div class="wrapper d-flex flex-column min-vh-100">
+            <main
+                class="flex-fill d-flex justify-content-center align-items-center"
+            >
+                <div class="px-4 py-5 my-5 text-center">
+                    <h1 class="display-5 fw-bold text-body-emphasis">
+                        Your question has been succesfully deleted.
+                    </h1>
+                    <div class="col-lg-6 mx-auto">
+                        <p class="lead mb-4">
+                            You can now ask another one if you wish.
+                        </p>
+                        <div
+                            class="d-grid gap-2 d-sm-flex justify-content-sm-center"
+                        >
+                            <a
+                                href="index.html#home"
+                                class="btn btn-primary btn-lg px-4 gap-3"
+                            >
+                                Back to home page
+                            </a>
                         </div>
                     </div>
                 </div>
+            </main>
+            <div class="container">
+                <footer
+                    class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top"
+                >
+                    <p class="col-md-4 mb-0 text-body-secondary">
+                        <img
+                            src="images/chrome.svg"
+                            alt="Chrome"
+                            width="40"
+                            height="32"
+                        />
+                        © 2025 Google, Inc. 90% of rights reserved.
+                    </p>
+                    <ul class="nav col-md-4 justify-content-end">
+                        <li class="nav-item">
+                            <a
+                                href="index.html#home"
+                                class="nav-link px-2 link-dark"
+                                >Home</a
+                            >
+                        </li>
+                        <li class="nav-item">
+                            <a
+                                href="index.html#features"
+                                class="nav-link px-2 link-dark"
+                                >Features</a
+                            >
+                        </li>
+                        <li class="nav-item">
+                            <a
+                                href="download.html"
+                                class="nav-link px-2 link-dark"
+                                >Dowload</a
+                            >
+                        </li>
+                        <li class="nav-item">
+                            <a href="FAQs.html" class="nav-link px-2 link-dark"
+                                >FAQs</a
+                            >
+                        </li>
+                        <li class="nav-item">
+                            <a
+                                href="ask_a_question.html"
+                                class="nav-link px-2 link-dark"
+                                >Ask a question</a
+                            >
+                        </li>
+                    </ul>
+                </footer>
             </div>
-        </main>
-        <div class="container">
-            <footer
-                class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top"
-            >
-                <p class="col-md-4 mb-0 text-body-secondary">
-                    <img
-                        src="images/chrome.svg"
-                        alt="Chrome"
-                        width="40"
-                        height="32"
-                    />
-                    © 2025 Google, Inc. 90% of rights reserved.
-                </p>
-                <ul class="nav col-md-4 justify-content-end">
-                    <li class="nav-item">
-                        <a
-                            href="index.html#home"
-                            class="nav-link px-2 link-dark"
-                            >Home</a
-                        >
-                    </li>
-                    <li class="nav-item">
-                        <a
-                            href="index.html#features"
-                            class="nav-link px-2 link-dark"
-                            >Features</a
-                        >
-                    </li>
-                    <li class="nav-item">
-                        <a href="download.html" class="nav-link px-2 link-dark"
-                            >Dowload</a
-                        >
-                    </li>
-                    <li class="nav-item">
-                        <a href="FAQs.html" class="nav-link px-2 link-dark"
-                            >FAQs</a
-                        >
-                    </li>
-                    <li class="nav-item">
-                        <a
-                            href="ask_a_question.html"
-                            class="nav-link px-2 link-dark"
-                            >Ask a question</a
-                        >
-                    </li>
-                </ul>
-            </footer>
         </div>
         <!-- Bootstrap JavaScript Libraries -->
         <script
@@ -305,6 +243,5 @@
             referrerpolicy="no-referrer"
         ></script>
         <script src="session-check.js"></script>
-        <script src="question-overview.js"></script>
     </body>
 </html>

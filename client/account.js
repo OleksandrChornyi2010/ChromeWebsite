@@ -13,6 +13,9 @@ document.querySelectorAll('#sidebar a').forEach(link => {
 
         // Show needed section
         document.getElementById(targetId).classList.remove('d-none');
+        if (targetId === "section2") {
+            loadQuestions();
+        }
     });
 });
 
@@ -20,6 +23,53 @@ window.addEventListener('userSessionReady', () => {
     console.log("UserSession:", window.userSession);
     document.querySelector("#header-text").textContent = window.userSession.username
 });
+
+
+async function loadQuestions() {
+    let questions;
+    try {
+        const response = await axios.get("http://localhost:3000/get-all-questions", {
+        });
+        questions = response.data;
+
+    } catch (err) {
+        console.error("Unexpected error:", err);
+        alert("There was an error while changing your password. Please try again later.");
+    }
+    const tbody = document.querySelector("#section2 tbody");
+    tbody.innerHTML = ""; // Очищаем перед загрузкой новых данных
+
+    questions.forEach((question, index) => {
+        const row = document.createElement("tr");
+        let preview = question.question;
+        // if (question.question.slice(0, 35) >= question.question.length) {
+        //     preview = question.question.length;
+        // }
+        // else {
+        //     preview = question.question.slice(0, 35) + "...";
+        // }
+        const dateObj = new Date(question.created_at);
+
+        const hours = dateObj.getHours().toString().padStart(2, '0');
+        const minutes = dateObj.getMinutes().toString().padStart(2, '0');
+        const day = dateObj.getDate().toString().padStart(2, '0');
+        const month = (dateObj.getMonth() + 1).toString().padStart(2, '0');
+        const year = dateObj.getFullYear();
+
+        const formatted = `${hours}:${minutes} ${day}.${month}.${year}`;
+
+
+        row.innerHTML = `
+            <th scope="row">${question.id}</th>
+            <td class="text-truncate" style="max-width: 200px;">${preview}</td>
+            <td >${formatted}</td>
+            <td><a href="question-overview.html?id=${question.id}" class="btn btn-sm btn-primary" data-id="${question.id}">View</a></td>
+        `;
+
+        tbody.appendChild(row);
+    });
+}
+
 
 (() => {
     "use strict";

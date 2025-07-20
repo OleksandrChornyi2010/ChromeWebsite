@@ -156,7 +156,7 @@ app.get("/get-session", async (req, res) => {
     return res.status(204).send("No opened session at your ip address.");
 });
 
-app.post("/questions", async (req, res) => {
+app.post("/submit-question", async (req, res) => {
     const ip = req.ip
     const { firstName, lastName, language, question } = req.body; // Unpacking
     let userSession
@@ -223,7 +223,7 @@ app.post("/change-password", async (req, res) => {
     }
     try {
         await connection.query("UPDATE users SET password = $1 WHERE username = $2 AND email = $3", [newPassword, userSession.username, userSession.email]);
-        closeSessions(userSession.email)
+        closeAllSessions(userSession.email)
     }
     catch (err) {
         console.error("Database error:", err.stack);
@@ -232,12 +232,102 @@ app.post("/change-password", async (req, res) => {
     return res.status(200).send("Your password has been updated.")
 })
 
+app.get("/get-all-questions", async (req, res) => {
+    const ip = req.ip;
+    let userSession;
+    // Check session
+    for (const user of openedSessions) {
+        if (user.ip === ip) {
+            // User found
+            userSession = user;
+            break;
+        }
+    }
+    if (!userSession) {
+        return res.status(204).send("No opened session at your IP address.");
+    }
+    try {
+        const result = await connection.query(
+            "SELECT * FROM questions WHERE username = $1 AND email = $2",
+            [userSession.username, userSession.email]
+        );
+        return res.status(200).json(result.rows);
+    }
+    catch (err) {
+        console.error("Database error:", err.stack);
+        return res.status(500).send("Internal server error");
+    }
+})
+
+app.get("/get-question", async (req, res) => {
+    const ip = req.ip;
+    const id = req.query.id
+    let userSession;
+    // Check session
+    for (const user of openedSessions) {
+        if (user.ip === ip) {
+            // User found
+            userSession = user;
+            break;
+        }
+    }
+    if (!userSession) {
+        return res.status(204).send("No opened session at your IP address.");
+    }
+    try {
+        const result = await connection.query(
+            "SELECT * FROM questions WHERE id = $1 AND username = $2 AND email = $3",
+            [id, userSession.username, userSession.email]
+        );
+        return res.status(200).json(result.rows);
+    }
+    catch (err) {
+        console.error("Database error:", err.stack);
+        return res.status(500).send("Internal server error");
+    }
+})
+
+app.delete("/delete-question", async (req, res) => {
+    const ip = req.ip;
+    const id = req.query.id;
+    let userSession;
+    // Check session
+    for (const user of openedSessions) {
+        if (user.ip === ip) {
+            // User found
+            userSession = user;
+            break;
+        }
+    }
+    if (!userSession) {
+        return res.status(204).send("No opened session at your IP address.");
+    }
+    try {
+        const result = await connection.query(
+            "DELETE FROM questions WHERE id = $1 AND username = $2 AND email = $3",
+            [id, userSession.username, userSession.email]
+        );
+
+        if (result.rowCount === 0) {
+            return res.status(404).send("Question not found");
+        }
+
+        return res.status(200).send("Question has been deleted succesfully.")
+    }
+    catch (err) {
+        console.error("Database error:", err.stack);
+        return res.status(500).send("Internal server error");
+    }
+})
+
+
 
 function openSession(ip, username, email) {
     openedSessions.push({ ip: ip, username: username, email: email })
     console.log(`New session ${username}, ${email} from ${ip} has been succesfully opened!`)
 }
-function closeSessions(email) {
+
+function closeAllSessions(email) {
     const initialLength = openedSessions.length;
     openedSessions = openedSessions.filter(session => session.email !== email);
 

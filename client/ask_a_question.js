@@ -67,7 +67,7 @@
         form.classList.add("was-validated");
 
         try {
-            const response = await axios.post("http://localhost:3000/questions", {
+            const response = await axios.post("http://localhost:3000/submit-question", {
                 firstName,
                 lastName,
                 language,
