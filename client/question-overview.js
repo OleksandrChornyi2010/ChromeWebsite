@@ -47,7 +47,7 @@ async function deleteQuestion() {
 
     } catch (err) {
         if (response.status === 403) {
-            window.location.href = "sign-in.html?source=question";
+            window.location.href = "sign-in.html";
         }
         console.error("Unexpected error:", err);
         alert("There was an error while viewing your question. Please try again later.");
