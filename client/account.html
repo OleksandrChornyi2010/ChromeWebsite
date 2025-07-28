@@ -150,14 +150,13 @@
         <!-- Main -->
         <div class="p-0 container border border-secondary">
             <header
-                class="navbar bg-dark flex-md-nowrap p-0 mb-2"
+                class="navbar bg-dark flex-md-nowrap p-0"
                 data-bs-theme="dark"
             >
                 <a
                     class="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-6 text-white"
                     id="header-text"
-                    >Your profile</a
-                >
+                ></a>
                 <ul class="navbar-nav flex-row d-md-none">
                     <li class="nav-item text-nowrap">
                         <button
@@ -194,8 +193,8 @@
             <main class="d-flex" style="min-height: 100vh">
                 <!-- Sidebar -->
                 <nav
-                    class="bg-light border-end border-top rounded-top"
-                    style="width: 250px"
+                    class="bg-mid border-end border-top"
+                    style="width: 250px; flex-shrink: 0"
                 >
                     <div class="list-group list-group-flush mt-3" id="sidebar">
                         <a
@@ -216,16 +215,16 @@
                         <a
                             href="#"
                             class="list-group-item list-group-item-action"
-                            data-content="settings"
+                            data-content="dashboard"
                             data-target="section3"
-                            >Settings</a
+                            >See more</a
                         >
                         <a
                             href="#"
                             class="list-group-item list-group-item-action"
                             data-content="help"
                             data-target="section4"
-                            >Help</a
+                            >Get help</a
                         >
                     </div>
                 </nav>
@@ -301,6 +300,184 @@
                             </tr> -->
                         </tbody>
                     </table>
+                </section>
+                <section class="flex-fill p-4 d-none" id="section3">
+                    <h1>Your installations</h1>
+                    <p>
+                        See which products you already have and which you can
+                        install to put your productivity to next level.
+                    </p>
+                    <hr />
+                    <div
+                        class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4 py-5"
+                    >
+                        <div class="col d-flex align-items-start">
+                            <img
+                                src="images/products/icons8-google-play.svg"
+                                class="bi text-body-secondary flex-shrink-0 me-3"
+                                alt=""
+                                srcset=""
+                            />
+                            <div>
+                                <h3
+                                    class="fw-bold mb-0 fs-4 text-body-emphasis"
+                                >
+                                    Google play
+                                </h3>
+                                <p>
+                                    Get the most popular and helpful apps from
+                                    google play
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col d-flex align-items-start">
+                            <img
+                                src="images/products/icons8-gmail.svg"
+                                alt=""
+                                class="bi text-body-secondary flex-shrink-0 me-3"
+                            />
+                            <div>
+                                <h3
+                                    class="fw-bold mb-0 fs-4 text-body-emphasis"
+                                >
+                                    Gmail
+                                </h3>
+                                <p>
+                                    Meet quick, modern, and easy-to-use e-mail
+                                    service.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col d-flex align-items-start">
+                            <img
+                                src="images/products/icons8-google-assistant.svg"
+                                alt=""
+                                class="bi text-body-secondary flex-shrink-0 me-3"
+                            />
+                            <div>
+                                <h3
+                                    class="fw-bold mb-0 fs-4 text-body-emphasis"
+                                >
+                                    Google assistant
+                                </h3>
+                                <p>
+                                    Work, play, and create with google
+                                    assistant! A service that helps you with
+                                    your device.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col d-flex align-items-start">
+                            <img
+                                src="images/products/icons8-google-authenticator.svg"
+                                alt=""
+                                class="bi text-body-secondary flex-shrink-0 me-3"
+                            />
+                            <div>
+                                <h3
+                                    class="fw-bold mb-0 fs-4 text-body-emphasis"
+                                >
+                                    Google authenticator
+                                </h3>
+                                <p>
+                                    Secure your website accounts with 2FA from
+                                    google authenticatior.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col d-flex align-items-start">
+                            <img
+                                src="images/products/icons8-google-drive.svg"
+                                alt=""
+                                class="bi text-body-secondary flex-shrink-0 me-3"
+                            />
+                            <div>
+                                <h3
+                                    class="fw-bold mb-0 fs-4 text-body-emphasis"
+                                >
+                                    Google drive
+                                </h3>
+                                <p>
+                                    Save your work for free with our cloud
+                                    storage service google drive.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col d-flex align-items-start">
+                            <img
+                                src="images/products/icons8-google-maps.svg"
+                                alt=""
+                            />
+                            <div>
+                                <h3
+                                    class="fw-bold mb-0 fs-4 text-body-emphasis"
+                                >
+                                    Google maps
+                                </h3>
+                                <p>
+                                    Drive with our navigation service google
+                                    maps.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col d-flex align-items-start">
+                            <img
+                                src="images/products/icons8-google-meet.svg"
+                                alt=""
+                            />
+                            <div>
+                                <h3
+                                    class="fw-bold mb-0 fs-4 text-body-emphasis"
+                                >
+                                    Google meet
+                                </h3>
+                                <p>
+                                    Create and attend online meetings with
+                                    google meet for free.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col d-flex align-items-start">
+                            <img
+                                src="images/products/icons8-google-travel.svg"
+                                alt=""
+                            />
+                            <div>
+                                <h3
+                                    class="fw-bold mb-0 fs-4 text-body-emphasis"
+                                >
+                                    Google travel
+                                </h3>
+                                <p>
+                                    Travel easily with google travel! Book
+                                    hotels, plane tickets, and plan your trips
+                                    without being worried!
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <section class="flex-fill p-4 d-none" id="section4">
+                    <h1>Need help?</h1>
+                    <p>Ask a tecnical support.</p>
+                    <hr />
+                    <h3>How to create a tecnical support ticket:</h3>
+                    <ol>
+                        <li>Create an email to google@support.gmail.com.</li>
+                        <li>
+                            Briefly write what's your problem in the email
+                            subject.
+                        </li>
+                        <li>
+                            Later in email specify your account username and
+                            region.
+                        </li>
+                        <li>After that expain your problem in great detail.</li>
+                        <li>
+                            We will answer you as soon as possible, so please be
+                            patient!
+                        </li>
+                    </ol>
                 </section>
             </main>
         </div>

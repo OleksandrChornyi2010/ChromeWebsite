@@ -1,0 +1,187 @@
+html,
+body {
+    user-select: none;
+    overflow-x: hidden; /* отключить горизонтальный скролл */
+    overflow-y: auto; /* либо hidden, если вертикальный скролл не нужен */
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+body {
+    background-image: url("images/textures/green-grass.jpg");
+}
+.image-container {
+    position: relative;
+    width: 56px;
+    height: 56px;
+}
+
+.main-image {
+    width: 56px;
+    height: 56px;
+    display: block;
+}
+
+.pip-image {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 38px;
+    height: 38px;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+}
+
+.cannon-image {
+    position: absolute;
+    top: 3%;
+    left: 50%;
+    /* width: 25px;
+    height: 46px; */
+    transform: translate(-50%, -50%);
+    transform-origin: 50% 125%; /* по умолчанию */
+    pointer-events: none;
+}
+.spawned-img {
+    background-color: white;
+}
+.bubble-wrapper {
+    position: fixed; /* фиксируем позицию вне потока */
+    top: 50%;
+    left: -400px;
+    transform: translateY(-50%);
+    animation: slideIn 0.5s forwards ease-out;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+}
+
+@keyframes slideIn {
+    to {
+        left: 24px;
+    }
+}
+
+.bubble-icon {
+    width: 48px;
+    height: 48px;
+    margin-right: 10px;
+    flex-shrink: 0;
+}
+
+.bubble-message {
+    background: #ffffff;
+    border: 1px solid #ccc;
+    border-radius: 12px;
+    padding: 10px 14px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    position: relative;
+    max-width: 300px;
+}
+
+.bubble-message::before {
+    content: "";
+    position: absolute;
+    left: -10px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 0;
+    height: 0;
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    border-right: 10px solid #ffffff;
+}
+.bubble-message {
+    display: flex;
+    flex-direction: column;
+}
+
+.bubble-message {
+    margin: 0 0 8px 0;
+}
+
+.bubble-message button {
+    align-self: flex-end; /* Pushes button to the right */
+}
+
+@keyframes slideOut {
+    from {
+        left: 24px;
+    }
+    to {
+        left: -400px;
+        display: none;
+    }
+}
+
+.edge-darkness {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
+
+    opacity: 0;
+    transition: opacity 0.5s ease;
+
+    background: radial-gradient(
+        ellipse at center,
+        rgba(0, 0, 0, 0) 30%,
+        rgba(0, 0, 0, 0.5) 70%,
+        rgba(0, 0, 0, 0.8) 100%
+    );
+}
+
+.edge-darkness.visible {
+    opacity: 1;
+}
+#Score-text {
+    user-select: none;
+    margin: 16px;
+    font-size: 24px; /* можно поставить 32px, 2em, или что нужно */
+    font-weight: bold; /* по желанию — сделать жирным */
+    color: rgb(255, 242, 104); /* если нужно для контраста */
+    text-shadow: 1px 1px 2px black; /* по желанию — для читаемости на фоне */
+}
+
+/* Ensure bubble is above the overlay */
+/* .bubble-wrapper {
+    z-index: 1;
+    position: relative;
+} */
+
+.game-character {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    pointer-events: none;
+    z-index: 5;
+}
+
+.game {
+    z-index: 5;
+}
+
+.bottom-left-hearts {
+    position: fixed;
+    bottom: 10px;
+    left: 10px;
+    display: flex;
+    gap: 8px;
+    z-index: 1000;
+}
+
+.bottom-left-hearts img {
+    width: 32px;
+    height: 32px;
+    -webkit-user-drag: none;
+    pointer-events: none;
+}

@@ -10,6 +10,10 @@
     transition: all 0.3s ease;
 }
 
+.list-group-item.active {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
 .btn:hover {
     transform: scale(1.04);
 }
@@ -53,6 +57,9 @@
 .btn-outline-primary:active {
     background-color: var(--primary-color-active) !important;
     border-color: var(--primary-color-active) !important;
+}
+.bg-mid {
+    background-color: #ebebeb !important;
 }
 
 .features-svg-handler {

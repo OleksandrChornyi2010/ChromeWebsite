@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Game</title>
+        <!-- Bootstrap CSS v5.2.1 -->
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+            crossorigin="anonymous"
+        />
+        <link rel="stylesheet" href="style.css" />
+        <link rel="stylesheet" href="game.css" />
+    </head>
+    <body>
+        <div class="bubble-wrapper">
+            <!-- Icon on the left -->
+            <img
+                class="bubble-icon"
+                src="images/textures/enemies/edge.svg"
+                alt="Icon"
+            />
+
+            <!-- Speech bubble -->
+            <div class="bubble-message">
+                <strong>Ha-Ha-Ha!</strong>
+
+                <p>Want a new browser? Beat me in this game first!</p>
+                <button class="btn btn-primary" id="start">OK</button>
+            </div>
+        </div>
+        <div class="edge-darkness" id="edge-darkness"></div>
+        <div class="game d-none">
+            <p id="Score-text">Score: 0/100</p>
+            <div class="game-character">
+                <div class="image-container">
+                    <img
+                        src="images/textures/moving_pikes.png"
+                        alt="Game Image"
+                        class="game-image"
+                    />
+                    <img
+                        src="images/textures/chrome.svg"
+                        alt="Picture in Picture"
+                        class="pip-image"
+                    />
+                    <img
+                        src="images/textures/Cannon_gun.png"
+                        alt=""
+                        class="cannon-image"
+                    />
+                </div>
+            </div>
+            <div class="bottom-left-hearts">
+                <img
+                    src="images/textures/pixel-heart.jpg"
+                    alt="Heart 1"
+                    id="heart_1"
+                />
+                <img
+                    src="images/textures/pixel-heart.jpg"
+                    alt="Heart 2"
+                    id="heart_2"
+                />
+                <img
+                    src="images/textures/pixel-heart.jpg"
+                    alt="Heart 3"
+                    id="heart_3"
+                />
+            </div>
+        </div>
+
+        <!-- Bootstrap JavaScript Libraries -->
+        <script
+            src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+            integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+            crossorigin="anonymous"
+        ></script>
+
+        <script
+            src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+            integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+            crossorigin="anonymous"
+        ></script>
+        <script src="game.js"></script>
+    </body>
+</html>
