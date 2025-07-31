@@ -1,8 +1,8 @@
 let initialSpeed = 10000;
 let speed = initialSpeed;
-let enemySpawnInterval = 1000;// 5000 milliseconds = 5 Seconds
-const transitionDelay = 150; // 5000 milliseconds = 5 Seconds
-let lives = 99999999;
+let enemySpawnInterval = 1000;
+const transitionDelay = 150;
+let lives = 3;
 const maxScore = 100;
 const collisionCheckInterval = 60
 const bulletSpeed = 10;
