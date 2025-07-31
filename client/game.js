@@ -1,10 +1,18 @@
-let speed = 10000; // 1000 milliseconds = 1 Second
+let initialSpeed = 10000;
+let speed = initialSpeed;
 let enemySpawnInterval = 1000;// 5000 milliseconds = 5 Seconds
 const transitionDelay = 150; // 5000 milliseconds = 5 Seconds
-let lives = 3;
+let lives = 99999999;
+const maxScore = 100;
 const collisionCheckInterval = 60
-let hasGameStarted = false;
+const bulletSpeed = 10;
+let hasGameStarted = true;
 let bullet = null;
+let bulletDamage = 25;
+let score = 0;
+let enemyInterval;
+let fileName;
+let boosters = ["images/textures/arch.png", "images/textures/debian.png", "images/textures/mint.png"]
 enemies = {
     clipchamp: {
         health: 100,
@@ -56,18 +64,91 @@ enemies = {
     },
 }
 let addedEnemies = []
-
 const keys = Object.keys(enemies)
-let enemyInterval;
-function showBubble(e, text = "Want a new browser? Beat me in this game first!") {
+const urlParams = new URLSearchParams(window.location.search);
+const platform = urlParams.get("platform");
+if (platform == "win") {
+    fileName = "chrome.exe";
+}
+else if (platform == "linux") {
+    fileName = "chrome.deb";
+}
+else if (platform == "mac") {
+    fileName = "chrome.dmg";
+}
+else if (platform == "android") {
+    fileName = "chrome.apk"
+}
+else if (platform == "ios") {
+    fileName = "chrome.amd64"
+}
+else {
+    fileName = "chrome.deb";
+}
+let boostersMenuDisplayed = false
+// Example: start bubble and darkness on page load
+window.addEventListener('DOMContentLoaded', showBubble);
+const penguin = document.getElementById("penguin");
+const menu = document.getElementById("penguin-menu");
+
+penguin.addEventListener("click", (event) => {
+    event.stopPropagation();
+    if (!boostersMenuDisplayed) {
+        menu.classList.toggle("active");
+    }
+    else {
+        menu.classList.remove("active");
+    }
+});
+
+const booster_1 = document.getElementById("booster-1") // Arch
+const booster_2 = document.getElementById("booster-2") // Debian
+const booster_3 = document.getElementById("booster-3") // Mint
+
+let booster_1_count = 0;
+let booster_2_count = 0;
+let booster_3_count = 0;
+
+let booster_1_active = false
+let booster_2_active = false
+let booster_3_active = false
+booster_1.addEventListener("click", (event) => {
+    event.stopPropagation();
+    booster_1_click();
+});
+booster_2.addEventListener("click", (event) => {
+    event.stopPropagation();
+    booster_2_click();
+});
+booster_3.addEventListener("click", (event) => {
+    event.stopPropagation();
+    booster_3_click();
+});
+
+// Button hides bubble
+document.querySelector("#start").addEventListener("click", hideBubble);
+let scoreText = document.querySelector("#score-text");
+// Получаем элементы
+const pipImage = document.querySelector('.pip-image');
+const cannonImage = document.querySelector('.cannon-image');
+
+function showBubble(e, text = "Want a new browser? Beat me in this game first!", win = false) {
     const bubble = document.querySelector('.bubble-wrapper');
     document.querySelector(".bubble-message p").textContent = text;
-    if (hasGameStarted) { // Here we check if the game has ended. hasGameStarted is set to true after the execution of this function, so it should work fine.
-        buttonStart = document.querySelector("#start")
+
+    buttonStart = document.querySelector("#start")
+    if (!hasGameStarted) { // Here we check if the game has ended. hasGameStarted is set to true after the execution of this function, so it should work fine.
         buttonStart.textContent = "Try again";
         buttonStart.removeEventListener("click", showBubble);
         buttonStart.addEventListener("click", () => {
             window.location.reload();// Or location.href = location.href;
+        })
+    }
+    if (win) {
+        document.querySelector(".bubble-message strong").remove();
+        buttonStart.textContent = "Yes!";
+        buttonStart.addEventListener("click", () => {
+            window.location.href = `/client/files/${fileName}`;
         })
     }
     const darkness = document.getElementById('edge-darkness');
@@ -76,6 +157,7 @@ function showBubble(e, text = "Want a new browser? Beat me in this game first!")
     bubble.style.animation = "slideIn 0.5s forwards ease-out";
     darkness.classList.add("visible");
 }
+
 // Start the game
 function hideBubble() {
     const bubble = document.querySelector('.bubble-wrapper');
@@ -89,27 +171,167 @@ function hideBubble() {
     enemyInterval = setInterval(spawnAndMoveEnemy, enemySpawnInterval);
     setInterval(() => {
         document.body.addEventListener('click', (e) => {
-            console.log("Call");
             if (hasGameStarted) {
                 shoot(e.clientX, e.clientY);
             }
         })
     }, enemySpawnInterval);
     window.addEventListener('resize', onWindowSizeChange);
-    //spawnAndMoveEnemy()
-
 }
 
-// Example: start bubble and darkness on page load
-window.addEventListener('DOMContentLoaded', showBubble);
+function booster_1_click() {
+    if (booster_1_count > 0 && !booster_1_active) {
+        //Use booster here
+        booster_1_active = true;
+        let boosterSizeX = 32;
+        let boosterSizeY = 32;
+        // Booster use animation
+        let pipRect = pipImage.getBoundingClientRect();
+        const centerX = (pipRect.left + pipRect.width / 2) - boosterSizeX / 2;
+        const centerY = (pipRect.top + pipRect.height / 2) - boosterSizeY * 2.5;
+        let boosterRect = document.querySelector("#booster-1").getBoundingClientRect();
+        const spawnX = (boosterRect.left + boosterRect.width / 2) - boosterSizeX / 2;
+        const spawnY = (boosterRect.top + boosterRect.height / 2) - boosterSizeY * 2.5;
+        let img = document.createElement('img');
+        img.src = boosters[0];
+        img.style.width = `${boosterSizeX}px`;
+        img.style.height = `${boosterSizeY}px`;
+        img.style.position = "fixed";
+        img.style.transition = `transform 0.3s linear`;
+        img.style.transform = `translate(${spawnX}px, ${spawnY}px)`;
+        document.querySelector('.game').appendChild(img);
+        setTimeout(() => {
+            img.addEventListener('transitionend', function onTransitionEnd() {
+                img.removeEventListener('transitionend', onTransitionEnd);
+                // Second animation: size + opacity
+                img.style.transition = 'transform 0.3s ease, opacity 0.3s ease';
+                img.style.transform += ' scale(15)';
+                img.style.opacity = '0';
 
-// Button hides bubble
-document.querySelector("#start").addEventListener("click", hideBubble);
+                img.addEventListener('transitionend', function onTransitionEndScale() {
+                    img.removeEventListener('transitionend', onTransitionEndScale);
+                    img.remove();
+                });
+            });
 
+            img.style.transform = `translate(${centerX}px, ${centerY}px)`;
+        }, transitionDelay);
+        speed = speed * 2;
+        addedEnemies.forEach(wrapper => {
+            updateEnemySpeed(wrapper);
+        })
+        setTimeout(() => {
+            speed = initialSpeed;
+            addedEnemies.forEach(wrapper => {
+                updateEnemySpeed(wrapper);
+            })
+            booster_1_active = false;
+        }, 5000)// 5 seconds
+        booster_1_count -= 1;
+        document.querySelector("#booster-1 + .booster-badge").textContent = booster_1_count; // Update text
+    }
+}
+function booster_2_click() {
+    if (booster_2_count > 0 && !booster_2_active) {
+        // Use booster here
+        booster_2_active = true;
+        let boosterSizeX = 32;
+        let boosterSizeY = 32;
+        // Booster use animation
+        let pipRect = pipImage.getBoundingClientRect();
+        const centerX = (pipRect.left + pipRect.width / 2) - boosterSizeX / 2;
+        const centerY = (pipRect.top + pipRect.height / 2) - boosterSizeY * 2.5;
+        let boosterRect = document.querySelector("#booster-2").getBoundingClientRect();
+        const spawnX = (boosterRect.left + boosterRect.width / 2) - boosterSizeX / 2;
+        const spawnY = (boosterRect.top + boosterRect.height / 2) - boosterSizeY * 2.5;
+        let img = document.createElement('img');
+        img.src = boosters[1];
+        img.style.width = `${boosterSizeX}px`;
+        img.style.height = `${boosterSizeY}px`;
+        img.style.position = "fixed";
+        img.style.transition = `transform 0.3s linear`;
+        img.style.transform = `translate(${spawnX}px, ${spawnY}px)`;
+        document.querySelector('.game').appendChild(img);
+        setTimeout(() => {
+            img.addEventListener('transitionend', function onTransitionEnd() {
+                img.removeEventListener('transitionend', onTransitionEnd);
+                // Second animation: size + opacity
+                img.style.transition = 'transform 0.3s ease, opacity 0.3s ease';
+                img.style.transform += ' scale(15)';
+                img.style.opacity = '0';
 
-// Получаем элементы
-const pipImage = document.querySelector('.pip-image');
-const cannonImage = document.querySelector('.cannon-image');
+                img.addEventListener('transitionend', function onTransitionEndScale() {
+                    img.removeEventListener('transitionend', onTransitionEndScale);
+                    img.remove();
+                });
+            });
+
+            img.style.transform = `translate(${centerX}px, ${centerY}px)`;
+        }, transitionDelay);
+        let initialDamage = bulletDamage;
+        bulletDamage = bulletDamage * 2;
+        setTimeout(() => {
+            bulletDamage = initialDamage;
+            booster_2_active = false;
+        }, 5000);
+        booster_2_count -= 1;
+        document.querySelector("#booster-2 + .booster-badge").textContent = booster_2_count; // Update text
+    }
+}
+function booster_3_click() {
+    if (booster_3_count > 0 && !booster_3_active) {
+        // Use booster here
+        booster_3_active = true;
+        let boosterSizeX = 32;
+        let boosterSizeY = 32;
+        // Booster use animation
+        let pipRect = pipImage.getBoundingClientRect();
+        const centerX = (pipRect.left + pipRect.width / 2) - boosterSizeX / 2;
+        const centerY = (pipRect.top + pipRect.height / 2) - boosterSizeY * 2.5;
+        let boosterRect = document.querySelector("#booster-3").getBoundingClientRect();
+        const spawnX = (boosterRect.left + boosterRect.width / 2) - boosterSizeX / 2;
+        const spawnY = (boosterRect.top + boosterRect.height / 2) - boosterSizeY * 2.5;
+        let img = document.createElement('img');
+        img.src = boosters[2];
+        img.style.width = `${boosterSizeX}px`;
+        img.style.height = `${boosterSizeY}px`;
+        img.style.position = "fixed";
+        img.style.transition = `transform 0.3s linear`;
+        img.style.transform = `translate(${spawnX}px, ${spawnY}px)`;
+        document.querySelector('.game').appendChild(img);
+        setTimeout(() => {
+            img.addEventListener('transitionend', function onTransitionEnd() {
+                img.removeEventListener('transitionend', onTransitionEnd);
+                // Second animation: size + opacity
+                img.style.transition = 'transform 0.3s ease, opacity 0.3s ease';
+                img.style.transform += ' scale(15)';
+                img.style.opacity = '0';
+
+                img.addEventListener('transitionend', function onTransitionEndScale() {
+                    img.removeEventListener('transitionend', onTransitionEndScale);
+                    img.remove();
+                });
+            });
+
+            img.style.transform = `translate(${centerX}px, ${centerY}px)`;
+        }, transitionDelay);
+        speed = 999999999;
+        addedEnemies.forEach(wrapper => {
+            updateEnemySpeed(wrapper);
+        })
+        setTimeout(() => {
+            speed = initialSpeed;
+            addedEnemies.forEach(wrapper => {
+                updateEnemySpeed(wrapper);
+            })
+            booster_3_active = false;
+        }, 3000)// 5 seconds
+        spawnAndMoveEnemy();
+        spawnAndMoveEnemy();
+        booster_3_count -= 1;
+        document.querySelector("#booster-3 + .booster-badge").textContent = booster_3_count; // Update text
+    }
+}
 
 window.addEventListener('mousemove', (e) => {
     if (hasGameStarted) {
@@ -136,49 +358,145 @@ window.addEventListener('mousemove', (e) => {
     }
 });
 
+// setInterval(() => {
+//     // Удаляем старые точки
+//     document.querySelectorAll(".debug-dot").forEach(el => el.remove());
+
+//     const imgs = document.querySelectorAll("img");
+//     imgs.forEach(img => {
+//         const rect = img.getBoundingClientRect();
+
+//         const positions = [
+//             [rect.left, rect.top],                  // Top Left
+//             [rect.right, rect.top],                 // Top Right
+//             [rect.left, rect.bottom],               // Bottom Left
+//             [rect.right, rect.bottom],              // Bottom Right
+//             [rect.left + rect.width / 2, rect.top],    // Top Center
+//             [rect.left + rect.width / 2, rect.bottom], // Bottom Center
+//             [rect.left, rect.top + rect.height / 2],   // Left Center
+//             [rect.right, rect.top + rect.height / 2]   // Right Center
+//         ];
+
+//         positions.forEach(([x, y]) => {
+//             const dot = document.createElement("div");
+//             dot.className = "debug-dot";
+//             dot.style.position = "fixed";
+//             dot.style.left = `${x - 5}px`;
+//             dot.style.top = `${y - 5}px`;
+//             dot.style.width = "5px";
+//             dot.style.height = "5px";
+//             //dot.style.backgroundColor = "red";
+//             dot.style.borderRadius = "50%";
+//             dot.style.zIndex = 99999;
+//             // Цвет зависит от того, penguin это или нет
+//             if (img.id === "penguin") {
+//                 dot.style.backgroundColor = "blue";
+//             }
+//             else if (img.id === "booster-1") {
+//                 dot.style.backgroundColor = "yellow";
+//             }
+//             else if (img.id === "booster-1-img") {
+//                 dot.style.backgroundColor = "red";
+//             }
+//             else {
+//                 dot.style.backgroundColor = "iajdpn";
+//             }
+//             document.body.appendChild(dot);
+//         });
+
+//     });
+// }, 100);
+
+function updateEnemySpeed(wrapper) {
+    let newSpeed = speed;
+    const rect = wrapper.getBoundingClientRect();
+    const currentX = rect.left;
+    const currentY = rect.top;
+
+    const target = document.querySelector('.game-image');
+    const targetRect = target.getBoundingClientRect();
+    const targetX = targetRect.left + targetRect.width / 2.5;
+    const targetY = targetRect.top + targetRect.height / 2.5;
+
+    const dx = targetX - currentX;
+    const dy = targetY - currentY;
+    const distance = Math.sqrt(dx * dx + dy * dy);
+
+    const duration = newSpeed / 1000; // Примерная новая длительность
+    //console.log(newSpeed)
+    // Сброс transition (чтобы сразу изменить позицию)
+    wrapper.style.transition = 'none';
+    wrapper.style.transform = `translate(${currentX}px, ${currentY}px)`;
+
+    // Нужно подождать один кадр, чтобы transition сработал
+    requestAnimationFrame(() => {
+        wrapper.style.transition = `transform ${duration}s linear`;
+        wrapper.style.transform = `translate(${targetX}px, ${targetY}px)`;
+    });
+}
+
 
 function spawnAndMoveEnemy() {
     if (hasGameStarted) {
         const randomKey = keys[Math.floor(Math.random() * keys.length)];
         const enemy = enemies[randomKey];
-        // 1. Создаём элемент <img>
-        const img = document.createElement('img');
         const { x, y } = getRandomEdgePosition();
-        img.src = enemy["sprite"]; // Image path
-        img.classList.add('spawned-img'); // используем для стилизации
-        addedEnemies.push(img)
-        // 2. Добавляем в контейнер игры
-        document.querySelector('.game').appendChild(img);
 
-        // 3. Start position
-        img.style.position = 'fixed';
-        // img.style.left = `${x}px`; // фиксируем, например, в (0,0)
-        // img.style.top = `${y}0px`;
-        img.style.left = '0px';
-        img.style.top = '0px';
-        img.style.transform = `translate(${x}px, ${y}px)`;
-        img.style.width = '32px'; // Make sure all enemies are the same size
+        // Создаём контейнер
+        const wrapper = document.createElement('div');
+        wrapper.style.position = 'fixed';
+        wrapper.style.left = '0px';
+        wrapper.style.top = '0px';
+        wrapper.style.transform = `translate(${x}px, ${y}px)`;
+        wrapper.style.width = '32px';
+        wrapper.style.height = '40px'; // чуть больше, чтобы влез полоска
+        wrapper.style.pointerEvents = 'none';
+
+        // Создаём врага
+        const img = document.createElement('img');
+        img.src = enemy["sprite"];
+        img.classList.add('spawned-img');
+        img.style.width = '32px';
         img.style.height = '32px';
-        img.style.transition = `transform ${speed / 1000}s linear`;
+        img.style.display = 'block';
 
-        // 4. Позиция цели
-        let target = document.querySelector('.game-image');
-        let targetRect = target.getBoundingClientRect();
+        addedEnemies.push(wrapper);
 
-        // 5. Спустя немного времени — двигаем туда
+        // Добавляем здоровье
+        let health = 100;
+        const healthBar = document.createElement('div');
+        healthBar.style.height = '4px';
+        healthBar.style.width = '100%';
+        healthBar.style.background = 'red';
+        healthBar.style.marginBottom = '4px';
+        healthBar.style.borderRadius = '2px';
+
+        // Добавляем в wrapper
+        wrapper.appendChild(healthBar);
+        wrapper.appendChild(img);
+
+        // Добавляем в игру
+        document.querySelector('.game').appendChild(wrapper);
+
+        // Плавное перемещение
+        wrapper.style.transition = `transform ${speed / 1000}s linear`;
+
+        // Позиция цели
+        const target = document.querySelector('.game-image');
+        const targetRect = target.getBoundingClientRect();
+
         setTimeout(() => {
-            // Listen transition end. This is a precaution case if the enemy has stopped but still exists in the game
-            img.addEventListener('transitionend', function onTransitionEnd() {
-                img.removeEventListener('transitionend', onTransitionEnd);
+            wrapper.addEventListener('transitionend', function onTransitionEnd() {
+                wrapper.removeEventListener('transitionend', onTransitionEnd);
                 // Remove it
                 console.log("No collision on animation end!");
-                img.remove();
-
+                //wrapper.remove();
             });
-            img.style.transform = `translate(${targetRect.left + targetRect.width / 2.5}px, ${targetRect.top + targetRect.height / 2.5}px)`;
 
-        }, transitionDelay); // Delay so that transition would have enought time 
-        // Copy to check for bullet colision
+            wrapper.style.transform = `translate(${targetRect.left + targetRect.width / 2.5}px, ${targetRect.top + targetRect.height / 2.5}px)`;
+        }, transitionDelay);
+
+        // Проверка коллизии с игроком
         const character = document.querySelector('.game-image');
 
         const collisionCheck = setInterval(() => {
@@ -192,32 +510,171 @@ function spawnAndMoveEnemy() {
                 enemyRect.bottom > characterRect.top;
 
             if (isColliding) {
-                clearInterval(collisionCheck); // Stop check
-                img.remove(); // Remove enemy
+                clearInterval(collisionCheck);
+                wrapper.remove();
                 lives -= 1;
                 if (lives <= 0) {
-                    document.querySelector(".game").remove()
-                    showBubble(undefined, "You lost! You are not getting a new browser!");
+                    document.querySelector(".game").remove();
                     hasGameStarted = false;
+                    showBubble(undefined, "You lost! You are not getting a new browser!");
                     return;
                 }
-                document.querySelector(`#heart_${lives + 1}`).remove() // Remove one heart
-
+                document.querySelector(`#heart_${lives + 1}`).remove();
             }
 
-        }, 1000 / collisionCheckInterval); // 60 кадров в секунду
-    }
+            // Bullet colision
+            if (typeof bullet !== 'undefined' && bullet) {
+                const bulletRect = bullet.getBoundingClientRect();
+                const isHit =
+                    enemyRect.left < bulletRect.right &&
+                    enemyRect.right > bulletRect.left &&
+                    enemyRect.top < bulletRect.bottom &&
+                    enemyRect.bottom > bulletRect.top;
 
+                if (isHit) {
+                    bullet.remove();
+                    bullet = null;
+                    health -= bulletDamage;
+                    if (health <= 0) { // Enemy dies here
+                        health = 0;
+                        const randomBoosterIndex = getRandomIndexFromList(boosters);
+                        let rect;
+                        let img;
+                        let tuxRect;
+                        let boosterWidth = 32;
+                        let boosterHeight = 32;
+                        let tuxCenterX;
+                        let tuxCenterY;
+                        let targetX;
+                        let targetY;
+                        let spawnX;
+                        let spawnY;
+                        const index = addedEnemies.indexOf(wrapper);
+                        addedEnemies.splice(index, 1);
+
+                        switch (randomBoosterIndex) {
+                            case 0:
+                                booster_1_count++;
+                                document.querySelector("#booster-1 + .booster-badge").textContent = booster_1_count; // Update text
+                                rect = wrapper.getBoundingClientRect()
+                                spawnX = (rect.left + rect.width / 2) - boosterWidth / 2;
+                                spawnY = (rect.top + rect.height / 2) - boosterHeight * 2.5;
+                                img = document.createElement('img');
+                                img.src = boosters[randomBoosterIndex];
+                                img.style.width = '32px';
+                                img.style.height = '32px';
+                                img.style.position = "fixed";
+                                img.style.transition = `transform 0.3s linear`;
+                                img.style.transform = `translate(${spawnX}px, ${spawnY}px)`;
+                                document.querySelector('.game').appendChild(img);
+                                tuxRect = document.getElementById("penguin").getBoundingClientRect();
+                                tuxCenterX = tuxRect.left + tuxRect.width / 2;
+                                tuxCenterY = tuxRect.top + tuxRect.height / 2;
+
+                                // Центрируем booster по Tux
+                                targetX = tuxCenterX - boosterWidth / 2;
+                                targetY = tuxCenterY - boosterHeight * 2;// - boosterHeight / 2;
+                                setTimeout(() => {
+                                    img.addEventListener('transitionend', function onTransitionEnd() {
+                                        img.removeEventListener('transitionend', onTransitionEnd);
+                                        img.remove();
+                                    });
+
+                                    img.style.transform = `translate(${targetX}px, ${targetY}px)`;
+                                }, transitionDelay);
+                                break;
+                            case 1:
+                                booster_2_count++;
+                                document.querySelector("#booster-2 + .booster-badge").textContent = booster_2_count; // Update text
+                                rect = wrapper.getBoundingClientRect()
+                                spawnX = (rect.left + rect.width / 2) - boosterWidth / 2;
+                                spawnY = (rect.top + rect.height / 2) - boosterHeight * 2.5;
+                                img = document.createElement('img');
+                                img.src = boosters[randomBoosterIndex];
+                                img.style.width = '32px';
+                                img.style.height = '32px';
+                                img.style.position = "fixed";
+                                img.style.transition = `transform 0.3s linear`;
+                                img.style.transform = `translate(${spawnX}px, ${spawnY}px)`;
+                                document.querySelector('.game').appendChild(img);
+                                tuxRect = document.getElementById("penguin").getBoundingClientRect();
+                                tuxCenterX = tuxRect.left + tuxRect.width / 2;
+                                tuxCenterY = tuxRect.top + tuxRect.height / 2;
+
+                                // Центрируем booster по Tux
+                                targetX = tuxCenterX - boosterWidth / 2;
+                                targetY = tuxCenterY - boosterHeight * 2;
+                                setTimeout(() => {
+                                    img.addEventListener('transitionend', function onTransitionEnd() {
+                                        img.removeEventListener('transitionend', onTransitionEnd);
+                                        img.remove();
+                                    });
+
+                                    img.style.transform = `translate(${targetX}px, ${targetY}px)`;
+                                }, transitionDelay);
+                                break;
+                            case 2:
+                                booster_3_count++;
+                                document.querySelector("#booster-3 + .booster-badge").textContent = booster_3_count; // Update text
+                                rect = wrapper.getBoundingClientRect()
+                                spawnX = (rect.left + rect.width / 2) - boosterWidth / 2;
+                                spawnY = (rect.top + rect.height / 2) - boosterHeight * 2.5;
+                                img = document.createElement('img');
+                                img.src = boosters[randomBoosterIndex];
+                                img.style.width = '32px';
+                                img.style.height = '32px';
+                                img.style.position = "fixed";
+                                img.style.transition = `transform 0.3s linear`;
+                                img.style.transform = `translate(${spawnX}px, ${spawnY}px)`;
+                                document.querySelector('.game').appendChild(img);
+                                tuxRect = document.getElementById("penguin").getBoundingClientRect();
+                                tuxCenterX = tuxRect.left + tuxRect.width / 2;
+                                tuxCenterY = tuxRect.top + tuxRect.height / 2;
+
+                                // Центрируем booster по Tux
+                                targetX = tuxCenterX - boosterWidth / 2;
+                                targetY = tuxCenterY - boosterHeight * 2;
+                                setTimeout(() => {
+                                    img.addEventListener('transitionend', function onTransitionEnd() {
+                                        img.removeEventListener('transitionend', onTransitionEnd);
+                                        img.remove();
+                                    });
+
+                                    img.style.transform = `translate(${targetX}px, ${targetY}px)`;
+                                }, transitionDelay);
+                                break;
+
+                            default:
+                                break;
+                        }
+                        wrapper.remove();
+                        score += 1;
+                        // Update score text
+                        scoreText.innerHTML = `Score: ${score}/${maxScore}`
+                        if (score >= maxScore) {
+                            //Win here
+                            document.querySelector(".game").remove();
+                            showBubble(undefined, "No! You won! But I'll be back in the next windows update!", true)
+                            hasGameStarted = false;
+                        }
+                    };
+                    healthBar.style.width = `${health}%`; // Visual update;
+                }
+            }
+
+        }, 1000 / collisionCheckInterval);
+    }
 }
+
 
 function onWindowSizeChange() {
     if (hasGameStarted) {
         target = document.querySelector('.game-image');
         targetRect = target.getBoundingClientRect();
         for (let i = 0; i < addedEnemies.length; i++) {
-            let img = addedEnemies[i]
-            if (img) {
-                img.style.transform = `translate(${targetRect.left + targetRect.width / 2.5}px, ${targetRect.top + targetRect.height / 2.5}px)`;
+            let wrapper = addedEnemies[i]
+            if (wrapper) {
+                wrapper.style.transform = `translate(${targetRect.left + targetRect.width / 2.5}px, ${targetRect.top + targetRect.height / 2.5}px)`;
             }
         }
     }
@@ -263,11 +720,11 @@ function shoot(mouseX, mouseY) {
         currentBullet.style.pointerEvents = 'none';
         currentBullet.style.userSelect = 'none';
         currentBullet.classList.add('bullet');
-
+        let currentBulletRect = currentBullet.getBoundingClientRect()
         // Cannon center
         const cannonRect = cannonImage.getBoundingClientRect();
-        const startX = cannonRect.left + cannonRect.width;
-        const startY = cannonRect.top;// + cannonRect.height / 2;
+        const startX = (cannonRect.left + cannonRect.width / 2) - currentBulletRect.width;
+        const startY = (cannonRect.top + cannonRect.height / 2) - currentBulletRect.height;
 
         // Vector
         const dx = mouseX - startX;
@@ -282,24 +739,20 @@ function shoot(mouseX, mouseY) {
 
         document.body.appendChild(currentBullet);
         bullet = currentBullet;
-
-        // Скорость полета
-        const speed = 8;
-
-        // Обновление позиции
+        // Update position
         const moveInterval = setInterval(() => {
             const rect = currentBullet.getBoundingClientRect();
             const x = rect.left + rect.width / 2;
             const y = rect.top + rect.height / 2;
 
-            // Обновление позиции
-            const vx = Math.cos(angleRad) * speed;
-            const vy = Math.sin(angleRad) * speed;
+
+            const vx = Math.cos(angleRad) * bulletSpeed;
+            const vy = Math.sin(angleRad) * bulletSpeed;
 
             currentBullet.style.left = `${x + vx}px`;
             currentBullet.style.top = `${y + vy}px`;
 
-            // Удалить пулю, если она вышла за границы экрана
+            // Remove the bullet if it's out of screen
             if (
                 x < 0 || x > window.innerWidth ||
                 y < 0 || y > window.innerHeight
@@ -312,3 +765,8 @@ function shoot(mouseX, mouseY) {
     }
 }
 
+function getRandomIndexFromList(list) {
+    if (list.length === 0) return null;
+    const randomIndex = Math.floor(Math.random() * list.length);
+    return randomIndex;
+}

@@ -179,9 +179,11 @@
                                 class="form-select w-auto mb-3 btn-outline-primary"
                             >
                                 <option selected disabled>Select OS</option>
-                                <option value="windows">Windows</option>
+                                <option value="win">Windows</option>
                                 <option value="linux">Linux</option>
-                                <option value="macos">macOS</option>
+                                <option value="mac">MacOS</option>
+                                <option value="android">Android</option>
+                                <option value="ios">IOS</option>
                             </select>
                         </div>
                         <hr />
@@ -190,15 +192,10 @@
                         >
                             <button
                                 type="button"
+                                id="downloadButton"
                                 class="btn btn-primary btn-lg px-4 me-md-2"
                             >
                                 Download
-                            </button>
-                            <button
-                                type="button"
-                                class="btn btn-outline-secondary btn-lg px-4"
-                            >
-                                See other versions
                             </button>
                         </div>
                     </div>
@@ -334,5 +331,6 @@
             referrerpolicy="no-referrer"
         ></script>
         <script src="session-check.js"></script>
+        <script src="download.js"></script>
     </body>
 </html>

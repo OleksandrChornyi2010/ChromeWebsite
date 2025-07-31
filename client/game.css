@@ -137,9 +137,11 @@ body {
 .edge-darkness.visible {
     opacity: 1;
 }
-#Score-text {
+#score-text {
     user-select: none;
     margin: 16px;
+    position: relative;
+    z-index: 100;
     font-size: 24px; /* можно поставить 32px, 2em, или что нужно */
     font-weight: bold; /* по желанию — сделать жирным */
     color: rgb(255, 242, 104); /* если нужно для контраста */
@@ -178,10 +180,71 @@ body {
     gap: 8px;
     z-index: 1000;
 }
-
 .bottom-left-hearts img {
     width: 32px;
     height: 32px;
     -webkit-user-drag: none;
     pointer-events: none;
+}
+
+.boosters {
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    display: flex;
+
+    z-index: 1000;
+}
+
+#penguin {
+    /* width: 64px; */
+    cursor: pointer;
+}
+
+.penguin-menu {
+    position: absolute;
+    bottom: 100%; /* выдвигается вверх */
+    left: 50%;
+    transform: translateX(-50%) translateY(10px);
+    background-color: #fff;
+    padding: 10px;
+    border: 1px solid #aaa;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    opacity: 0;
+    pointer-events: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8;
+    transition: opacity 0.4s ease, transform 0.4s ease;
+    z-index: 10;
+}
+.penguin-menu img {
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+.booster-wrapper {
+    position: relative;
+    display: inline-block;
+}
+
+.booster-badge {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    background-color: #00bfff;
+    color: white;
+    font-size: 12px;
+    padding: 2px 6px;
+    border-radius: 50%;
+    font-weight: bold;
+    transform: translate(30%, 30%);
+    pointer-events: none;
+}
+
+.penguin-menu.active {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateX(-50%) translateY(0);
 }

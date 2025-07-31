@@ -10,7 +10,7 @@
         // Get elements and values
         const firstNameInput = document.querySelector("#firstName");
         const lastNameInput = document.querySelector("#lastName");
-        const languageInput = document.querySelector("#language")
+        const languageInput = document.querySelector("#language");
         const questionInput = document.querySelector("#question");
 
         const firstNameFeedback = document.querySelector("#firstName-feedback");
