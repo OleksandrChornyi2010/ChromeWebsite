@@ -28,9 +28,10 @@
         let isValid = true;
 
         // Reset previous errors
-        usernameInput.classList.remove("is-invalid");
-        emailInput.classList.remove("is-invalid");
-        passwordInput.classList.remove("is-invalid");
+        usernameInput.classList.remove("is-valid", "is-invalid");
+        emailInput.classList.remove("is-valid", "is-invalid");
+        passwordInput.classList.remove("is-valid", "is-invalid");
+
 
         // Username: 4-31 characters
         if (username.length < 3 || username.length > 32) {
@@ -68,8 +69,8 @@
             form.classList.add("was-validated");
             return; // stop submit
         }
-
         form.classList.add("was-validated");
+
 
         try {
             const response = await axios.post("http://localhost:3000/login", {
@@ -97,3 +98,13 @@
         }
     });
 })();
+
+document
+    .getElementById("togglePassword")
+    .addEventListener("click", function () {
+        const passwordInput = document.getElementById("floatingPassword");
+        const icon = document.getElementById("toggleIcon");
+        const isHidden = passwordInput.type === "password";
+        passwordInput.type = isHidden ? "text" : "password";
+        icon.className = isHidden ? "bi bi-eye-slash-fill" : "bi bi-eye-fill";
+    });
