@@ -16,6 +16,7 @@
         const usernameInput = document.querySelector("#floatingUsername");
         const emailInput = document.querySelector("#floatingEmail");
         const passwordInput = document.querySelector("#floatingPassword");
+        const checkbox = document.getElementById("checkDefault");
 
         const usernameFeedback = document.querySelector("#usernameFeedback");
         const emailFeedback = document.querySelector("#emailFeedback");
@@ -24,6 +25,7 @@
         const username = usernameInput.value.trim();
         const email = emailInput.value.trim();
         const password = passwordInput.value;
+        const rememberMe = checkbox.checked;
 
         let isValid = true;
 
@@ -76,7 +78,8 @@
             const response = await axios.post("http://localhost:3000/login", {
                 username,
                 email,
-                password
+                password,
+                rememberMe
             });
 
             console.log("Succesfull login:", response.data);

@@ -16,17 +16,18 @@ await connection.connect(); // works only with Node 16+ using ESM or top-level a
 
 const app = express();
 const port = 3000;
+let openedSessions = []; // Object structure: { ip: "192.0.0.0", username: "alice", email: "alice@example.com", rememberMe: false}
+let sessionTimeout = 1 * 60 * 1000 // 10 minutes
 
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(morgan("tiny"));
 app.use(express.json());
 
-let openedSessions = []; // Object structure: { ip: "192.0.0.0", username: "alice", email: "alice@example.com"}
 
 app.post("/register", async (req, res) => {
     const ip = req.ip
-    const { username, email, password } = req.body; // unpacking
+    const { username, email, password, rememberMe } = req.body; // unpacking
     if (!username || !email || !password) {
         return res.status(400).send("Bad request: empty username, email or password");
     }
@@ -68,7 +69,7 @@ app.post("/register", async (req, res) => {
 
         console.log(`New user ${username}, ${email} has been successfully created!`);
         // Open session
-        openSession(ip, username, email);
+        openSession(ip, username, email, rememberMe);
         return res.status(201).send("User created");
 
     } catch (err) {
@@ -80,6 +81,7 @@ app.post("/register", async (req, res) => {
 
 app.post("/login", async (req, res) => {
     const ip = req.ip
+    const { username, email, password, rememberMe } = req.body; // Unpacking
     // Check session
     for (const user of openedSessions) {
         if (user.ip === ip) {
@@ -87,7 +89,6 @@ app.post("/login", async (req, res) => {
             return res.status(409).send("You are already logged in.");
         }
     }
-    const { username, email, password } = req.body; // Unpacking
     if (!username || !email || !password) {
         return res.status(400).send("Bad request: empty username, email or password");
     }
@@ -122,7 +123,7 @@ app.post("/login", async (req, res) => {
             // Check if passwords match
             if (existingUser.rows[0].password === password) {
                 // Open session
-                openSession(ip, username, email);
+                openSession(ip, username, email, rememberMe);
                 return res.status(200).send("User logined");
             }
             // Passwords don't match!
@@ -154,6 +155,17 @@ app.get("/get-session", async (req, res) => {
     }
     // User is not found
     return res.status(204).send("No opened session at your ip address.");
+});
+app.post("/close-session", async (req, res) => {
+    const ip = req.ip;
+    const email = req.body.email;
+    if (closeSession(ip, email)) {
+        clearSessionTimer(ip, email)
+        res.status(200).send("Your session has been succesfully closed.");
+    }
+    else {
+        res.status(204).send("Your session is already closed!");
+    }
 });
 
 app.post("/submit-question", async (req, res) => {
@@ -223,7 +235,9 @@ app.post("/change-password", async (req, res) => {
     }
     try {
         await connection.query("UPDATE users SET password = $1 WHERE username = $2 AND email = $3", [newPassword, userSession.username, userSession.email]);
-        closeAllSessions(userSession.email)
+        closeAllSessions(userSession.email);
+        clearAllSessionTimers(userSession.email);
+
     }
     catch (err) {
         console.error("Database error:", err.stack);
@@ -319,12 +333,49 @@ app.delete("/delete-question", async (req, res) => {
         return res.status(500).send("Internal server error");
     }
 })
+app.post("/newsletter", async (req, res) => {
+    const email = req.body.email;
+    try {
+        const result = await connection.query(
+            "SELECT * FROM newsletter_subscriptions WHERE email = $1",
+            [email]
+        );
+        if (result.rowCount) {
+            return res.status(409).send("This email is already subscribed.")
+        }
+    }
+    catch (err) {
+        console.error("Database error:", err.stack);
+        return res.status(500).send("Internal server error");
+    }
+    try {
+        await connection.query(
+            `INSERT INTO newsletter_subscriptions (email) VALUES ($1)`,
+            [email]
+        );
+    } catch (err) {
+        console.error("Database error:", err.stack);
+        return res.status(500).send("Internal server error");
+    }
+    return res.status(200).send("You have successfully subscribed!")
+})
 
+function openSession(ip, username, email, rememberMe) {
+    const session = { ip, username, email };
 
+    if (!rememberMe) {
+        console.log("Started session timer");
+        const timeoutId = setTimeout(() => {
+            console.log(`Session timeout for ${ip} and ${email}. Closing session`);
+            closeSession(ip, email);
+        }, sessionTimeout);
 
-function openSession(ip, username, email) {
-    openedSessions.push({ ip: ip, username: username, email: email })
-    console.log(`New session ${username}, ${email} from ${ip} has been succesfully opened!`)
+        session.timeoutId = timeoutId;
+    }
+
+    openedSessions.push(session);
+
+    console.log(`New session ${username}, ${email} from ${ip} has been successfully opened!`);
 }
 
 function closeAllSessions(email) {
@@ -338,6 +389,39 @@ function closeAllSessions(email) {
         console.warn(`No active sessions were found for email ${email}.`);
         return false;
     }
+}
+
+function closeSession(ip, email) {
+    const initialLength = openedSessions.length;
+    openedSessions = openedSessions.filter(session => !(session.email === email && session.ip === ip));
+
+    if (openedSessions.length < initialLength) {
+        console.log(`A session for email ${email} with IP ${ip} has been successfully closed!`);
+        return true;
+    } else {
+        console.warn(`No active sessions were found for email ${email} with IP ${ip}.`);
+        return false;
+    }
+}
+
+function clearSessionTimer(ip, email) {
+    const session = openedSessions.find(s => s.ip === ip && s.email === email);
+    if (session && session.timeoutId) {
+        clearTimeout(session.timeoutId);
+        session.timeoutId = null;
+        console.log(`Timeout cleared for session ${email} from ${ip}`);
+    }
+}
+
+
+function clearAllSessionTimers(email) {
+    openedSessions.forEach(session => {
+        if (session.email === email && session.timeoutId) {
+            clearTimeout(session.timeoutId);
+            session.timeoutId = null;
+            console.log(`Timeout cleared for session ${email} from IP ${session.ip}`);
+        }
+    });
 }
 
 app.listen(port, () => {

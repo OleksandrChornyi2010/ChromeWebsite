@@ -26,3 +26,19 @@
         })
     }
 })();
+
+document.querySelector("#logOutItem").addEventListener("click", async () => {
+    try {
+        const response = await axios.post("http://localhost:3000/close-session", {
+            email: window.userSession.email
+        });
+        if (response.status === 200) {
+            console.log("Your session has been succesfully closed.");
+        } else if (response.status === 204) {
+            console.log("Your session is already closed!");
+        }
+        location.href = "index.html#home"
+    } catch (err) {
+        console.error("Unexpected error:", err);
+    }
+})

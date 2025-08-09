@@ -137,7 +137,10 @@
                                     >
                                 </li>
                                 <li>
-                                    <a class="dropdown-item" href="#"
+                                    <a
+                                        id="logOutItem"
+                                        class="dropdown-item"
+                                        href="#"
                                         >Log out</a
                                     >
                                 </li>
@@ -187,7 +190,40 @@
                     </div>
                 </div>
             </div>
-            <div class="container px-4 py-5" id="features">
+            <div class="container px-4 py-5">
+                <div
+                    class="row flex-lg-row-reverse align-items-center g-5 py-5 border-top border-bottom"
+                >
+                    <div class="col-10 col-sm-8 col-lg-6">
+                        <img
+                            src="images/chrome_opened.png"
+                            class="d-block mx-lg-auto img-fluid shadow"
+                            alt="Bootstrap Themes"
+                            width="700"
+                            height="500"
+                            loading="lazy"
+                        />
+                    </div>
+                    <div class="col-lg-6">
+                        <h4
+                            class="display-5 fw-bold text-body-emphasis lh-1 mb-3"
+                        >
+                            We care about your browsing experience
+                        </h4>
+                        <p class="lead">
+                            Say goodbye to slow loading times and annoying
+                            crashes. Chrome’s cutting-edge technology ensures
+                            lightning-fast browsing, seamless integration with
+                            your favorite apps, and built-in protection against
+                            malware and phishing.
+                        </p>
+                        <div
+                            class="d-grid gap-2 d-md-flex justify-content-md-start"
+                        ></div>
+                    </div>
+                </div>
+            </div>
+            <div class="container px-4 py-5 border-bottom" id="features">
                 <h2 class="pb-2 border-bottom">Why choose Chrome?</h2>
                 <div class="row g-4 py-5 row-cols-1 row-cols-lg-3">
                     <div class="col d-flex align-items-start">
@@ -288,6 +324,98 @@
                                 help you do more, faster.
                             </p>
                         </div>
+                    </div>
+                </div>
+            </div>
+            <div class="container px-4 py-5">
+                <div
+                    class="row flex-lg-row align-items-center g-5 py-5 border-top border-bottom"
+                >
+                    <div class="col-10 col-sm-8 col-lg-6">
+                        <img
+                            src="images/chrome_ready_to_begin.png"
+                            class="d-block mx-lg-auto img-fluid shadow-lg"
+                            alt="Bootstrap Themes"
+                            width="700"
+                            height="500"
+                            loading="lazy"
+                        />
+                    </div>
+                    <div class="col-lg-6">
+                        <h4
+                            class="display-5 fw-bold text-body-emphasis lh-1 mb-3"
+                        >
+                            Ready to begin?
+                        </h4>
+                        <p class="lead">
+                            Download Google Chrome now and start exploring the
+                            internet at the speed of thought.
+                        </p>
+                        <div
+                            class="d-grid gap-2 d-md-flex justify-content-md-end"
+                        >
+                            <button
+                                type="button"
+                                class="btn btn-primary btn-lg px-4 me-md-2"
+                                id="download_lg"
+                            >
+                                Download
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="container px-4 py-5" id="form">
+                <div class="row align-items-center g-lg-5 py-5">
+                    <div class="col-lg-7 text-center text-lg-start">
+                        <h1
+                            class="display-4 fw-bold lh-1 text-body-emphasis mb-3"
+                        >
+                            Stay in the know
+                        </h1>
+                        <p class="col-lg-10 fs-4">
+                            Subscribe to our weekly newsletter to know
+                            everything about upcoming updates!
+                        </p>
+                    </div>
+                    <div class="col-md-10 mx-auto col-lg-5">
+                        <form
+                            class="p-4 p-md-5 border rounded-3 bg-body-tertiary novalidate"
+                        >
+                            <div class="form-floating mb-3">
+                                <input
+                                    type="email"
+                                    class="form-control"
+                                    id="floatingEmail"
+                                    pattern="^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$"
+                                    minlength="6"
+                                    maxlength="64"
+                                    name="email"
+                                    autocomplete="email"
+                                    placeholder=""
+                                    value=""
+                                    required=""
+                                />
+                                <label for="floatingEmail">Email address</label>
+                                <div
+                                    class="invalid-feedback"
+                                    id="emailFeedback"
+                                >
+                                    Please enter a valid email.
+                                </div>
+                            </div>
+                            <button
+                                class="w-100 btn btn-lg btn-primary"
+                                type="submit"
+                            >
+                                Subscribe
+                            </button>
+                            <hr class="my-4" />
+                            <small class="text-body-secondary"
+                                >By clicking Subscribe, you agree to the
+                                <a href="">terms of use</a>.</small
+                            >
+                        </form>
                     </div>
                 </div>
             </div>

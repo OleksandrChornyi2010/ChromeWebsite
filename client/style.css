@@ -71,7 +71,9 @@
 #home {
     scroll-margin-top: 73px; /* header height */
 }
-
+#features {
+    scroll-margin-top: 73px; /* header height */
+}
 .anti-header-padding {
     padding-top: 63px;
 }
