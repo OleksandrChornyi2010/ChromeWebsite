@@ -16,8 +16,8 @@ await connection.connect(); // works only with Node 16+ using ESM or top-level a
 
 const app = express();
 const port = 3000;
-let openedSessions = []; // Object structure: { ip: "192.0.0.0", username: "alice", email: "alice@example.com", rememberMe: false}
-let sessionTimeout = 1 * 60 * 1000 // 10 minutes
+let openedSessions = []; // Object structure: { ip: "192.0.0.0", username: "alice", email: "alice@example.com", rememberMe: false, timeoutId: 123123123}
+let sessionTimeout = 10 * 60 * 1000 // 10 minutes
 
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -149,7 +149,6 @@ app.get("/get-session", async (req, res) => {
     for (const user of openedSessions) {
         if (user.ip === ip) {
             // User found
-            //console.log(`User ip ${ip}, saved ip ${user.ip}`);
             return res.status(200).json({ username: user.username, email: user.email });
         }
     }
