@@ -126,7 +126,7 @@ app.post("/login", async (req, res) => {
                 openSession(ip, username, email, rememberMe);
                 return res.status(200).send("User logined");
             }
-            // Passwords don't match!
+            // Passwords don't match
             else {
                 return res.status(401).send("Passwords don't match!")
             }

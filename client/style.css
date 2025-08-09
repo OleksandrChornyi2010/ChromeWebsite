@@ -23,7 +23,7 @@
     border-color: var(--primary-color) !important;
 }
 .btn-primary:focus {
-    /*same as normal color*/
+    /* same as normal color */
     background-color: var(--primary-color) !important;
     border-color: var(--primary-color) !important;
 }
@@ -41,7 +41,7 @@
     border-color: var(--primary-color-outline) !important;
 }
 .btn-outline-primary:focus {
-    /*same as normal color*/
+    /* same as normal color */
     color: var(--primary-color-outline);
     border-color: var(--primary-color-outline) !important;
 }

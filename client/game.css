@@ -1,8 +1,8 @@
 html,
 body {
     user-select: none;
-    overflow-x: hidden; /* отключить горизонтальный скролл */
-    overflow-y: auto; /* либо hidden, если вертикальный скролл не нужен */
+    overflow-x: hidden;
+    overflow-y: auto;
     margin: 0;
     padding: 0;
     height: 100%;
@@ -36,17 +36,15 @@ body {
     position: absolute;
     top: 3%;
     left: 50%;
-    /* width: 25px;
-    height: 46px; */
     transform: translate(-50%, -50%);
-    transform-origin: 50% 125%; /* по умолчанию */
+    transform-origin: 50% 125%;
     pointer-events: none;
 }
 .spawned-img {
     background-color: white;
 }
 .bubble-wrapper {
-    position: fixed; /* фиксируем позицию вне потока */
+    position: fixed;
     top: 50%;
     left: -400px;
     transform: translateY(-50%);
@@ -142,17 +140,11 @@ body {
     margin: 16px;
     position: relative;
     z-index: 100;
-    font-size: 24px; /* можно поставить 32px, 2em, или что нужно */
-    font-weight: bold; /* по желанию — сделать жирным */
-    color: rgb(255, 242, 104); /* если нужно для контраста */
-    text-shadow: 1px 1px 2px black; /* по желанию — для читаемости на фоне */
+    font-size: 24px;
+    font-weight: bold;
+    color: rgb(255, 242, 104);
+    text-shadow: 1px 1px 2px black;
 }
-
-/* Ensure bubble is above the overlay */
-/* .bubble-wrapper {
-    z-index: 1;
-    position: relative;
-} */
 
 .game-character {
     position: fixed;
@@ -197,13 +189,12 @@ body {
 }
 
 #penguin {
-    /* width: 64px; */
     cursor: pointer;
 }
 
 .penguin-menu {
     position: absolute;
-    bottom: 100%; /* выдвигается вверх */
+    bottom: 100%;
     left: 50%;
     transform: translateX(-50%) translateY(10px);
     background-color: #fff;

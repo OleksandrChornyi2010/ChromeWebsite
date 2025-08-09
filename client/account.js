@@ -37,17 +37,11 @@ async function loadQuestions() {
         alert("There was an error while changing your password. Please try again later.");
     }
     const tbody = document.querySelector("#section2 tbody");
-    tbody.innerHTML = ""; // Очищаем перед загрузкой новых данных
+    tbody.innerHTML = "";
 
     questions.forEach((question, index) => {
         const row = document.createElement("tr");
         let preview = question.question;
-        // if (question.question.slice(0, 35) >= question.question.length) {
-        //     preview = question.question.length;
-        // }
-        // else {
-        //     preview = question.question.slice(0, 35) + "...";
-        // }
         const dateObj = new Date(question.created_at);
 
         const hours = dateObj.getHours().toString().padStart(2, '0');

@@ -22,7 +22,7 @@ form.addEventListener("submit", async (event) => {
         !email.includes("@") ||
         !email.includes(".") ||
         email.indexOf("@") === 0 ||
-        email.lastIndexOf(".") < email.indexOf("@")  // There must be "." after "@" sign
+        email.lastIndexOf(".") < email.indexOf("@")  // There must be "." after the "@" sign
     ) {
         // Invalid email
         emailInput.classList.remove("is-valid");
