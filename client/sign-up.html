@@ -17,10 +17,61 @@
             crossorigin="anonymous"
         />
         <link rel="stylesheet" href="style.css" />
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"
+            rel="stylesheet"
+        />
     </head>
 
     <body class="anti-header-padding">
-        <div class="fixed-top border-bottom bg-white">
+        <div
+            class="dropdown position-fixed bottom-0 end-0 mb-3 me-3"
+            id="toggleThemeDropdown"
+        >
+            <button
+                class="btn btn-primary py-2 dropdown-toggle d-flex align-items-center"
+                id="themeDropdown"
+                type="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+            >
+                <i class="bi bi-sun-fill me-2"></i>
+            </button>
+            <ul
+                class="dropdown-menu dropdown-menu-end shadow"
+                aria-labelledby="themeDropdown"
+            >
+                <li>
+                    <button
+                        type="button"
+                        class="dropdown-item d-flex align-items-center theme-button"
+                        data-bs-theme-value="light"
+                    >
+                        <i class="bi bi-sun-fill me-2 opacity-50"></i> Light
+                    </button>
+                </li>
+                <li>
+                    <button
+                        type="button"
+                        class="dropdown-item d-flex align-items-center theme-button"
+                        data-bs-theme-value="dark"
+                    >
+                        <i class="bi bi-moon-stars-fill me-2 opacity-50"></i>
+                        Dark
+                    </button>
+                </li>
+                <li>
+                    <button
+                        type="button"
+                        class="dropdown-item d-flex align-items-center theme-button"
+                        data-bs-theme-value="auto"
+                    >
+                        <i class="bi bi-circle-half me-2 opacity-50"></i> Auto
+                    </button>
+                </li>
+            </ul>
+        </div>
+        <div class="fixed-top border-bottom bg-body">
             <div class="container">
                 <header
                     class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3"
@@ -45,33 +96,35 @@
                         <li>
                             <a
                                 href="index.html#home"
-                                class="nav-link px-2 link-dark"
+                                class="nav-link px-2 link-body-emphasis"
                                 >Home</a
                             >
                         </li>
                         <li>
                             <a
                                 href="index.html#features"
-                                class="nav-link px-2 link-dark"
+                                class="nav-link px-2 link-body-emphasis"
                                 >Features</a
                             >
                         </li>
                         <li>
                             <a
                                 href="download.html"
-                                class="nav-link px-2 link-dark"
+                                class="nav-link px-2 link-body-emphasis"
                                 >Download</a
                             >
                         </li>
                         <li>
-                            <a href="FAQs.html" class="nav-link px-2 link-dark"
+                            <a
+                                href="FAQs.html"
+                                class="nav-link px-2 link-body-emphasis"
                                 >FAQs</a
                             >
                         </li>
                         <li>
                             <a
                                 href="ask_a_question.html"
-                                class="nav-link px-2 link-dark"
+                                class="nav-link px-2 link-body-emphasis"
                                 >Ask a question</a
                             >
                         </li>
@@ -125,7 +178,7 @@
                             >
                                 <li>
                                     <p
-                                        class="dropdown-header px-3 text-dark"
+                                        class="dropdown-header px-3 text-body"
                                         id="dropdown-header-text"
                                     >
                                         example@gmail.com
@@ -151,7 +204,7 @@
             </div>
         </div>
 
-        <div class="wrapper d-flex flex-column min-vh-100">
+        <div class="wrapper d-flex flex-column min-vh-100 anti-header-padding">
             <main
                 class="flex-fill d-flex justify-content-center align-items-center"
             >
@@ -256,33 +309,35 @@
                         <li class="nav-item">
                             <a
                                 href="index.html#home"
-                                class="nav-link px-2 link-dark"
+                                class="nav-link px-2 link-body-emphasis"
                                 >Home</a
                             >
                         </li>
                         <li class="nav-item">
                             <a
                                 href="index.html#features"
-                                class="nav-link px-2 link-dark"
+                                class="nav-link px-2 link-body-emphasis"
                                 >Features</a
                             >
                         </li>
                         <li class="nav-item">
                             <a
                                 href="download.html"
-                                class="nav-link px-2 link-dark"
+                                class="nav-link px-2 link-body-emphasis"
                                 >Dowload</a
                             >
                         </li>
                         <li class="nav-item">
-                            <a href="FAQs.html" class="nav-link px-2 link-dark"
+                            <a
+                                href="FAQs.html"
+                                class="nav-link px-2 link-body-emphasis"
                                 >FAQs</a
                             >
                         </li>
                         <li class="nav-item">
                             <a
                                 href="ask_a_question.html"
-                                class="nav-link px-2 link-dark"
+                                class="nav-link px-2 link-body-emphasis"
                                 >Ask a question</a
                             >
                         </li>

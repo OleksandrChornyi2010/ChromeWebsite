@@ -24,7 +24,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(morgan("tiny"));
 app.use(express.json());
 
-
 app.post("/register", async (req, res) => {
     const ip = req.ip
     const { username, email, password, rememberMe } = req.body; // unpacking
@@ -257,7 +256,7 @@ app.get("/get-all-questions", async (req, res) => {
         }
     }
     if (!userSession) {
-        return res.status(204).send("No opened session at your IP address.");
+        return res.status(403).send("No opened session at your IP address.");
     }
     try {
         const result = await connection.query(

@@ -1,4 +1,11 @@
 window.userSession = undefined;
+themeButtons = document.querySelectorAll(".theme-button");
+
+const savedTheme = localStorage.getItem("theme");
+if (savedTheme) {
+    setTheme(savedTheme);
+}
+
 (async () => {
     // Are we logged into an account form this ip?
     try {
@@ -41,3 +48,25 @@ document.querySelector("#logOutItem").addEventListener("click", async () => {
         console.error("Unexpected error:", err);
     }
 })
+
+themeButtons.forEach(btn => {
+    btn.addEventListener("click", () => {
+        setTheme(btn.getAttribute("data-bs-theme-value"));
+    });
+});
+
+function setTheme(theme) {
+    document.body.setAttribute("data-bs-theme", theme);
+    localStorage.setItem("theme", theme);
+    let themeDropdown = document.querySelector("#themeDropdown");
+
+    if (theme == "light") {
+        themeDropdown.innerHTML = '<i id="themeButtonIcon" class="bi bi-sun-fill me-2"></i>';
+    }
+    else if (theme == "dark") {
+        themeDropdown.innerHTML = '<i class="bi bi-moon-stars-fill me-2"></i>';
+    }
+    else if (theme == "auto") {
+        themeDropdown.innerHTML = '<i class="bi bi-circle-half me-2"></i>';
+    }
+}

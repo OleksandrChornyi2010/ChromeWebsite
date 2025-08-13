@@ -67,20 +67,59 @@
     height: 40px;
     border-radius: 10px;
 }
-
-#home {
-    scroll-margin-top: 73px; /* header height */
+@media (min-width: 576px) {
+    #home,
+    #features {
+        scroll-margin-top: 164px;
+    }
+    .anti-header-padding,
+    #home {
+        padding-top: 154px;
+    }
 }
-#features {
-    scroll-margin-top: 73px; /* header height */
+@media (min-width: 768px) {
+    #home,
+    #features {
+        scroll-margin-top: 111px;
+    }
+    .anti-header-padding,
+    #home {
+        padding-top: 110px;
+    }
 }
-.anti-header-padding {
-    padding-top: 63px;
+@media (min-width: 992px) {
+    #home,
+    #features {
+        scroll-margin-top: 73px;
+    }
+    .anti-header-padding,
+    #home {
+        padding-top: 63px;
+    }
+}
+@media (min-width: 576px) {
+    .anti-header-padding-account {
+        padding-top: 184px;
+    }
+}
+@media (min-width: 768px) {
+    .anti-header-padding-account {
+        padding-top: 130px;
+    }
+}
+@media (min-width: 992px) {
+    .anti-header-padding-account {
+        padding-top: 83px;
+    }
 }
 
 .fixed-card {
     height: 188px;
     overflow: hidden;
+}
+
+#toggleThemeDropdown {
+    z-index: 999999;
 }
 
 .form-not-check-input[type="checkbox"] {
