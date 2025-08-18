@@ -16,7 +16,7 @@
             integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
             crossorigin="anonymous"
         />
-        <link rel="stylesheet" href="style.css" />
+        <link rel="stylesheet" href="/client/css/style.css" />
         <link
             href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"
             rel="stylesheet"
@@ -82,7 +82,7 @@
                             class="d-inline-flex link-body-emphasis text-decoration-none"
                         >
                             <img
-                                src="images/chrome.svg"
+                                src="/client/images//chrome.svg"
                                 alt="Chrome"
                                 width="40"
                                 height="32"
@@ -205,140 +205,186 @@
         </div>
 
         <main>
-            <div class="container pb-5 anti-header-padding">
-                <div class="py-5 text-center">
-                    <h1 class="h2">Ask a question</h1>
-                    <p class="lead">
-                        Below is a form you need to fill in order to submit your
-                        question. You can cancel just by leaving the page.
-                    </p>
+            <section class="pb-5 text-center container anti-header-padding">
+                <div class="row py-lg-5">
+                    <div class="col-lg-6 col-md-8 mx-auto">
+                        <h1 class="fw-light">Frequently asked questions</h1>
+                        <p class="lead text-body-secondary">
+                            Browse already asked questions about our browser or
+                            ask one yourself.
+                        </p>
+                        <p>
+                            <a
+                                href="ask_a_question.html"
+                                class="btn btn-primary my-2"
+                                >Ask a question</a
+                            >
+                        </p>
+                    </div>
                 </div>
-                <div class="row g-3">
-                    <div class="d-flex justify-content-center">
-                        <div class="col-md-7 col-lg-8">
-                            <form class="needs-validation" novalidate="">
-                                <div class="row g-3">
-                                    <div class="col-sm-6">
-                                        <label
-                                            for="firstName"
-                                            class="form-label"
-                                            >First name</label
-                                        >
-                                        <input
-                                            type="text"
-                                            class="form-control"
-                                            id="firstName"
-                                            placeholder=""
-                                            value=""
-                                            required=""
-                                        />
-                                        <div
-                                            class="invalid-feedback"
-                                            id="firstName-feedback"
-                                        >
-                                            Valid first name is required.
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <label for="lastName" class="form-label"
-                                            >Last name</label
-                                        >
-                                        <input
-                                            type="text"
-                                            class="form-control"
-                                            id="lastName"
-                                            placeholder=""
-                                            value=""
-                                            required=""
-                                        />
-                                        <div
-                                            class="invalid-feedback"
-                                            id="lastName-feedback"
-                                        >
-                                            Valid last name is required.
-                                        </div>
-                                    </div>
-                                    <div class="col-12">
-                                        <label for="language" class="form-label"
-                                            >Language</label
-                                        >
-                                        <select
-                                            class="form-select"
-                                            id="language"
-                                            required=""
-                                        >
-                                            <option value="" selected disabled>
-                                                Please choose your language...
-                                            </option>
-                                            <option>
-                                                English (United States)
-                                            </option>
-                                            <option>
-                                                English (Great Britian)
-                                            </option>
-                                            <option>Ukranian (Ukraine)</option>
-                                        </select>
-                                        <div
-                                            class="invalid-feedback"
-                                            id="language-feedback"
-                                        >
-                                            Please select your language.
-                                        </div>
-                                    </div>
-                                    <div class="col-12">
-                                        <label for="question" class="form-label"
-                                            >Enter your question</label
-                                        >
-                                        <textarea
-                                            class="form-control"
-                                            id="question"
-                                            placeholder="Enter question"
-                                            rows="5"
-                                            required
-                                        ></textarea>
-                                        <div
-                                            class="invalid-feedback"
-                                            id="question-feedback"
-                                        >
-                                            Please enter a valid question.
-                                        </div>
-                                    </div>
+            </section>
+            <div class="album py-5 bg-body-tertiary">
+                <div class="container">
+                    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+                        <div class="col">
+                            <div class="card shadow-sm fixed-card">
+                                <div class="card-body">
+                                    <h4 class="card-text text-center">
+                                        When I open Chrome it says "Can't update
+                                        chrome" what should I do?
+                                    </h4>
+                                    <p class="card-text">
+                                        You should reinstall chrome from our
+                                        official website. It would not affect
+                                        you settings.
+                                    </p>
+                                    <div
+                                        class="d-flex justify-content-between align-items-center"
+                                    ></div>
                                 </div>
-                                <hr class="my-4" />
-                                <div class="form-check">
-                                    <input
-                                        class="form-not-check-input"
-                                        type="checkbox"
-                                        id="notify-when-answered"
-                                    />
-                                    <label
-                                        class="form-check-label"
-                                        for="notify-when-answered"
-                                        >Notify me when the answer is
-                                        available</label
-                                    >
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="card shadow-sm fixed-card">
+                                <div class="card-body">
+                                    <h4 class="card-text text-center">
+                                        How can I clear my browsing history?
+                                    </h4>
+                                    <p class="card-text">
+                                        Go to Settings → Privacy and security →
+                                        Clear browsing data. You can choose what
+                                        to delete and for which time range.
+                                    </p>
+                                    <div
+                                        class="d-flex justify-content-between align-items-center"
+                                    ></div>
                                 </div>
-                                <div class="form-check">
-                                    <input
-                                        class="form-not-check-input"
-                                        type="checkbox"
-                                        id="save-info"
-                                    />
-                                    <label
-                                        class="form-check-label"
-                                        for="save-info"
-                                        >Save this information for next
-                                        time</label
-                                    >
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="card shadow-sm fixed-card">
+                                <div class="card-body">
+                                    <h4 class="card-text text-center">
+                                        Why is Chrome using so much memory?
+                                    </h4>
+                                    <p class="card-text">
+                                        Although we do as much as possible to
+                                        optimize our browser, a lot of open
+                                        windows still can use much memory. Try
+                                        closing tabs that you no longer use.
+                                    </p>
+                                    <div
+                                        class="d-flex justify-content-between align-items-center"
+                                    ></div>
                                 </div>
-                                <hr class="my-4" />
-                                <button
-                                    class="w-100 btn btn-primary btn-lg"
-                                    type="submit"
-                                >
-                                    Submit
-                                </button>
-                            </form>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="card shadow-sm fixed-card">
+                                <div class="card-body">
+                                    <h4 class="card-text text-center">
+                                        How do I import my settings from another
+                                        browser?
+                                    </h4>
+                                    <p class="card-text">
+                                        To import you settings from another
+                                        browser go to Bookmarks → Import
+                                        bookmarks and settings. Then choose the
+                                        browser and what you would like to
+                                        import.
+                                    </p>
+                                    <div
+                                        class="d-flex justify-content-between align-items-center"
+                                    ></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="card shadow-sm fixed-card">
+                                <div class="card-body">
+                                    <h4 class="card-text text-center">
+                                        How do I set Chrome as my default
+                                        browser?
+                                    </h4>
+                                    <p class="card-text">
+                                        Go to Chrome Settings → Default browser
+                                        → Click "Make default". You may be
+                                        prompted by your operating system to
+                                        confirm.
+                                    </p>
+                                    <div
+                                        class="d-flex justify-content-between align-items-center"
+                                    ></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="card shadow-sm fixed-card">
+                                <div class="card-body">
+                                    <h4 class="card-text text-center">
+                                        Is browsing with Chrome secure?
+                                    </h4>
+                                    <p class="card-text">
+                                        Yes, Chrome includes built-in security
+                                        features like Safe Browsing, sandboxing,
+                                        and regular security updates.
+                                    </p>
+                                    <div
+                                        class="d-flex justify-content-between align-items-center"
+                                    ></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="card shadow-sm fixed-card">
+                                <div class="card-body">
+                                    <h4 class="card-text text-center">
+                                        Can I use Chrome extensions?
+                                    </h4>
+                                    <p class="card-text">
+                                        Yes, Chrome supports thousands of
+                                        extensions available from the Chrome Web
+                                        Store.
+                                    </p>
+                                    <div
+                                        class="d-flex justify-content-between align-items-center"
+                                    ></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="card shadow-sm fixed-card">
+                                <div class="card-body">
+                                    <h4 class="card-text text-center">
+                                        Does Chrome sync data across devices?
+                                    </h4>
+                                    <p class="card-text">
+                                        Yes, if you're signed into your Google
+                                        account, Chrome can sync your bookmarks,
+                                        passwords, history, and more across
+                                        devices.
+                                    </p>
+                                    <div
+                                        class="d-flex justify-content-between align-items-center"
+                                    ></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="card shadow-sm fixed-card">
+                                <div class="card-body">
+                                    <h4 class="card-text text-center">
+                                        Is Google Chrome free to use?
+                                    </h4>
+                                    <p class="card-text">
+                                        Yes, Google Chrome is completely free to
+                                        download and use.
+                                    </p>
+                                    <div
+                                        class="d-flex justify-content-between align-items-center"
+                                    ></div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -350,7 +396,7 @@
             >
                 <p class="col-md-4 mb-0 text-body-secondary">
                     <img
-                        src="images/chrome.svg"
+                        src="/client/images//chrome.svg"
                         alt="Chrome"
                         width="40"
                         height="32"
@@ -414,7 +460,6 @@
             crossorigin="anonymous"
             referrerpolicy="no-referrer"
         ></script>
-        <script src="session-check-question.js"></script>
-        <script src="ask_a_question.js"></script>
+        <script src="/client/js/session-check.js"></script>
     </body>
 </html>

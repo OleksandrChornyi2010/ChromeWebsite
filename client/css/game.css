@@ -8,7 +8,7 @@ body {
     height: 100%;
 }
 body {
-    background-image: url("images/textures/green-grass.jpg");
+    background-image: url("/client/images//textures/green-grass.jpg");
 }
 .image-container {
     position: relative;

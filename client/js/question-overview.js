@@ -2,7 +2,7 @@
     "use strict";
 
     const form = document.querySelector(".needs-validation");
-    document.querySelector("#cancel-button").addEventListener("click", deleteQuestion);
+    document.querySelector("#delete-button").addEventListener("click", deleteQuestion);
     const urlParams = new URLSearchParams(window.location.search);
     const id = urlParams.get("id");
     // Get elements and values

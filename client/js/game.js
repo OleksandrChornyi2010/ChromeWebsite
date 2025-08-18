@@ -12,54 +12,54 @@ let bulletDamage = 25;
 let score = 0;
 let enemyInterval;
 let fileName;
-let boosters = ["images/textures/arch.png", "images/textures/debian.png", "images/textures/mint.png"]
+let boosters = ["/client/images//textures/arch.png", "/client/images//textures/debian.png", "/client/images//textures/mint.png"]
 enemies = {
     clipchamp: {
         health: 100,
         damage: 1,
-        sprite: "images/textures/enemies/clipchamp.svg",
+        sprite: "/client/images//textures/enemies/clipchamp.svg",
 
     },
     copilot: {
         health: 100,
         damage: 1,
-        sprite: "images/textures/enemies/copilot.svg",
+        sprite: "/client/images//textures/enemies/copilot.svg",
 
     },
     edge: {
         health: 100,
         damage: 1,
-        sprite: "images/textures/enemies/edge.svg",
+        sprite: "/client/images//textures/enemies/edge.svg",
 
     },
     teams: {
         health: 100,
         damage: 1,
-        sprite: "images/textures/enemies/teams.svg",
+        sprite: "/client/images//textures/enemies/teams.svg",
 
     },
     onedrive: {
         health: 100,
         damage: 1,
-        sprite: "images/textures/enemies/onedrive.svg",
+        sprite: "/client/images//textures/enemies/onedrive.svg",
 
     },
     win11: {
         health: 100,
         damage: 1,
-        sprite: "images/textures/enemies/windows-11.svg",
+        sprite: "/client/images//textures/enemies/windows-11.svg",
 
     },
     windows_defender: {
         health: 100,
         damage: 1,
-        sprite: "images/textures/enemies/windows-defender.svg",
+        sprite: "/client/images//textures/enemies/windows-defender.svg",
 
     },
     word: {
         health: 100,
         damage: 1,
-        sprite: "images/textures/enemies/word.svg",
+        sprite: "/client/images//textures/enemies/word.svg",
 
     },
 }
@@ -542,7 +542,7 @@ function getRandomEdgePosition() {
 function shoot(mouseX, mouseY) {
     if (!bullet) {
         const currentBullet = document.createElement('img');
-        currentBullet.src = 'images/textures/Bullet.png';
+        currentBullet.src = '/client/images//textures/Bullet.png';
         currentBullet.style.position = 'fixed';
         // currentBullet.style.width = '16px';
         // currentBullet.style.height = '16px';
