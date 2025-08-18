@@ -3,7 +3,7 @@ os = detectOS()
 if (os != "Unknown") {
     osSelect.value = os;
 }
-let platform;
+let platform = "linux";
 document.querySelector("#downloadButton").addEventListener("click", () => {
     if (osSelect.selectedIndex === 1) {
         platform = "win"
@@ -20,14 +20,7 @@ document.querySelector("#downloadButton").addEventListener("click", () => {
     else if (osSelect.selectedIndex === 5) {
         platform = "ios"
     }
-    if (platform) {
-        window.location.href = `game.html?platform=${platform}`
-    }
-    else {
-        console.log(platform)
-        console.log("234567")
-    }
-
+    window.location.href = `game.html?platform=${platform}`
 });
 
 

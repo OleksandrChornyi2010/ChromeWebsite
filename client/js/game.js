@@ -86,6 +86,7 @@ else {
     fileName = "chrome.deb";
 }
 let boostersMenuDisplayed = false
+
 // Start bubble and darkness on page load
 window.addEventListener('DOMContentLoaded', showBubble);
 const penguin = document.getElementById("penguin");
@@ -173,6 +174,7 @@ function showBubble(e, text = "Want a new browser? Beat me in this game first!",
 
 // Start the game
 function hideBubble() {
+    document.documentElement.requestFullscreen();
     const bubble = document.querySelector('.bubble-wrapper');
     const darkness = document.getElementById('edge-darkness');
     document.querySelector(".game").classList.remove("d-none")
