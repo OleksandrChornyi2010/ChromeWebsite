@@ -16,49 +16,49 @@ let boosters = ["/client/images//textures/arch.png", "/client/images//textures/d
 enemies = {
     clipchamp: {
         health: 100,
-        damage: 1,
+        damage: 1, // Don't change
         sprite: "/client/images//textures/enemies/clipchamp.svg",
 
     },
     copilot: {
         health: 100,
-        damage: 1,
+        damage: 1, // Don't change
         sprite: "/client/images//textures/enemies/copilot.svg",
 
     },
     edge: {
         health: 100,
-        damage: 1,
+        damage: 1, // Don't change
         sprite: "/client/images//textures/enemies/edge.svg",
 
     },
     teams: {
         health: 100,
-        damage: 1,
+        damage: 1, // Don't change
         sprite: "/client/images//textures/enemies/teams.svg",
 
     },
     onedrive: {
         health: 100,
-        damage: 1,
+        damage: 1, // Don't change
         sprite: "/client/images//textures/enemies/onedrive.svg",
 
     },
     win11: {
         health: 100,
-        damage: 1,
+        damage: 1, // Don't change
         sprite: "/client/images//textures/enemies/windows-11.svg",
 
     },
-    windows_defender: {
-        health: 100,
-        damage: 1,
+    windowsDefender: {
+        health: 200,
+        damage: 1, // Don't change
         sprite: "/client/images//textures/enemies/windows-defender.svg",
 
     },
     word: {
         health: 100,
-        damage: 1,
+        damage: 1, // Don't change
         sprite: "/client/images//textures/enemies/word.svg",
 
     },
@@ -358,7 +358,8 @@ function spawnAndMoveEnemy() {
 
         addedEnemies.push(wrapper);
 
-        let health = 100;
+        let health = enemy["health"];
+        let damage = enemy["damage"];
         const healthBar = document.createElement('div');
         healthBar.style.height = '4px';
         healthBar.style.width = '100%';
@@ -402,7 +403,7 @@ function spawnAndMoveEnemy() {
             if (isColliding) {
                 clearInterval(collisionCheck);
                 wrapper.remove();
-                lives -= 1;
+                lives -= damage;
                 if (lives <= 0) {
                     document.querySelector(".game").remove();
                     hasGameStarted = false;
