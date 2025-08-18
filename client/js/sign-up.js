@@ -97,3 +97,13 @@
         }
     });
 })();
+
+document
+    .getElementById("togglePassword")
+    .addEventListener("click", function () {
+        const passwordInput = document.getElementById("floatingPassword");
+        const icon = document.getElementById("toggleIcon");
+        const isHidden = passwordInput.type === "password";
+        passwordInput.type = isHidden ? "text" : "password";
+        icon.className = isHidden ? "bi bi-eye-slash-fill" : "bi bi-eye-fill";
+    });

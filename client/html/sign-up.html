@@ -254,18 +254,23 @@
                             Please enter a valid email.
                         </div>
                     </div>
-                    <div class="form-floating mt-2">
+                    <div class="form-floating mt-2 password-wrapper">
                         <input
                             type="password"
                             class="form-control"
                             id="floatingPassword"
-                            name="current-password"
                             pattern=".{9,31}"
-                            autocomplete="current-password"
                             placeholder=""
                             value=""
                             required=""
                         />
+                        <button
+                            class="btn toggle-password"
+                            type="button"
+                            id="togglePassword"
+                        >
+                            <i class="bi bi-eye-fill" id="toggleIcon"></i>
+                        </button>
                         <label for="floatingPassword">Password</label>
                         <div class="invalid-feedback" id="passwordFeedback">
                             Password must be between 7 and 31 characters
