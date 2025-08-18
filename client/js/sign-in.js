@@ -5,7 +5,7 @@
     const urlParams = new URLSearchParams(window.location.search);
     const source = urlParams.get("source");
     if (source == "question") {
-        document.querySelector("#title-text").textContent = "You need to login to ask a question!"
+        document.querySelector("#title-text").textContent = "You need to log in to ask a question!"
         redirectLocation = "ask_a_question.html"
     }
     form.addEventListener("submit", async (event) => {
