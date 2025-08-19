@@ -362,10 +362,15 @@ function spawnAndMoveEnemy() {
         let damage = enemy["damage"];
         const healthBar = document.createElement('div');
         healthBar.style.height = '4px';
-        healthBar.style.width = '100%';
+        healthBar.style.width = `${health}%`;
         healthBar.style.background = 'red';
         healthBar.style.marginBottom = '4px';
         healthBar.style.borderRadius = '2px';
+
+        healthBar.style.position = "absolute";
+        healthBar.style.left = "50%";
+        healthBar.style.bottom = "100%"; // Above enemy
+        healthBar.style.transform = "translateX(-50%)";
 
         wrapper.appendChild(healthBar);
         wrapper.appendChild(img);
