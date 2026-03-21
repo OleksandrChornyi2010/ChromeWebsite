@@ -1,54 +1,56 @@
-(() => {
-    "use strict";
+;(() => {
+    "use strict"
     let redirectLocation = "account.html"
-    const form = document.querySelector(".needs-validation");
-    const urlParams = new URLSearchParams(window.location.search);
-    const source = urlParams.get("source");
+    const form = document.querySelector(".needs-validation")
+    const urlParams = new URLSearchParams(window.location.search)
+    const source = urlParams.get("source")
     if (source == "question") {
-        document.querySelector("#title-text").textContent = "You need to log in to ask a question!"
+        document.querySelector("#title-text").textContent =
+            "You need to log in to ask a question!"
         redirectLocation = "ask_a_question.html"
     }
     form.addEventListener("submit", async (event) => {
-        event.preventDefault();
-        event.stopPropagation();
+        event.preventDefault()
+        event.stopPropagation()
 
         // Get elements and values
-        const usernameInput = document.querySelector("#floatingUsername");
-        const emailInput = document.querySelector("#floatingEmail");
-        const passwordInput = document.querySelector("#floatingPassword");
-        const checkbox = document.getElementById("checkDefault");
+        const usernameInput = document.querySelector("#floatingUsername")
+        const emailInput = document.querySelector("#floatingEmail")
+        const passwordInput = document.querySelector("#floatingPassword")
+        const checkbox = document.getElementById("checkDefault")
 
-        const usernameFeedback = document.querySelector("#usernameFeedback");
-        const emailFeedback = document.querySelector("#emailFeedback");
-        const passwordFeedback = document.querySelector("#passwordFeedback");
+        const usernameFeedback = document.querySelector("#usernameFeedback")
+        const emailFeedback = document.querySelector("#emailFeedback")
+        const passwordFeedback = document.querySelector("#passwordFeedback")
 
-        const username = usernameInput.value.trim();
-        const email = emailInput.value.trim();
-        const password = passwordInput.value;
-        const rememberMe = checkbox.checked;
+        const username = usernameInput.value.trim()
+        const email = emailInput.value.trim()
+        const password = passwordInput.value
+        const rememberMe = checkbox.checked
 
-        let isValid = true;
+        let isValid = true
 
         // Reset previous errors
-        usernameInput.classList.remove("is-valid", "is-invalid");
-        emailInput.classList.remove("is-valid", "is-invalid");
-        passwordInput.classList.remove("is-valid", "is-invalid");
-
+        usernameInput.classList.remove("is-valid", "is-invalid")
+        emailInput.classList.remove("is-valid", "is-invalid")
+        passwordInput.classList.remove("is-valid", "is-invalid")
 
         // Username: 4-31 characters
         if (username.length < 3 || username.length > 32) {
-            usernameInput.classList.remove("is-valid");
-            usernameInput.classList.add("is-invalid");
-            usernameFeedback.textContent = "Username must be between 4 and 31 characters including both.";
-            isValid = false;
+            usernameInput.classList.remove("is-valid")
+            usernameInput.classList.add("is-invalid")
+            usernameFeedback.textContent =
+                "Username must be between 4 and 31 characters including both."
+            isValid = false
         }
 
         // Password: 9-31 characters
         if (password.length < 8 || password.length > 32) {
-            passwordInput.classList.remove("is-valid");
-            passwordInput.classList.add("is-invalid");
-            passwordFeedback.textContent = "Password must be between 7 and 31 characters including both.";
-            isValid = false;
+            passwordInput.classList.remove("is-valid")
+            passwordInput.classList.add("is-invalid")
+            passwordFeedback.textContent =
+                "Password must be between 7 and 31 characters including both."
+            isValid = false
         }
 
         // Email: simple check
@@ -58,56 +60,54 @@
             !email.includes("@") ||
             !email.includes(".") ||
             email.indexOf("@") === 0 ||
-            email.lastIndexOf(".") < email.indexOf("@")  // There must be "." after "@" sign
+            email.lastIndexOf(".") < email.indexOf("@") // There must be "." after "@" sign
         ) {
             // Invalid email
-            emailInput.classList.remove("is-valid");
-            emailInput.classList.add("is-invalid");
-            emailFeedback.textContent = "Please enter a valid email address.";
-            isValid = false;
+            emailInput.classList.remove("is-valid")
+            emailInput.classList.add("is-invalid")
+            emailFeedback.textContent = "Please enter a valid email address."
+            isValid = false
         }
 
         if (!isValid) {
-            form.classList.add("was-validated");
-            return; // stop submit
+            form.classList.add("was-validated")
+            return // stop submit
         }
-        form.classList.add("was-validated");
-
+        form.classList.add("was-validated")
 
         try {
             const response = await axios.post("http://localhost:3000/login", {
                 username,
                 email,
                 password,
-                rememberMe
-            });
+                rememberMe,
+            })
 
-            console.log("Succesfull login:", response.data);
-            location.href = redirectLocation;
-
+            console.log("Succesfull login:", response.data)
+            location.href = redirectLocation
         } catch (err) {
             if (err.response && err.response.status === 404) {
-                window.location.href = "sign-up.html?source=login";
-            }
-            else if (err.response && err.response.status === 401) {
-                passwordInput.classList.remove("is-valid");
-                passwordInput.classList.add("is-invalid");
-                passwordFeedback.textContent = "Passwords do not match.";
-            }
-            else {
-                console.error("Unexpected error:", err);
-                alert("There was an error while logging into your account. Please try again later.");
+                window.location.href = "sign-up.html?source=login"
+            } else if (err.response && err.response.status === 401) {
+                passwordInput.classList.remove("is-valid")
+                passwordInput.classList.add("is-invalid")
+                passwordFeedback.textContent = "Passwords do not match."
+            } else {
+                console.error("Unexpected error:", err)
+                alert(
+                    "There was an error while logging into your account. Please try again later.",
+                )
             }
         }
-    });
-})();
+    })
+})()
 
 document
     .getElementById("togglePassword")
     .addEventListener("click", function () {
-        const passwordInput = document.getElementById("floatingPassword");
-        const icon = document.getElementById("toggleIcon");
-        const isHidden = passwordInput.type === "password";
-        passwordInput.type = isHidden ? "text" : "password";
-        icon.className = isHidden ? "bi bi-eye-slash-fill" : "bi bi-eye-fill";
-    });
+        const passwordInput = document.getElementById("floatingPassword")
+        const icon = document.getElementById("toggleIcon")
+        const isHidden = passwordInput.type === "password"
+        passwordInput.type = isHidden ? "text" : "password"
+        icon.className = isHidden ? "bi bi-eye-slash-fill" : "bi bi-eye-fill"
+    })
