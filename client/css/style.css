@@ -58,8 +58,12 @@
     background-color: var(--primary-color-active) !important;
     border-color: var(--primary-color-active) !important;
 }
-.bg-mid {
-    background-color: #ebebeb !important;
+[data-bs-theme="light"] .bg-mid {
+    background-color: #ebebeb;
+}
+
+[data-bs-theme="dark"] .bg-mid {
+    background-color: #2b3033;
 }
 
 .features-svg-handler {
