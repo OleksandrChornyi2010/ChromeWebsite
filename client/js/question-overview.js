@@ -12,7 +12,9 @@
     const lastNameInput = document.querySelector("#lastName")
     const languageInput = document.querySelector("#language")
     const questionInput = document.querySelector("#question")
+    const titleQuestionId = document.querySelector("#title-text")
 
+    titleQuestionId.textContent += id
     try {
         const response = await axios.get("http://localhost:3000/get-question", {
             params: { id },
