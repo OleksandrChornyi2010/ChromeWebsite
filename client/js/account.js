@@ -40,7 +40,7 @@ async function loadQuestions() {
     } catch (err) {
         console.error("Unexpected error:", err)
         alert(
-            "There was an error while changing your password. Please try again later.",
+            "There was an error while getting your questions. Please try again later.",
         )
     }
     const tbody = document.querySelector("#section2 tbody")

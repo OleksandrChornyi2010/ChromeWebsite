@@ -15,5 +15,5 @@ if (platform == "win") {
     // Unknown platform
     fileName = "chrome.deb"
 }
-window.location.href = `/client/files/${fileName}`
-document.querySelector("#clickHere").href = `/client/files/${fileName}`
+window.location.href = `../files/${fileName}`
+document.querySelector("#clickHere").href = `../files/${fileName}`
