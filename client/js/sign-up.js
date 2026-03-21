@@ -34,21 +34,21 @@
         emailInput.classList.remove("is-invalid")
         passwordInput.classList.remove("is-invalid")
 
-        // Username: 4-31 characters
+        // Username: 3-31 characters
         if (username.length < 3 || username.length > 32) {
             usernameInput.classList.remove("is-valid")
             usernameInput.classList.add("is-invalid")
             usernameFeedback.textContent =
-                "Username must be between 4 and 31 characters including both."
+                "Username must be between 3 and 31 characters including both."
             isValid = false
         }
 
-        // Password: 9-31 characters
+        // Password: 8-31 characters
         if (password.length < 8 || password.length > 32) {
             passwordInput.classList.remove("is-valid")
             passwordInput.classList.add("is-invalid")
             passwordFeedback.textContent =
-                "Password must be between 7 and 31 characters including both."
+                "Password must be between 8 and 31 characters including both."
             isValid = false
         }
 

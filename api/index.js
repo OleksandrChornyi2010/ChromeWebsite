@@ -53,7 +53,7 @@ app.post("/register", async (req, res) => {
         return res
             .status(400)
             .send(
-                "Username length should be between 4 and 31 symbols including both",
+                "Username length must be between 3 and 31 symbols including both",
             )
     }
 
@@ -61,7 +61,7 @@ app.post("/register", async (req, res) => {
         return res
             .status(400)
             .send(
-                "Password length should be between 7 and 31 symbols including both",
+                "Password length must be between 8 and 31 symbols including both",
             )
     }
     // Email: simple check

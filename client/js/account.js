@@ -93,12 +93,12 @@ async function loadQuestions() {
         // Reset previous errors
         newPasswordInput.classList.remove("is-invalid")
 
-        // Password: 7-31 characters
+        // Password: 8-31 characters
         if (newPassword.length < 8 || newPassword.length > 32) {
             newPasswordInput.classList.remove("is-valid")
             newPasswordInput.classList.add("is-invalid")
             newPasswordFeedback.textContent =
-                "Password must be between 7 and 31 characters including both."
+                "Password must be between 8 and 31 characters including both."
             isValid = false
         }
         if (!isValid) {
@@ -115,7 +115,7 @@ async function loadQuestions() {
                     newPassword,
                 },
             )
-            console.log("Password has been changed succesfully")
+            console.log("Password has been changed succesfully:", response.data)
             location.href = "password-update.html"
         } catch (err) {
             console.error("Unexpected error:", err)
@@ -125,3 +125,13 @@ async function loadQuestions() {
         }
     })
 })()
+
+document
+    .getElementById("togglePassword")
+    .addEventListener("click", function () {
+        const newPasswordInput = document.getElementById("newPassword-input")
+        const icon = document.getElementById("toggleIcon")
+        const isHidden = newPasswordInput.type === "password"
+        newPasswordInput.type = isHidden ? "text" : "password"
+        icon.className = isHidden ? "bi bi-eye-slash-fill" : "bi bi-eye-fill"
+    })
