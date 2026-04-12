@@ -1,5 +1,5 @@
 const osSelect = document.querySelector("#osSelect")
-os = detectOS()
+const os = detectOS()
 if (os != "Unknown") {
     osSelect.value = os
 }

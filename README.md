@@ -7,4 +7,5 @@ Google, Chrome, Microsoft, Edge and related logos are trademarks of their respec
 Frontend is hosted [here](https://oleksandrchornyi2010.github.io/ChromeWebsite/).
 
 Backend is hosted on [Render](https://render.com/)
+
 Database is hosted on [Aiven](https://aiven.io/)

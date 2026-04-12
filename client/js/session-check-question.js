@@ -1,11 +1,11 @@
-themeButtons = document.querySelectorAll(".theme-button")
+const themeButtons = document.querySelectorAll(".theme-button")
 
 const savedTheme = localStorage.getItem("theme")
 if (savedTheme) {
     setTheme(savedTheme)
 }
 
-window.addEventListener("backendReady", async () => {
+async function checkSession() {
     // Are we logged into an account form this ip?
     try {
         const response = await axios.get(`${window.API_URL}/get-session`)
@@ -32,7 +32,14 @@ window.addEventListener("backendReady", async () => {
             element.classList.remove("d-none")
         })
     }
-});
+}
+
+if (window.API_URL) {
+    checkSession()
+}
+else {
+    window.addEventListener("backendReady", checkSession);
+}
 
 document.querySelector("#logOutItem").addEventListener("click", async () => {
     try {

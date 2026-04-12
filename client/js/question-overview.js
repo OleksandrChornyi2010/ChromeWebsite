@@ -54,7 +54,7 @@ async function deleteQuestion() {
         )
         window.location.href = "deleted.html"
     } catch (err) {
-        if (response.status === 403) {
+        if (err.response && err.response.status === 403) {
             window.location.href = "sign-in.html"
         }
         console.error("Unexpected error:", err)

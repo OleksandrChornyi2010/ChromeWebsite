@@ -17,7 +17,7 @@ let boosters = [
     "../images/textures/debian.png",
     "../images/textures/mint.png",
 ]
-enemies = {
+const enemies = {
     clipchamp: {
         health: 100,
         damage: 1, // Don't change
@@ -141,7 +141,7 @@ function showBubble(
     const bubble = document.querySelector(".bubble-wrapper")
     document.querySelector(".bubble-message p").textContent = text
 
-    buttonStart = document.querySelector("#start")
+    let buttonStart = document.querySelector("#start")
     if (!hasGameStarted) {
         // Here we check if the game has ended. hasGameStarted is set to true after the execution of this function, so it should work fine.
         buttonStart.textContent = "Try again"
@@ -471,6 +471,7 @@ function spawnAndMoveEnemy() {
                                     randomBoosterIndex,
                                     wrapper.getBoundingClientRect(),
                                 )
+                                break
                             case 2:
                                 booster_3_count++
                                 document.querySelector(
@@ -538,8 +539,8 @@ function animateBoosterAdd(boosterIndex, rect) {
 
 function onWindowSizeChange() {
     if (hasGameStarted) {
-        target = document.querySelector(".game-image")
-        targetRect = target.getBoundingClientRect()
+        const target = document.querySelector(".game-image")
+        const targetRect = target.getBoundingClientRect()
         for (let i = 0; i < addedEnemies.length; i++) {
             let wrapper = addedEnemies[i]
             if (wrapper) {
