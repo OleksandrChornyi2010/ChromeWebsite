@@ -1,4 +1,4 @@
-;(() => {
+; (() => {
     "use strict"
     let redirectLocation = "account.html"
     const form = document.querySelector(".needs-validation")
@@ -77,7 +77,7 @@
 
         try {
             const response = await axios.post(
-                "http://localhost:3000/register",
+                `${window.API_URL}/register`,
                 {
                     username,
                     email,

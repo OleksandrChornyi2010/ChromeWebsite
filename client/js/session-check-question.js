@@ -5,10 +5,10 @@ if (savedTheme) {
     setTheme(savedTheme)
 }
 
-;(async () => {
+window.addEventListener("backendReady", async () => {
     // Are we logged into an account form this ip?
     try {
-        const response = await axios.get("http://localhost:3000/get-session")
+        const response = await axios.get(`${window.API_URL}/get-session`)
         console.log(response.data)
         if (response.status === 200) {
             // Still logged in
@@ -32,12 +32,12 @@ if (savedTheme) {
             element.classList.remove("d-none")
         })
     }
-})()
+});
 
 document.querySelector("#logOutItem").addEventListener("click", async () => {
     try {
         const response = await axios.post(
-            "http://localhost:3000/close-session",
+            `${window.API_URL}/close-session`,
             {
                 email: window.userSession.email,
             },

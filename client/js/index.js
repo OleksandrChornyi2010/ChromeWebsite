@@ -37,7 +37,7 @@ form.addEventListener("submit", async (event) => {
     }
     form.classList.add("was-validated")
     try {
-        const response = await axios.post("http://localhost:3000/newsletter", {
+        const response = await axios.post(`${window.API_URL}/newsletter`, {
             email,
         })
         location.href = redirectLocation

@@ -1,4 +1,4 @@
-;(async () => {
+; (async () => {
     "use strict"
 
     const form = document.querySelector(".needs-validation")
@@ -16,7 +16,7 @@
 
     titleQuestionId.textContent += id
     try {
-        const response = await axios.get("http://localhost:3000/get-question", {
+        const response = await axios.get(`${window.API_URL}/get-question`, {
             params: { id },
         })
         if (response.status === 204) {
@@ -47,7 +47,7 @@ async function deleteQuestion() {
     const id = urlParams.get("id")
     try {
         const response = await axios.delete(
-            "http://localhost:3000/delete-question",
+            `${window.API_URL}/delete-question`,
             {
                 params: { id },
             },

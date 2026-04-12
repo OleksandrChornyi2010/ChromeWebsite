@@ -4,4 +4,8 @@
   "database": "Your database name",
   "password": "Your password",
   "port": 5432
+  // Check if SSL is required by your database and configure it if needed.
+  "ssl": {
+      "rejectUnauthorized": false
+  }
 }

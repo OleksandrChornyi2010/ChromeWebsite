@@ -1,4 +1,4 @@
-;(() => {
+; (() => {
     "use strict"
     let redirectLocation = "account.html"
     const form = document.querySelector(".needs-validation")
@@ -76,7 +76,7 @@
         form.classList.add("was-validated")
 
         try {
-            const response = await axios.post("http://localhost:3000/login", {
+            const response = await axios.post(`${window.API_URL}/login`, {
                 username,
                 email,
                 password,

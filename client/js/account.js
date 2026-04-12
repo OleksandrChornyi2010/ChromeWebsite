@@ -33,7 +33,7 @@ async function loadQuestions() {
     let questions
     try {
         const response = await axios.get(
-            "http://localhost:3000/get-all-questions",
+            `${window.API_URL}/get-all-questions`,
             {},
         )
         questions = response.data
@@ -70,7 +70,7 @@ async function loadQuestions() {
     })
 }
 
-;(() => {
+; (() => {
     "use strict"
 
     const form = document.querySelector(".needs-validation")
@@ -110,7 +110,7 @@ async function loadQuestions() {
 
         try {
             const response = await axios.post(
-                "http://localhost:3000/change-password",
+                `${window.API_URL}/change-password`,
                 {
                     newPassword,
                 },

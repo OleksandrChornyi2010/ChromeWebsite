@@ -1,4 +1,4 @@
-;(() => {
+; (() => {
     "use strict"
 
     const form = document.querySelector(".needs-validation")
@@ -71,7 +71,7 @@
 
         try {
             const response = await axios.post(
-                "http://localhost:3000/submit-question",
+                `${window.API_URL}/submit-question`,
                 {
                     firstName,
                     lastName,
