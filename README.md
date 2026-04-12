@@ -4,7 +4,7 @@
 It is not affiliated with, endorsed by, or associated with Google LLC or Microsoft Corporation.
 Google, Chrome, Microsoft, Edge and related logos are trademarks of their respective owners.**
 
-Frontend is hosted [here](https://oleksandrchornyi2010.github.io/ChromeWebsite/).
+Frontend is hosted on [github pages here](https://oleksandrchornyi2010.github.io/ChromeWebsite/).
 
 Backend is hosted on [Render](https://render.com/)
 
