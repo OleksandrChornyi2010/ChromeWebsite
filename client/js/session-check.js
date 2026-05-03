@@ -1,10 +1,4 @@
 window.userSession = undefined
-const themeButtons = document.querySelectorAll(".theme-button")
-
-const savedTheme = localStorage.getItem("theme")
-if (savedTheme) {
-    setTheme(savedTheme)
-}
 
 async function checkSession() {
     // Are we logged into an account form this ip?
@@ -35,19 +29,15 @@ async function checkSession() {
 
 if (window.API_URL) {
     checkSession()
-}
-else {
-    window.addEventListener("backendReady", checkSession);
+} else {
+    window.addEventListener("backendReady", checkSession)
 }
 
 document.querySelector("#logOutItem").addEventListener("click", async () => {
     try {
-        const response = await axios.post(
-            `${window.API_URL}/close-session`,
-            {
-                email: window.userSession.email,
-            },
-        )
+        const response = await axios.post(`${window.API_URL}/close-session`, {
+            email: window.userSession.email,
+        })
         if (response.status === 200) {
             console.log("Your session has been succesfully closed.")
         } else if (response.status === 204) {
@@ -58,24 +48,3 @@ document.querySelector("#logOutItem").addEventListener("click", async () => {
         console.error("Unexpected error:", err)
     }
 })
-
-themeButtons.forEach((btn) => {
-    btn.addEventListener("click", () => {
-        setTheme(btn.getAttribute("data-bs-theme-value"))
-    })
-})
-
-function setTheme(theme) {
-    document.body.setAttribute("data-bs-theme", theme)
-    localStorage.setItem("theme", theme)
-    let themeDropdown = document.querySelector("#themeDropdown")
-
-    if (theme == "light") {
-        themeDropdown.innerHTML =
-            '<i id="themeButtonIcon" class="bi bi-sun-fill me-2"></i>'
-    } else if (theme == "dark") {
-        themeDropdown.innerHTML = '<i class="bi bi-moon-stars-fill me-2"></i>'
-    } else if (theme == "auto") {
-        themeDropdown.innerHTML = '<i class="bi bi-circle-half me-2"></i>'
-    }
-}
