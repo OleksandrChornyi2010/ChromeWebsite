@@ -76,10 +76,13 @@
 #features {
     scroll-margin-top: 164px;
 }
-.anti-header-padding {
+.anti-header-padding-extended {
+    padding-top: 223px;
+}
+.anti-header-padding-medium {
     padding-top: 175px;
 }
-.anti-header-padding-account {
+.anti-header-padding-big {
     padding-top: 195px;
 }
 
@@ -88,10 +91,13 @@
     #features {
         scroll-margin-top: 164px;
     }
-    .anti-header-padding {
+    .anti-header-padding-extended {
+        padding-top: 180px;
+    }
+    .anti-header-padding-medium {
         padding-top: 156px;
     }
-    .anti-header-padding-account {
+    .anti-header-padding-big {
         padding-top: 184px;
     }
 }
@@ -100,10 +106,13 @@
     #features {
         scroll-margin-top: 111px;
     }
-    .anti-header-padding {
+    .anti-header-padding-extended {
         padding-top: 90px;
     }
-    .anti-header-padding-account {
+    .anti-header-padding-medium {
+        padding-top: 90px;
+    }
+    .anti-header-padding-big {
         padding-top: 130px;
     }
 }
@@ -112,10 +121,13 @@
     #features {
         scroll-margin-top: 73px;
     }
-    .anti-header-padding {
+    .anti-header-padding-extended {
+        padding-top: 80px;
+    }
+    .anti-header-padding-medium {
         padding-top: 63px;
     }
-    .anti-header-padding-account {
+    .anti-header-padding-big {
         padding-top: 83px;
     }
 }

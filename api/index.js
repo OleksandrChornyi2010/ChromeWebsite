@@ -6,7 +6,6 @@ import morgan from "morgan"
 import fs from "fs"
 
 let config
-
 const fileName = "server.json"
 const filePath = `./${fileName}`
 if (!fs.existsSync(filePath)) {
