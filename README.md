@@ -8,4 +8,4 @@ Frontend is hosted on [github pages here](https://oleksandrchornyi2010.github.io
 
 Backend is hosted on [Render](https://render.com/)
 
-Database is hosted on [Aiven](https://aiven.io/)
+Database is hosted on [Neon](https://neon.com/)
