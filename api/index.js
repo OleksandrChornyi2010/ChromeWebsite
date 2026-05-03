@@ -3,11 +3,14 @@ import cors from "cors"
 import { Client } from "pg"
 import bodyParser from "body-parser"
 import morgan from "morgan"
+import bcrypt from "bcrypt"
 import fs from "fs"
 
 let config
 const fileName = "server.json"
 const filePath = `./${fileName}`
+const saltRounds = 10
+
 if (!fs.existsSync(filePath)) {
     console.error(
         `${fileName} file is not found! Create it from ${fileName}.sample`,
@@ -85,10 +88,11 @@ app.post("/register", async (req, res) => {
         if (existingUser.rows.length > 0) {
             return res.status(409).send("User already exists")
         }
+        const hashedPassword = await bcrypt.hash(password, saltRounds)
         // Create user
         await connection.query(
             `INSERT INTO users (username, email, password) VALUES ($1, $2, $3)`,
-            [username, email, password],
+            [username, email, hashedPassword],
         )
 
         console.log(
@@ -155,7 +159,7 @@ app.post("/login", async (req, res) => {
         // User exists
         if (existingUser.rowCount === 1) {
             // Check if passwords match
-            if (existingUser.rows[0].password === password) {
+            if (bcrypt.compare(password, existingUser.rows[0].password)) {
                 // Open session
                 openSession(ip, username, email, rememberMe)
                 return res.status(200).send("User logined")
@@ -289,9 +293,10 @@ app.post("/change-password", async (req, res) => {
             )
     }
     try {
+        const hashedPassword = await bcrypt.hash(newPassword, saltRounds)
         await connection.query(
             "UPDATE users SET password = $1 WHERE username = $2 AND email = $3",
-            [newPassword, userSession.username, userSession.email],
+            [hashedPassword, userSession.username, userSession.email],
         )
         closeAllSessions(userSession.email)
         clearAllSessionTimers(userSession.email)
