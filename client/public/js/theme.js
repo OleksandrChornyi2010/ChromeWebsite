@@ -1,12 +1,14 @@
+function getDeviceTheme() {
+    return window.matchMedia("(prefers-color-scheme: dark)").matches
+        ? "dark"
+        : "light"
+}
+
 const savedTheme = localStorage.getItem("theme")
 if (savedTheme) {
     setTheme(savedTheme)
 } else {
-    setTheme(
-        window.matchMedia("(prefers-color-scheme: dark)").matches
-            ? "dark"
-            : "light",
-    )
+    setTheme(getDeviceTheme())
 }
 document.addEventListener("DOMContentLoaded", () => {
     const themeButtons = document.querySelectorAll(".theme-button")
@@ -19,7 +21,6 @@ document.addEventListener("DOMContentLoaded", () => {
 })
 
 function updateThemeDropdown(theme) {
-    localStorage.setItem("theme", theme)
     let themeDropdown = document.querySelector("#themeDropdown")
 
     if (theme == "light") {
@@ -33,7 +34,14 @@ function updateThemeDropdown(theme) {
 }
 
 function setTheme(theme) {
-    document.documentElement.setAttribute("data-bs-theme", theme)
+    let themeAttr
+    if (theme === "auto") {
+        themeAttr = getDeviceTheme()
+    } else {
+        themeAttr = theme
+    }
+    localStorage.setItem("theme", theme)
+    document.documentElement.setAttribute("data-bs-theme", themeAttr)
     if (document.readyState !== "loading") {
         updateThemeDropdown(theme)
     } else {
