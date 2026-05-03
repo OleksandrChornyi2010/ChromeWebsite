@@ -1,6 +1,6 @@
 import express from "express"
 import cors from "cors"
-import { Client } from "pg"
+import { Pool } from "pg"
 import bodyParser from "body-parser"
 import morgan from "morgan"
 import bcrypt from "bcrypt"
@@ -25,12 +25,16 @@ try {
     console.error(`Error parsing ${fileName}:`, err.message)
 }
 
-const connection = new Client(config)
+const pool = new Pool({
+    ...config,
+    max: 10,
+    idleTimeoutMillis: 30000,
+    connectionTimeoutMillis: 5000,
+})
 
-await connection
-    .connect()
-    .then(() => console.log("Successfully connected to databse"))
-    .catch((err) => console.error("Connecting to database failed:", err))
+pool.on("error", (err) => {
+    console.error("Unexpected pool error:", err)
+})
 
 const app = express()
 const port = 3000
@@ -80,7 +84,7 @@ app.post("/register", async (req, res) => {
     }
     try {
         // Check if user exists
-        const existingUser = await connection.query(
+        const existingUser = await pool.query(
             `SELECT * FROM users WHERE username = $1 AND email = $2`,
             [username, email],
         )
@@ -90,7 +94,7 @@ app.post("/register", async (req, res) => {
         }
         const hashedPassword = await bcrypt.hash(password, saltRounds)
         // Create user
-        await connection.query(
+        await pool.query(
             `INSERT INTO users (username, email, password) VALUES ($1, $2, $3)`,
             [username, email, hashedPassword],
         )
@@ -152,17 +156,17 @@ app.post("/login", async (req, res) => {
     }
     try {
         // Check if user exists
-        const existingUser = await connection.query(
+        const existingUser = await pool.query(
             `SELECT * FROM users WHERE username = $1 AND email = $2`,
             [username, email],
         )
         // User exists
         if (existingUser.rowCount === 1) {
             // Check if passwords match
-            if (bcrypt.compare(password, existingUser.rows[0].password)) {
+            if (await bcrypt.compare(password, existingUser.rows[0].password)) {
                 // Open session
                 openSession(ip, username, email, rememberMe)
-                return res.status(200).send("User logined")
+                return res.status(200).send("User logged in")
             }
             // Passwords don't match
             else {
@@ -249,7 +253,7 @@ app.post("/submit-question", async (req, res) => {
             )
     }
     try {
-        await connection.query(
+        await pool.query(
             `INSERT INTO questions (username, email, first_name, last_name, language, question) VALUES ($1, $2, $3, $4, $5, $6)`,
             [
                 userSession.username,
@@ -294,7 +298,7 @@ app.post("/change-password", async (req, res) => {
     }
     try {
         const hashedPassword = await bcrypt.hash(newPassword, saltRounds)
-        await connection.query(
+        await pool.query(
             "UPDATE users SET password = $1 WHERE username = $2 AND email = $3",
             [hashedPassword, userSession.username, userSession.email],
         )
@@ -322,7 +326,7 @@ app.get("/get-all-questions", async (req, res) => {
         return res.status(403).send("No opened session at your IP address.")
     }
     try {
-        const result = await connection.query(
+        const result = await pool.query(
             "SELECT * FROM questions WHERE username = $1 AND email = $2",
             [userSession.username, userSession.email],
         )
@@ -349,7 +353,7 @@ app.get("/get-question", async (req, res) => {
         return res.status(204).send("No opened session at your IP address.")
     }
     try {
-        const result = await connection.query(
+        const result = await pool.query(
             "SELECT * FROM questions WHERE id = $1 AND username = $2 AND email = $3",
             [id, userSession.username, userSession.email],
         )
@@ -376,7 +380,7 @@ app.delete("/delete-question", async (req, res) => {
         return res.status(204).send("No opened session at your IP address.")
     }
     try {
-        const result = await connection.query(
+        const result = await pool.query(
             "DELETE FROM questions WHERE id = $1 AND username = $2 AND email = $3",
             [id, userSession.username, userSession.email],
         )
@@ -394,7 +398,7 @@ app.delete("/delete-question", async (req, res) => {
 app.post("/newsletter", async (req, res) => {
     const email = req.body.email
     try {
-        const result = await connection.query(
+        const result = await pool.query(
             "SELECT * FROM newsletter_subscriptions WHERE email = $1",
             [email],
         )
@@ -406,7 +410,7 @@ app.post("/newsletter", async (req, res) => {
         return res.status(500).send("Internal server error")
     }
     try {
-        await connection.query(
+        await pool.query(
             `INSERT INTO newsletter_subscriptions (email) VALUES ($1)`,
             [email],
         )
