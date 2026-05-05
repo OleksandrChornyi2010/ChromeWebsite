@@ -43,8 +43,16 @@ let sessionTimeout = 10 * 60 * 1000 // 10 minutes
 
 app.use(cors())
 app.use(bodyParser.urlencoded({ extended: true }))
-app.use(morgan("tiny"))
+app.use(morgan("tiny", {
+    skip: (req, res) => {
+        return req.originalUrl === "/health"
+    }
+}))
 app.use(express.json())
+
+app.get("/health", async (req, res) => {
+    return res.sendStatus(200)
+})
 
 app.post("/register", async (req, res) => {
     const ip = req.ip
