@@ -21,7 +21,9 @@ const maxScore = 100
 const collisionCheckInterval = 60
 const bulletSpeed = 10
 let hasGameStarted = true
-let bullet = null
+let bullets = []
+const defaultMaxBullets = 1
+let maxBullets = defaultMaxBullets
 let bulletDamage = 25
 let score = 0
 let enemyInterval
@@ -148,7 +150,7 @@ function showBubble(
     if (!hasGameStarted) {
         // Here we check if the game has ended. hasGameStarted is set to true after the execution of this function, so it should work fine.
         buttonStart.textContent = "Try again"
-        buttonStart.removeEventListener("click", showBubble)
+        buttonStart.removeEventListener("click", hideBubble)
         buttonStart.addEventListener("click", () => {
             window.location.reload() // Or location.href = location.href;
         })
@@ -182,8 +184,8 @@ function hideBubble() {
     bubble.style.animation = "slideOut 0.5s forwards ease-in"
     darkness.classList.remove("visible")
     hasGameStarted = true
-    enemyInterval = setInterval(spawnAndMoveEnemy, enemySpawnInterval)
-    setInterval(() => {
+    enemyInterval = setInterval(processEnemy, enemySpawnInterval)
+    setTimeout(() => {
         document.body.addEventListener("click", (e) => {
             if (hasGameStarted) {
                 shoot(e.clientX, e.clientY)
@@ -198,15 +200,17 @@ function booster_1_click() {
         //Use booster here
         booster_1_active = true
         animateUseBooster(1)
-        speed = speed / 2
-        addedEnemies.forEach((wrapper) => {
-            updateEnemySpeed(wrapper)
-        })
+        // speed = speed / 2
+        // addedEnemies.forEach((wrapper) => {
+        //     updateEnemySpeed(wrapper)
+        // })
+        maxBullets = 2
         setTimeout(() => {
-            speed = initialSpeed
-            addedEnemies.forEach((wrapper) => {
-                updateEnemySpeed(wrapper)
-            })
+            // speed = initialSpeed
+            // addedEnemies.forEach((wrapper) => {
+            //     updateEnemySpeed(wrapper)
+            // })
+            maxBullets = 1
             booster_1_active = false
         }, booster_1_time)
         booster_1_count -= 1
@@ -235,8 +239,8 @@ function booster_3_click() {
         // Use booster here
         booster_3_active = true
         animateUseBooster(3)
-        spawnAndMoveEnemy()
-        spawnAndMoveEnemy()
+        processEnemy()
+        processEnemy()
         addedEnemies.forEach((wrapper) => {
             pauseEnemies = true
             pauseEnemy(wrapper)
@@ -391,7 +395,7 @@ function removeEnemy(wrapper) {
     }
 }
 
-function spawnAndMoveEnemy() {
+function processEnemy() {
     if (hasGameStarted) {
         once = true
         const randomKey = keys[Math.floor(Math.random() * keys.length)]
@@ -470,78 +474,79 @@ function spawnAndMoveEnemy() {
             }
 
             // Bullet colision
-            if (typeof bullet !== "undefined" && bullet) {
-                const bulletRect = bullet.getBoundingClientRect()
-                const isHit =
-                    enemyRect.left < bulletRect.right &&
-                    enemyRect.right > bulletRect.left &&
-                    enemyRect.top < bulletRect.bottom &&
-                    enemyRect.bottom > bulletRect.top
+            bullets.forEach((bullet) => {
+                if (typeof bullet !== "undefined" && bullet) {
+                    const bulletRect = bullet.getBoundingClientRect()
+                    const isHit =
+                        enemyRect.left < bulletRect.right &&
+                        enemyRect.right > bulletRect.left &&
+                        enemyRect.top < bulletRect.bottom &&
+                        enemyRect.bottom > bulletRect.top
 
-                if (isHit) {
-                    bullet.remove()
-                    bullet = null
-                    health -= bulletDamage
-                    if (health <= 0) {
-                        // Enemy dies here
-                        health = 0
-                        const randomBoosterIndex =
-                            getRandomIndexFromList(boosters)
-                        const index = addedEnemies.indexOf(wrapper)
-                        addedEnemies.splice(index, 1)
+                    if (isHit) {
+                        removeBullet(bullet)
+                        health -= bulletDamage
+                        if (health <= 0) {
+                            // Enemy dies here
+                            health = 0
+                            const randomBoosterIndex =
+                                getRandomIndexFromList(boosters)
+                            const index = addedEnemies.indexOf(wrapper)
+                            addedEnemies.splice(index, 1)
 
-                        switch (randomBoosterIndex) {
-                            case 0:
-                                booster_1_count++
-                                document.querySelector(
-                                    "#booster-1 + .booster-badge",
-                                ).textContent = booster_1_count // Update text
-                                animateAddBooster(
-                                    randomBoosterIndex,
-                                    wrapper.getBoundingClientRect(),
+                            switch (randomBoosterIndex) {
+                                case 0:
+                                    booster_1_count++
+                                    document.querySelector(
+                                        "#booster-1 + .booster-badge",
+                                    ).textContent = booster_1_count // Update text
+                                    animateAddBooster(
+                                        randomBoosterIndex,
+                                        wrapper.getBoundingClientRect(),
+                                    )
+                                    break
+                                case 1:
+                                    booster_2_count++
+                                    document.querySelector(
+                                        "#booster-2 + .booster-badge",
+                                    ).textContent = booster_2_count // Update text
+                                    animateAddBooster(
+                                        randomBoosterIndex,
+                                        wrapper.getBoundingClientRect(),
+                                    )
+                                    break
+                                case 2:
+                                    booster_3_count++
+                                    document.querySelector(
+                                        "#booster-3 + .booster-badge",
+                                    ).textContent = booster_3_count // Update text
+                                    animateAddBooster(
+                                        randomBoosterIndex,
+                                        wrapper.getBoundingClientRect(),
+                                    )
+                                    break
+                                default:
+                                    break
+                            }
+                            removeEnemy(wrapper)
+                            score += 1
+                            // Update score text
+                            scoreText.innerHTML = `Score: ${score}/${maxScore}`
+                            if (score >= maxScore) {
+                                // Win here
+                                document.querySelector(".game").remove()
+                                showBubble(
+                                    undefined,
+                                    "No! You won! But I'll be back in the next windows update!",
+                                    true,
                                 )
-                                break
-                            case 1:
-                                booster_2_count++
-                                document.querySelector(
-                                    "#booster-2 + .booster-badge",
-                                ).textContent = booster_2_count // Update text
-                                animateAddBooster(
-                                    randomBoosterIndex,
-                                    wrapper.getBoundingClientRect(),
-                                )
-                                break
-                            case 2:
-                                booster_3_count++
-                                document.querySelector(
-                                    "#booster-3 + .booster-badge",
-                                ).textContent = booster_3_count // Update text
-                                animateAddBooster(
-                                    randomBoosterIndex,
-                                    wrapper.getBoundingClientRect(),
-                                )
-                                break
-                            default:
-                                break
+                                hasGameStarted = false
+                            }
                         }
-                        removeEnemy(wrapper)
-                        score += 1
-                        // Update score text
-                        scoreText.innerHTML = `Score: ${score}/${maxScore}`
-                        if (score >= maxScore) {
-                            // Win here
-                            document.querySelector(".game").remove()
-                            showBubble(
-                                undefined,
-                                "No! You won! But I'll be back in the next windows update!",
-                                true,
-                            )
-                            hasGameStarted = false
-                        }
+                        healthBar.style.width = `${health}%` // Visual update;
                     }
-                    healthBar.style.width = `${health}%` // Visual update;
                 }
-            }
+            })
         }, 1000 / collisionCheckInterval)
     }
 }
@@ -639,12 +644,10 @@ function getRandomEdgePosition() {
 }
 
 function shoot(mouseX, mouseY) {
-    if (!bullet) {
+    if (bullets.length < maxBullets) {
         const currentBullet = document.createElement("img")
         currentBullet.src = bulletSpriteUrl
         currentBullet.style.position = "fixed"
-        // currentBullet.style.width = '16px';
-        // currentBullet.style.height = '16px';
         currentBullet.style.pointerEvents = "none"
         currentBullet.style.userSelect = "none"
         currentBullet.classList.add("bullet")
@@ -668,7 +671,7 @@ function shoot(mouseX, mouseY) {
         currentBullet.style.top = `${startY}px`
 
         document.body.appendChild(currentBullet)
-        bullet = currentBullet
+        bullets.push(currentBullet)
         // Update position
         const moveInterval = setInterval(() => {
             const rect = currentBullet.getBoundingClientRect()
@@ -688,11 +691,18 @@ function shoot(mouseX, mouseY) {
                 y < 0 ||
                 y > window.innerHeight
             ) {
-                currentBullet.remove()
+                removeBullet(currentBullet)
                 clearInterval(moveInterval)
-                bullet = null
             }
         }, 1000 / 60) // 60 FPS
+    }
+}
+
+function removeBullet(bullet) {
+    bullet.remove()
+    const index = bullets.indexOf(bullet);
+    if (index !== -1) {
+        bullets.splice(index, 1);
     }
 }
 
