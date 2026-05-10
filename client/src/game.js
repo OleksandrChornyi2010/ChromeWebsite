@@ -16,7 +16,6 @@ let speed = initialSpeed
 let enemySpawnInterval = 1500 // Every 1.5 seconds
 const transitionDelay = 150
 let lives = 3
-let once = false
 const maxScore = 100
 const collisionCheckInterval = 60
 const bulletSpeed = 10
@@ -200,22 +199,15 @@ function booster_1_click() {
         //Use booster here
         booster_1_active = true
         animateUseBooster(1)
-        // speed = speed / 2
-        // addedEnemies.forEach((wrapper) => {
-        //     updateEnemySpeed(wrapper)
-        // })
         maxBullets = 2
         setTimeout(() => {
-            // speed = initialSpeed
-            // addedEnemies.forEach((wrapper) => {
-            //     updateEnemySpeed(wrapper)
-            // })
             maxBullets = 1
             booster_1_active = false
         }, booster_1_time)
         booster_1_count -= 1
-        document.querySelector("#booster-1 + .booster-badge").textContent =
+        document.querySelector("#booster-1 ~ .booster-badge").textContent =
             booster_1_count // Update text
+        runLoader(document.querySelector("#booster-1 ~ .loader"), booster_1_time / 1000)
     }
 }
 function booster_2_click() {
@@ -230,8 +222,9 @@ function booster_2_click() {
             booster_2_active = false
         }, booster_2_time)
         booster_2_count -= 1
-        document.querySelector("#booster-2 + .booster-badge").textContent =
+        document.querySelector("#booster-2 ~ .booster-badge").textContent =
             booster_2_count // Update text
+        runLoader(document.querySelector("#booster-2 ~ .loader"), booster_2_time / 1000)
     }
 }
 function booster_3_click() {
@@ -254,10 +247,29 @@ function booster_3_click() {
         }, booster_3_time) // 3 seconds
 
         booster_3_count -= 1
-        document.querySelector("#booster-3 + .booster-badge").textContent =
+        document.querySelector("#booster-3 ~ .booster-badge").textContent =
             booster_3_count // Update text
+        runLoader(document.querySelector("#booster-3 ~ .loader"), booster_3_time / 1000)
     }
 }
+
+/**
+ * @param {HTMLElement} loaderElement - Loader element
+ * @param {number} durationSeconds - Time in seconds
+ */
+function runLoader(loaderElement, durationSeconds) {
+    // Set duration
+    loaderElement.style.setProperty('--duration', `${durationSeconds}s`);
+
+    // Show loader
+    loaderElement.classList.add('active');
+
+    // Listen animation finish
+    loaderElement.addEventListener('animationend', () => {
+        loaderElement.classList.remove('active');
+    }, { once: true });
+}
+
 function animateUseBooster(boosterNumber) {
     const boosterSizeX = 32
     const boosterSizeY = 32
@@ -397,7 +409,6 @@ function removeEnemy(wrapper) {
 
 function processEnemy() {
     if (hasGameStarted) {
-        once = true
         const randomKey = keys[Math.floor(Math.random() * keys.length)]
         const enemy = enemies[randomKey]
         const { x, y } = getRandomEdgePosition()
@@ -498,7 +509,7 @@ function processEnemy() {
                                 case 0:
                                     booster_1_count++
                                     document.querySelector(
-                                        "#booster-1 + .booster-badge",
+                                        "#booster-1 ~ .booster-badge",
                                     ).textContent = booster_1_count // Update text
                                     animateAddBooster(
                                         randomBoosterIndex,
@@ -508,7 +519,7 @@ function processEnemy() {
                                 case 1:
                                     booster_2_count++
                                     document.querySelector(
-                                        "#booster-2 + .booster-badge",
+                                        "#booster-2 ~ .booster-badge",
                                     ).textContent = booster_2_count // Update text
                                     animateAddBooster(
                                         randomBoosterIndex,
@@ -518,7 +529,7 @@ function processEnemy() {
                                 case 2:
                                     booster_3_count++
                                     document.querySelector(
-                                        "#booster-3 + .booster-badge",
+                                        "#booster-3 ~ .booster-badge",
                                     ).textContent = booster_3_count // Update text
                                     animateAddBooster(
                                         randomBoosterIndex,

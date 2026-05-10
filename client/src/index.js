@@ -15,9 +15,7 @@ form.addEventListener("submit", async (event) => {
     const emailFeedback = document.querySelector("#emailFeedback")
     const email = emailInput.value.trim()
     let isValid = true
-    // Email: simple check
     if (checkEmail(email)) {
-        // Invalid email
         emailInput.classList.remove("is-valid")
         emailInput.classList.add("is-invalid")
         emailFeedback.textContent = "Please enter a valid email address."

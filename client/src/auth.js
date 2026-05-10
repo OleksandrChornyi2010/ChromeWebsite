@@ -35,7 +35,6 @@ form.addEventListener("submit", async (event) => {
     emailInput.classList.remove("is-valid", "is-invalid")
     passwordInput.classList.remove("is-valid", "is-invalid")
 
-    // Username: 3-31 characters
     if (checkUsername(username)) {
         usernameInput.classList.remove("is-valid")
         usernameInput.classList.add("is-invalid")
@@ -44,7 +43,6 @@ form.addEventListener("submit", async (event) => {
         isValid = false
     }
 
-    // Password: 8-31 characters
     if (checkPassword(password)) {
         passwordInput.classList.remove("is-valid")
         passwordInput.classList.add("is-invalid")
@@ -53,9 +51,7 @@ form.addEventListener("submit", async (event) => {
         isValid = false
     }
 
-    // Email: simple check
     if (checkEmail(email)) {
-        // Invalid email
         emailInput.classList.remove("is-valid")
         emailInput.classList.add("is-invalid")
         emailFeedback.textContent = "Please enter a valid email address."

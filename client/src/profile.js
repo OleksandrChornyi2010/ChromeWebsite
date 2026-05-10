@@ -106,7 +106,6 @@ form.addEventListener("submit", async (event) => {
     // Reset previous errors
     newPasswordInput.classList.remove("is-invalid")
 
-    // Password: 8-31 characters
     if (checkPassword(newPassword)) {
         newPasswordInput.classList.remove("is-valid")
         newPasswordInput.classList.add("is-invalid")
