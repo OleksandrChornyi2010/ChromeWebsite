@@ -1,3 +1,4 @@
+import { checkEmail } from "./utils/checks"
 document.querySelector("#download").addEventListener("click", () => {
     location.href = "download.html"
 })
@@ -15,14 +16,7 @@ form.addEventListener("submit", async (event) => {
     const email = emailInput.value.trim()
     let isValid = true
     // Email: simple check
-    if (
-        email.length < 6 ||
-        email.length > 64 ||
-        !email.includes("@") ||
-        !email.includes(".") ||
-        email.indexOf("@") === 0 ||
-        email.lastIndexOf(".") < email.indexOf("@") // There must be "." after the "@" sign
-    ) {
+    if (checkEmail(email)) {
         // Invalid email
         emailInput.classList.remove("is-valid")
         emailInput.classList.add("is-invalid")

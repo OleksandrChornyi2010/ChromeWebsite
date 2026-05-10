@@ -1,6 +1,5 @@
 import { defineConfig } from "vite";
 import { resolve } from "path";
-import { resolveObjectURL } from "buffer";
 
 export default defineConfig({
     base: "/ChromeWebsite/",

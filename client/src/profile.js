@@ -1,3 +1,5 @@
+import { checkPassword } from "./utils/checks"
+
 document.querySelectorAll("#sidebar a").forEach((link) => {
     link.addEventListener("click", function (e) {
         e.preventDefault()
@@ -105,7 +107,7 @@ form.addEventListener("submit", async (event) => {
     newPasswordInput.classList.remove("is-invalid")
 
     // Password: 8-31 characters
-    if (newPassword.length < 8 || newPassword.length > 32) {
+    if (checkPassword(newPassword)) {
         newPasswordInput.classList.remove("is-valid")
         newPasswordInput.classList.add("is-invalid")
         newPasswordFeedback.textContent =

@@ -13,14 +13,14 @@ async function checkSession() {
             window.dispatchEvent(new Event("userSessionReady"))
         } else if (response.status === 204) {
             console.log("Not logged in")
-            document.querySelectorAll("#header-button").forEach((element) => {
+            document.querySelectorAll(".header-button").forEach((element) => {
                 element.classList.remove("d-none")
             })
             window.dispatchEvent(new Event("notLoggedIn"))
         }
     } catch (err) {
         console.error("Unexpected error:", err)
-        document.querySelectorAll("#header-button").forEach((element) => {
+        document.querySelectorAll(".header-button").forEach((element) => {
             element.classList.remove("d-none")
         })
     }

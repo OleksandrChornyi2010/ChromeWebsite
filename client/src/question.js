@@ -1,3 +1,5 @@
+import { checkName, checkQuestion } from "./utils/checks"
+
 // Get elements and values
 const firstNameInput = document.querySelector("#firstName")
 const lastNameInput = document.querySelector("#lastName")
@@ -47,7 +49,7 @@ function init() {
         questionInput.classList.remove("is-invalid")
 
         // First name: 2-32 characters
-        if (firstName.length < 2 || firstName.length > 32) {
+        if (checkName(firstName)) {
             console.log("f-l:" + firstName.length)
             firstNameInput.classList.remove("is-valid")
             firstNameInput.classList.add("is-invalid")
@@ -57,7 +59,7 @@ function init() {
         }
 
         // Last name: 2-32 characters
-        if (lastName.length < 2 || lastName.length > 32) {
+        if (checkName(lastName)) {
             console.log("l-l:" + lastName.length)
             lastNameInput.classList.remove("is-valid")
             lastNameInput.classList.add("is-invalid")
@@ -73,7 +75,7 @@ function init() {
             isValid = false
         }
         // Question: 6-350 characters
-        if (question.length < 6 || question.length > 350) {
+        if (checkQuestion(question)) {
             console.log("q-l:" + question.length)
             questionInput.classList.remove("is-valid")
             questionInput.classList.add("is-invalid")

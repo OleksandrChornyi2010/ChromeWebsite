@@ -11,11 +11,12 @@ import windowsDefenderSpriteUrl from "./assets/textures/enemies/windows-defender
 import wordSpriteUrl from "./assets/textures/enemies/word.svg"
 import bulletSpriteUrl from "./assets/textures/Bullet.png"
 
-let initialSpeed = 10000
+let initialSpeed = 80
 let speed = initialSpeed
 let enemySpawnInterval = 1500 // Every 1.5 seconds
 const transitionDelay = 150
 let lives = 3
+let once = false
 const maxScore = 100
 const collisionCheckInterval = 60
 const bulletSpeed = 10
@@ -72,6 +73,7 @@ const enemies = {
     },
 }
 let addedEnemies = []
+let pauseEnemies = false
 const keys = Object.keys(enemies)
 const urlParams = new URLSearchParams(window.location.search)
 const platform = urlParams.get("platform")
@@ -84,11 +86,8 @@ const menu = document.getElementById("penguin-menu")
 
 penguin.addEventListener("click", (event) => {
     event.stopPropagation()
-    if (!boostersMenuDisplayed) {
-        menu.classList.toggle("active")
-    } else {
-        menu.classList.remove("active")
-    }
+    menu.classList.toggle("active")
+    boostersMenuDisplayed = !boostersMenuDisplayed
 })
 
 document.addEventListener("keydown", function (event) {
@@ -113,6 +112,11 @@ let booster_3_count = 0
 let booster_1_active = false
 let booster_2_active = false
 let booster_3_active = false
+
+let booster_1_time = 5000 // 5 seconds
+let booster_2_time = 5000 // 5 seconds
+let booster_3_time = 3000 // 3 seconds
+
 booster_1.addEventListener("click", (event) => {
     event.stopPropagation()
     booster_1_click()
@@ -194,7 +198,7 @@ function booster_1_click() {
         //Use booster here
         booster_1_active = true
         animateUseBooster(1)
-        speed = speed * 2
+        speed = speed / 2
         addedEnemies.forEach((wrapper) => {
             updateEnemySpeed(wrapper)
         })
@@ -204,7 +208,7 @@ function booster_1_click() {
                 updateEnemySpeed(wrapper)
             })
             booster_1_active = false
-        }, 5000) // 5 seconds
+        }, booster_1_time)
         booster_1_count -= 1
         document.querySelector("#booster-1 + .booster-badge").textContent =
             booster_1_count // Update text
@@ -220,7 +224,7 @@ function booster_2_click() {
         setTimeout(() => {
             bulletDamage = initialDamage
             booster_2_active = false
-        }, 5000)
+        }, booster_2_time)
         booster_2_count -= 1
         document.querySelector("#booster-2 + .booster-badge").textContent =
             booster_2_count // Update text
@@ -231,68 +235,77 @@ function booster_3_click() {
         // Use booster here
         booster_3_active = true
         animateUseBooster(3)
-        speed = 999999999
+        spawnAndMoveEnemy()
+        spawnAndMoveEnemy()
         addedEnemies.forEach((wrapper) => {
-            updateEnemySpeed(wrapper)
+            pauseEnemies = true
+            pauseEnemy(wrapper)
         })
         setTimeout(() => {
-            speed = initialSpeed
             addedEnemies.forEach((wrapper) => {
-                updateEnemySpeed(wrapper)
+                pauseEnemies = false
+                resumeEnemy(wrapper)
             })
             booster_3_active = false
-        }, 3000) // 3 seconds
-        spawnAndMoveEnemy()
-        spawnAndMoveEnemy()
+        }, booster_3_time) // 3 seconds
+
         booster_3_count -= 1
         document.querySelector("#booster-3 + .booster-badge").textContent =
             booster_3_count // Update text
     }
 }
 function animateUseBooster(boosterNumber) {
-    let boosterSizeX = 32
-    let boosterSizeY = 32
+    const boosterSizeX = 32
+    const boosterSizeY = 32
     // Booster use animation
-    let pipRect = pipImage.getBoundingClientRect()
+    const pipRect = pipImage.getBoundingClientRect()
     const centerX = pipRect.left + pipRect.width / 2 - boosterSizeX / 2
     const centerY = pipRect.top + pipRect.height / 2 - boosterSizeY * 2.5
-    let boosterRect = document
-        .querySelector(`#booster-${boosterNumber}`)
-        .getBoundingClientRect()
-    const spawnX = boosterRect.left + boosterRect.width / 2 - boosterSizeX / 2
-    const spawnY = boosterRect.top + boosterRect.height / 2 - boosterSizeY * 2.5
-    let img = document.createElement("img")
+    let spawnX;
+    let spawnY;
+    if (boostersMenuDisplayed) {
+        const boosterRect = document
+            .querySelector(`#booster-${boosterNumber}`)
+            .getBoundingClientRect()
+        spawnX = boosterRect.left + boosterRect.width / 2 - boosterSizeX / 2
+        spawnY = boosterRect.top + boosterRect.height / 2 - boosterSizeY * 2.5
+    }
+    else {
+        const tuxRect = document.getElementById("penguin").getBoundingClientRect()
+        spawnX = tuxRect.left + tuxRect.width / 2 - boosterSizeX / 2
+        spawnY = tuxRect.top + tuxRect.height / 2 - boosterSizeY * 2.5
+    }
+    const img = document.createElement("img")
     img.src = boosters[boosterNumber - 1] // List indexes start from 0
     img.style.width = `${boosterSizeX}px`
     img.style.height = `${boosterSizeY}px`
     img.style.position = "fixed"
-    img.style.transition = `transform 0.3s linear`
+    // img.style.transition = `transform 0.3s linear`
     img.style.transform = `translate(${spawnX}px, ${spawnY}px)`
     img.style.webkitUserDrag = "none"
     img.style.pointerEvents = "none"
+
     document.querySelector(".game").appendChild(img)
-    setTimeout(() => {
-        img.addEventListener("transitionend", function onTransitionEnd() {
-            img.removeEventListener("transitionend", onTransitionEnd)
-            // Second animation: size + opacity
-            img.style.transition = "transform 0.3s ease, opacity 0.3s ease"
-            img.style.transform += " scale(15)"
-            img.style.opacity = "0"
+    const flyAnimation = img.animate([
+        { transform: `translate(${spawnX}px, ${spawnY}px)` },
+        { transform: `translate(${centerX}px, ${centerY}px)` }
+    ], {
+        duration: 300,
+        delay: transitionDelay,
+        easing: "linear",
+        fill: "forwards"
+    })
 
-            img.addEventListener(
-                "transitionend",
-                function onTransitionEndScale() {
-                    img.removeEventListener(
-                        "transitionend",
-                        onTransitionEndScale,
-                    )
-                    img.remove()
-                },
-            )
+    flyAnimation.onfinish = () => {
+        const scaleAnimation = img.animate([
+            { transform: `translate(${centerX}px, ${centerY}px) scale(0)`, opacity: 1 },
+            { transform: `translate(${centerX}px, ${centerY}px) scale(15)`, opacity: 0 }
+        ], {
+            duration: 300,
+            easing: "ease",
+            fill: "forwards"
         })
-
-        img.style.transform = `translate(${centerX}px, ${centerY}px)`
-    }, transitionDelay)
+    }
 }
 window.addEventListener("mousemove", (e) => {
     if (hasGameStarted) {
@@ -315,7 +328,6 @@ window.addEventListener("mousemove", (e) => {
 })
 
 function updateEnemySpeed(wrapper) {
-    let newSpeed = speed
     const rect = wrapper.getBoundingClientRect()
     const currentX = rect.left
     const currentY = rect.top
@@ -325,23 +337,63 @@ function updateEnemySpeed(wrapper) {
     const targetX = targetRect.left + targetRect.width / 2.5
     const targetY = targetRect.top + targetRect.height / 2.5
 
-    const dx = targetX - currentX
-    const dy = targetY - currentY
-    const distance = Math.sqrt(dx * dx + dy * dy)
-
-    const duration = newSpeed / 1000
-
-    wrapper.style.transition = "none"
     wrapper.style.transform = `translate(${currentX}px, ${currentY}px)`
+    wrapper.getAnimations().forEach(anim => anim.cancel());
 
-    requestAnimationFrame(() => {
-        wrapper.style.transition = `transform ${duration}s linear`
-        wrapper.style.transform = `translate(${targetX}px, ${targetY}px)`
-    })
+    animateEnemy(wrapper, currentX, currentY, targetX, targetY, 0)
+}
+
+function pauseEnemy(wrapper) {
+    const animations = wrapper.getAnimations();
+
+    animations.forEach(anim => {
+        anim.pause();
+    });
+}
+
+function resumeEnemy(wrapper) {
+    const animations = wrapper.getAnimations();
+
+    animations.forEach(anim => {
+        anim.play();
+    });
+}
+function animateEnemy(wrapper, initX, initY, targetX, targetY, delay = transitionDelay) {
+    if (!pauseEnemies) {
+        const dx = targetX - initX;
+        const dy = targetY - initY;
+        const distance = Math.sqrt(dx * dx + dy * dy);
+        const calculatedDuration = (distance / speed) * 1000;
+
+        const animation = wrapper.animate([
+            { transform: `translate(${initX}px, ${initY}px)` },
+            { transform: `translate(${targetX}px, ${targetY}px)` }
+        ], {
+            duration: calculatedDuration,
+            delay: delay,
+            easing: "linear",
+            fill: "forwards"
+        })
+
+        animation.onfinish = () => {
+            console.log("No collision on animation end!")
+            removeEnemy(wrapper)
+        }
+    }
+}
+
+function removeEnemy(wrapper) {
+    wrapper.getAnimations().forEach(anim => anim.cancel());
+    wrapper.remove()
+    const index = addedEnemies.indexOf(wrapper);
+    if (index !== -1) {
+        addedEnemies.splice(index, 1);
+    }
 }
 
 function spawnAndMoveEnemy() {
     if (hasGameStarted) {
+        once = true
         const randomKey = keys[Math.floor(Math.random() * keys.length)]
         const enemy = enemies[randomKey]
         const { x, y } = getRandomEdgePosition()
@@ -362,8 +414,6 @@ function spawnAndMoveEnemy() {
         img.style.height = "32px"
         img.style.display = "block"
 
-        addedEnemies.push(wrapper)
-
         let health = enemy["health"]
         let damage = enemy["damage"]
         const healthBar = document.createElement("div")
@@ -382,28 +432,14 @@ function spawnAndMoveEnemy() {
         wrapper.appendChild(img)
 
         document.querySelector(".game").appendChild(wrapper)
-
-        wrapper.style.transition = `transform ${speed / 1000}s linear`
+        addedEnemies.push(wrapper)
 
         const target = document.querySelector(".game-image")
         const targetRect = target.getBoundingClientRect()
+        const targetX = targetRect.left + targetRect.width / 2.5
+        const targetY = targetRect.top + targetRect.height / 2.5
 
-        setTimeout(() => {
-            wrapper.addEventListener(
-                "transitionend",
-                function onTransitionEnd() {
-                    wrapper.removeEventListener(
-                        "transitionend",
-                        onTransitionEnd,
-                    )
-                    // Remove wrapper
-                    console.log("No collision on animation end!")
-                    wrapper.remove()
-                },
-            )
-
-            wrapper.style.transform = `translate(${targetRect.left + targetRect.width / 2.5}px, ${targetRect.top + targetRect.height / 2.5}px)`
-        }, transitionDelay)
+        animateEnemy(wrapper, x, y, targetX, targetY)
 
         const character = document.querySelector(".game-image")
 
@@ -419,7 +455,7 @@ function spawnAndMoveEnemy() {
 
             if (isColliding) {
                 clearInterval(collisionCheck)
-                wrapper.remove()
+                removeEnemy(wrapper)
                 lives -= damage
                 if (lives <= 0) {
                     document.querySelector(".game").remove()
@@ -460,7 +496,7 @@ function spawnAndMoveEnemy() {
                                 document.querySelector(
                                     "#booster-1 + .booster-badge",
                                 ).textContent = booster_1_count // Update text
-                                animateBoosterAdd(
+                                animateAddBooster(
                                     randomBoosterIndex,
                                     wrapper.getBoundingClientRect(),
                                 )
@@ -470,7 +506,7 @@ function spawnAndMoveEnemy() {
                                 document.querySelector(
                                     "#booster-2 + .booster-badge",
                                 ).textContent = booster_2_count // Update text
-                                animateBoosterAdd(
+                                animateAddBooster(
                                     randomBoosterIndex,
                                     wrapper.getBoundingClientRect(),
                                 )
@@ -480,7 +516,7 @@ function spawnAndMoveEnemy() {
                                 document.querySelector(
                                     "#booster-3 + .booster-badge",
                                 ).textContent = booster_3_count // Update text
-                                animateBoosterAdd(
+                                animateAddBooster(
                                     randomBoosterIndex,
                                     wrapper.getBoundingClientRect(),
                                 )
@@ -488,12 +524,12 @@ function spawnAndMoveEnemy() {
                             default:
                                 break
                         }
-                        wrapper.remove()
+                        removeEnemy(wrapper)
                         score += 1
                         // Update score text
                         scoreText.innerHTML = `Score: ${score}/${maxScore}`
                         if (score >= maxScore) {
-                            //Win here
+                            // Win here
                             document.querySelector(".game").remove()
                             showBubble(
                                 undefined,
@@ -510,34 +546,54 @@ function spawnAndMoveEnemy() {
     }
 }
 
-function animateBoosterAdd(boosterIndex, rect) {
-    let boosterWidth = 32
-    let boosterHeight = 32
-    let spawnX = rect.left + rect.width / 2 - boosterWidth / 2
-    let spawnY = rect.top + rect.height / 2 - boosterHeight * 2.5
-    let img = document.createElement("img")
+function animateAddBooster(boosterIndex, rect) {
+    const boosterWidth = 32
+    const boosterHeight = 32
+
+    const spawnX = rect.left + rect.width / 2 - boosterWidth / 2
+    const spawnY = rect.top + rect.height / 2 - boosterHeight * 2.5
+    const img = document.createElement("img")
     img.src = boosters[boosterIndex]
     img.style.width = "32px"
     img.style.height = "32px"
     img.style.position = "fixed"
-    img.style.transition = `transform 0.3s linear`
     img.style.transform = `translate(${spawnX}px, ${spawnY}px)`
     document.querySelector(".game").appendChild(img)
-    let tuxRect = document.getElementById("penguin").getBoundingClientRect()
-    let tuxCenterX = tuxRect.left + tuxRect.width / 2
-    let tuxCenterY = tuxRect.top + tuxRect.height / 2
+    const tuxRect = document.getElementById("penguin").getBoundingClientRect()
+    const tuxCenterX = tuxRect.left + tuxRect.width / 2
+    const tuxCenterY = tuxRect.top + tuxRect.height / 2
 
-    // Center booster by Tux
-    let targetX = tuxCenterX - boosterWidth / 2
-    let targetY = tuxCenterY - boosterHeight * 2
-    setTimeout(() => {
-        img.addEventListener("transitionend", function onTransitionEnd() {
-            img.removeEventListener("transitionend", onTransitionEnd)
-            img.remove()
-        })
+    let targetX;
+    let targetY;
+    if (boostersMenuDisplayed) {
+        const boosterRect = document
+            .querySelector(`#booster-${boosterIndex + 1}`)
+            .getBoundingClientRect()
+        targetX = boosterRect.left + boosterRect.width / 2 - boosterWidth / 2
+        targetY = boosterRect.top + boosterRect.height / 2 - boosterHeight * 2.5
+    }
+    else {
+        const tuxRect = document.getElementById("penguin").getBoundingClientRect()
+        targetX = tuxCenterX - boosterWidth / 2
+        targetY = tuxCenterY - boosterHeight * 2.5
+    }
 
-        img.style.transform = `translate(${targetX}px, ${targetY}px)`
-    }, transitionDelay)
+    const animation = img.animate(
+        [
+            { transform: `translate(${spawnX}px, ${spawnY}px)` },
+            { transform: `translate(${targetX}px, ${targetY}px)` }
+        ],
+        {
+            duration: 300,
+            delay: transitionDelay,
+            easing: "linear",
+            fill: "forwards"
+        }
+    )
+
+    animation.onfinish = () => {
+        img.remove()
+    }
 }
 
 function onWindowSizeChange() {
@@ -547,7 +603,7 @@ function onWindowSizeChange() {
         for (let i = 0; i < addedEnemies.length; i++) {
             let wrapper = addedEnemies[i]
             if (wrapper) {
-                wrapper.style.transform = `translate(${targetRect.left + targetRect.width / 2.5}px, ${targetRect.top + targetRect.height / 2.5}px)`
+                updateEnemySpeed(wrapper)
             }
         }
     }
