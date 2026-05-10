@@ -1,3 +1,16 @@
+import archBoosterUrl from "./assets/textures/arch.png"
+import debianBoosterUrl from "./assets/textures/debian.png"
+import mintBoosterUrl from "./assets/textures/mint.png"
+import clipchampSpriteUrl from "./assets/textures/enemies/clipchamp.svg"
+import copilotSpriteUrl from "./assets/textures/enemies/copilot.svg"
+import edgeSpriteUrl from "./assets/textures/enemies/edge.svg"
+import teamsSpriteUrl from "./assets/textures/enemies/teams.svg"
+import onedriveSpriteUrl from "./assets/textures/enemies/onedrive.svg"
+import win11SpriteUrl from "./assets/textures/enemies/windows-11.svg"
+import windowsDefenderSpriteUrl from "./assets/textures/enemies/windows-defender.svg"
+import wordSpriteUrl from "./assets/textures/enemies/word.svg"
+import bulletSpriteUrl from "./assets/textures/Bullet.png"
+
 let initialSpeed = 10000
 let speed = initialSpeed
 let enemySpawnInterval = 1500 // Every 1.5 seconds
@@ -11,71 +24,57 @@ let bullet = null
 let bulletDamage = 25
 let score = 0
 let enemyInterval
-let fileName
 let boosters = [
-    "../images/textures/arch.png",
-    "../images/textures/debian.png",
-    "../images/textures/mint.png",
+    archBoosterUrl,
+    debianBoosterUrl,
+    mintBoosterUrl,
 ]
 const enemies = {
     clipchamp: {
         health: 100,
         damage: 1, // Don't change
-        sprite: "../images/textures/enemies/clipchamp.svg",
+        sprite: clipchampSpriteUrl,
     },
     copilot: {
         health: 100,
         damage: 1, // Don't change
-        sprite: "../images/textures/enemies/copilot.svg",
+        sprite: copilotSpriteUrl,
     },
     edge: {
         health: 100,
         damage: 1, // Don't change
-        sprite: "../images/textures/enemies/edge.svg",
+        sprite: edgeSpriteUrl,
     },
     teams: {
         health: 100,
         damage: 1, // Don't change
-        sprite: "../images/textures/enemies/teams.svg",
+        sprite: teamsSpriteUrl,
     },
     onedrive: {
         health: 100,
         damage: 1, // Don't change
-        sprite: "../images/textures/enemies/onedrive.svg",
+        sprite: onedriveSpriteUrl,
     },
     win11: {
         health: 100,
         damage: 1, // Don't change
-        sprite: "../images/textures/enemies/windows-11.svg",
+        sprite: win11SpriteUrl,
     },
     windowsDefender: {
         health: 200,
         damage: 1, // Don't change
-        sprite: "../images/textures/enemies/windows-defender.svg",
+        sprite: windowsDefenderSpriteUrl,
     },
     word: {
         health: 100,
         damage: 1, // Don't change
-        sprite: "../images/textures/enemies/word.svg",
+        sprite: wordSpriteUrl,
     },
 }
 let addedEnemies = []
 const keys = Object.keys(enemies)
 const urlParams = new URLSearchParams(window.location.search)
 const platform = urlParams.get("platform")
-if (platform == "win") {
-    fileName = "chrome.exe"
-} else if (platform == "linux") {
-    fileName = "chrome.deb"
-} else if (platform == "mac") {
-    fileName = "chrome.dmg"
-} else if (platform == "android") {
-    fileName = "chrome.apk"
-} else if (platform == "ios") {
-    fileName = "chrome.amd64"
-} else {
-    fileName = "chrome.deb"
-}
 let boostersMenuDisplayed = false
 
 // Start bubble and darkness on page load
@@ -154,8 +153,11 @@ function showBubble(
         document.querySelector(".bubble-message strong").remove()
         buttonStart.textContent = "Yes!"
         buttonStart.addEventListener("click", () => {
-            //window.location.href = `../files/${fileName}`;
-            window.location.href = `download-started.html?platform=${platform}`
+            const params = new URLSearchParams({
+                type: "download",
+                platform: platform
+            })
+            window.location.href = "info.html?" + params.toString()
         })
     }
     const darkness = document.getElementById("edge-darkness")
@@ -328,6 +330,7 @@ function updateEnemySpeed(wrapper) {
     const distance = Math.sqrt(dx * dx + dy * dy)
 
     const duration = newSpeed / 1000
+
     wrapper.style.transition = "none"
     wrapper.style.transform = `translate(${currentX}px, ${currentY}px)`
 
@@ -582,7 +585,7 @@ function getRandomEdgePosition() {
 function shoot(mouseX, mouseY) {
     if (!bullet) {
         const currentBullet = document.createElement("img")
-        currentBullet.src = "../images/textures/Bullet.png"
+        currentBullet.src = bulletSpriteUrl
         currentBullet.style.position = "fixed"
         // currentBullet.style.width = '16px';
         // currentBullet.style.height = '16px';

@@ -7,7 +7,6 @@ document.querySelector("#download_lg").addEventListener("click", () => {
 document.querySelector("#FAQs").addEventListener("click", () => {
     location.href = "FAQs.html"
 })
-let redirectLocation = "subscribed.html"
 form.addEventListener("submit", async (event) => {
     event.preventDefault()
     event.stopPropagation()
@@ -37,10 +36,13 @@ form.addEventListener("submit", async (event) => {
     }
     form.classList.add("was-validated")
     try {
-        const response = await axios.post(`${window.API_URL}/newsletter`, {
+        const response = await axios.post(`${window.API_URL}/newsletter-subscribe`, {
             email,
         })
-        location.href = redirectLocation
+        const params = new URLSearchParams({
+            type: "subscribed"
+        })
+        window.location.href = "info.html?" + params.toString()
     } catch (err) {
         if (err.response && err.response.status === 409) {
             emailFeedback.textContent = "This email is already used."

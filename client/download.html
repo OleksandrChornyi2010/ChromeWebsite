@@ -16,7 +16,7 @@
             integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
             crossorigin="anonymous"
         />
-        <link rel="stylesheet" href="../css/style.css" />
+        <link rel="stylesheet" href="/src/styles/style.css" />
         <link
             href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"
             rel="stylesheet"
@@ -83,7 +83,7 @@
                             class="d-inline-flex link-body-emphasis text-decoration-none"
                         >
                             <img
-                                src="../images/chrome.svg"
+                                src="/src/assets/chrome.svg"
                                 alt="Chrome"
                                 width="40"
                                 height="32"
@@ -124,7 +124,7 @@
                         </li>
                         <li>
                             <a
-                                href="ask_a_question.html"
+                                href="question.html"
                                 class="nav-link px-2 link-body-emphasis"
                                 >Ask a question</a
                             >
@@ -133,13 +133,13 @@
 
                     <div class="col-lg text-end">
                         <a
-                            href="sign-in.html"
+                            href="auth.html?type=login"
                             class="btn btn-outline-primary me-2 d-none"
                             id="header-button"
                             >Sign-in</a
                         >
                         <a
-                            href="sign-up.html"
+                            href="auth.html?type=register"
                             class="btn btn-primary d-none"
                             id="header-button"
                             >Sign-up</a
@@ -186,7 +186,7 @@
                                     </p>
                                 </li>
                                 <li>
-                                    <a class="dropdown-item" href="account.html"
+                                    <a class="dropdown-item" href="profile.html"
                                         >Profile</a
                                     >
                                 </li>
@@ -205,89 +205,172 @@
             </div>
         </div>
 
-        <div
-            class="wrapper d-flex flex-column min-vh-100 anti-header-padding-medium"
-        >
-            <main
-                class="flex-fill d-flex justify-content-center align-items-center"
-            >
-                <div class="px-4 py-5 my-5 text-center">
-                    <h1 class="display-5 fw-bold text-body-emphasis">
-                        Your question has been succesfully deleted.
-                    </h1>
-                    <div class="col-lg-6 mx-auto">
-                        <p class="lead mb-4">
-                            You can now ask another one if you wish.
-                        </p>
-                        <div
-                            class="d-grid gap-2 d-sm-flex justify-content-sm-center"
+        <main>
+            <div class="container px-4 py-4 mt-4">
+                <div
+                    class="row flex-lg-row-reverse align-items-center g-5 pb-5 anti-header-padding-medium"
+                >
+                    <div class="col-10 col-sm-8 col-lg-6">
+                        <img
+                            src="/src/assets/chrome_new_tab.png"
+                            class="d-block mx-lg-auto img-fluid"
+                            alt="Chrome"
+                            width="700"
+                            height="500"
+                            loading="lazy"
+                        />
+                    </div>
+                    <div class="col-lg-6">
+                        <h1
+                            class="display-5 fw-bold text-body-emphasis lh-1 mb-3"
                         >
-                            <a
-                                href="index.html#home"
-                                class="btn btn-primary btn-lg px-4 gap-3"
+                            Browse as you like
+                        </h1>
+                        <div class="d-flex">
+                            <p class="lead">
+                                Start your journey by selecting OS and clicking
+                                Download button
+                            </p>
+                            <select
+                                id="osSelect"
+                                class="form-select w-auto mb-3 btn-outline-primary"
                             >
-                                Back to home page
-                            </a>
+                                <option selected disabled>Select OS</option>
+                                <option value="win">Windows</option>
+                                <option value="linux">Linux</option>
+                                <option value="mac">MacOS</option>
+                                <option value="android">Android</option>
+                                <option value="ios">IOS</option>
+                            </select>
+                        </div>
+                        <hr />
+                        <div
+                            class="d-grid gap-2 d-md-flex justify-content-md-start"
+                        >
+                            <button
+                                type="button"
+                                id="downloadButton"
+                                class="btn btn-primary btn-lg px-4 me-md-2"
+                            >
+                                Download
+                            </button>
                         </div>
                     </div>
                 </div>
-            </main>
-            <div class="container">
-                <footer
-                    class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top"
-                >
-                    <p
-                        class="col-md-4 mb-0 text-body-secondary order-2 order-md-1"
-                    >
-                        <img
-                            src="../images/chrome.svg"
-                            alt="Chrome"
-                            width="40"
-                            height="32"
-                        />
-                        All rights belong to Google.
-                    </p>
-                    <ul
-                        class="nav col-md-4 justify-content-end order-1 order-md-2"
-                    >
-                        <li class="nav-item">
-                            <a
-                                href="index.html#home"
-                                class="nav-link px-2 link-body-emphasis"
-                                >Home</a
-                            >
-                        </li>
-                        <li class="nav-item">
-                            <a
-                                href="index.html#features"
-                                class="nav-link px-2 link-body-emphasis"
-                                >Features</a
-                            >
-                        </li>
-                        <li class="nav-item">
-                            <a
-                                href="download.html"
-                                class="nav-link px-2 link-body-emphasis"
-                                >Dowload</a
-                            >
-                        </li>
-                        <li class="nav-item">
-                            <a
-                                href="FAQs.html"
-                                class="nav-link px-2 link-body-emphasis"
-                                >FAQs</a
-                            >
-                        </li>
-                        <li class="nav-item">
-                            <a
-                                href="ask_a_question.html"
-                                class="nav-link px-2 link-body-emphasis"
-                                >Ask a question</a
-                            >
-                        </li>
-                    </ul>
-                </footer>
             </div>
+            <div class="container marketing">
+                <h1 class="text-center">Installation guide</h1>
+                <hr />
+                <!-- START THE FEATURETTES -->
+                <div class="row featurette">
+                    <div class="col-md-7">
+                        <h2 class="featurette-heading fw-normal lh-1">
+                            Launch the installer
+                        </h2>
+                        <p class="lead">
+                            Launch the installer by double clicking on the file.
+                        </p>
+                    </div>
+                    <div class="col-md-5">
+                        <img
+                            class="img-fluid rounded-4 shadow-lg"
+                            src="/src/assets/Step-1.png"
+                            alt="Chrome installation"
+                        />
+                    </div>
+                </div>
+                <hr class="featurette-divider" />
+                <div class="row featurette">
+                    <div class="col-md-7 order-md-2">
+                        <h2 class="featurette-heading fw-normal lh-1">
+                            Allow admin privileges
+                        </h2>
+                        <p class="lead">
+                            Click "Yes" in this dialogue window. This is needed
+                            to install chrome.
+                        </p>
+                    </div>
+                    <div class="col-md-5 order-md-1">
+                        <img
+                            src="/src/assets/Step-2.png"
+                            class="img-fluid rounded-top"
+                            alt=""
+                        />
+                    </div>
+                </div>
+                <hr class="featurette-divider" />
+                <div class="row featurette">
+                    <div class="col-md-7">
+                        <h2 class="featurette-heading fw-normal lh-1">
+                            Wait for the installation to finish.
+                        </h2>
+                        <p class="lead">
+                            This can take up to a minute. After the installer is
+                            done you can go ahead and use Chrome on your PC!
+                        </p>
+                    </div>
+                    <div class="col-md-5">
+                        <img
+                            class="img-fluid rounded-4 shadow"
+                            src="/src/assets/Step-3.jpg"
+                            alt="Chrome installation"
+                        />
+                    </div>
+                </div>
+                <!-- /END THE FEATURETTES -->
+            </div>
+        </main>
+        <div class="container">
+            <footer
+                class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top"
+            >
+                <p class="col-md-4 mb-0 text-body-secondary order-2 order-md-1">
+                    <img
+                        src="/src/assets/chrome.svg"
+                        alt="Chrome"
+                        width="40"
+                        height="32"
+                    />
+                    All rights belong to Google.
+                </p>
+                <ul class="nav col-md-4 justify-content-end order-1 order-md-2">
+                    <li class="nav-item">
+                        <a
+                            href="index.html#home"
+                            class="nav-link px-2 link-body-emphasis"
+                            >Home</a
+                        >
+                    </li>
+                    <li class="nav-item">
+                        <a
+                            href="index.html#features"
+                            class="nav-link px-2 link-body-emphasis"
+                            >Features</a
+                        >
+                    </li>
+                    <li class="nav-item">
+                        <a
+                            href="download.html"
+                            class="nav-link px-2 link-body-emphasis"
+                            >Dowload</a
+                        >
+                    </li>
+                    <li class="nav-item">
+                        <a
+                            href="FAQs.html"
+                            class="nav-link px-2 link-body-emphasis"
+                            >FAQs</a
+                        >
+                    </li>
+                    <li class="nav-item">
+                        <a
+                            href="question.html"
+                            class="nav-link px-2 link-body-emphasis"
+                            >Ask a question</a
+                        >
+                    </li>
+                </ul>
+            </footer>
         </div>
         <!-- Bootstrap JavaScript Libraries -->
         <script
@@ -307,7 +390,8 @@
             crossorigin="anonymous"
             referrerpolicy="no-referrer"
         ></script>
-        <script type="module" src="../js/main.js"></script>
-        <script type="module" src="../js/session-check.js"></script>
+        <script type="module" src="/src/main.js"></script>
+        <script type="module" src="/src/session.js"></script>
+        <script type="module" src="/src/download.js"></script>
     </body>
 </html>

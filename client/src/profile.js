@@ -20,13 +20,24 @@ document.querySelectorAll("#sidebar a").forEach((link) => {
         if (targetId === "section2") {
             loadQuestions()
         }
+        const sidebarMenu = document.getElementById("sidebarMenu");
+        const bsCollapse = bootstrap.Collapse.getOrCreateInstance(sidebarMenu);
+
+        if (sidebarMenu.classList.contains("collapsing")) {
+            sidebarMenu.addEventListener("shown.bs.collapse", () => {
+                bsCollapse.hide()
+            }, { once: true })
+        } else if (sidebarMenu.classList.contains("show")) {
+            bsCollapse.hide()
+        }
     })
 })
 
 window.addEventListener("userSessionReady", () => {
     console.log("UserSession:", window.userSession)
-    document.querySelector("#header-text").textContent =
-        window.userSession.username
+    const headerText = document.getElementById("header-text")
+    headerText.textContent = window.userSession.username
+    headerText.classList.remove("invisible")
 })
 
 async function loadQuestions() {
@@ -58,73 +69,74 @@ async function loadQuestions() {
         const year = dateObj.getFullYear()
 
         const formatted = `${hours}:${minutes} ${day}.${month}.${year}`
-
+        const params = new URLSearchParams({
+            type: "overview",
+            id: question.id
+        })
         row.innerHTML = `
             <th scope="row">${question.id}</th>
-            <td class="text-truncate" style="max-width: 200px;">${preview}</td>
+            <td class="text-truncate" style="max-width: 10.42vw;">${preview}</td>
             <td >${formatted}</td>
-            <td><a href="question-overview.html?id=${question.id}" class="btn btn-sm btn-primary" data-id="${question.id}">View</a></td>
+            <td><a href="question.html?${params.toString()}" class="btn btn-sm btn-primary" data-id="${question.id}">View</a></td>
         `
 
         tbody.appendChild(row)
     })
 }
 
-; (() => {
-    "use strict"
+const form = document.querySelector(".needs-validation")
 
-    const form = document.querySelector(".needs-validation")
+form.addEventListener("submit", async (event) => {
+    event.preventDefault()
+    event.stopPropagation()
 
-    form.addEventListener("submit", async (event) => {
-        event.preventDefault()
-        event.stopPropagation()
+    // Get elements and values
+    const newPasswordInput = document.querySelector("#newPassword-input")
 
-        // Get elements and values
-        const newPasswordInput = document.querySelector("#newPassword-input")
+    const newPasswordFeedback = document.querySelector(
+        "#newPassword-feedback",
+    )
 
-        const newPasswordFeedback = document.querySelector(
-            "#newPassword-feedback",
-        )
+    const newPassword = newPasswordInput.value.trim()
 
-        const newPassword = newPasswordInput.value.trim()
+    let isValid = true
 
-        let isValid = true
+    // Reset previous errors
+    newPasswordInput.classList.remove("is-invalid")
 
-        // Reset previous errors
-        newPasswordInput.classList.remove("is-invalid")
-
-        // Password: 8-31 characters
-        if (newPassword.length < 8 || newPassword.length > 32) {
-            newPasswordInput.classList.remove("is-valid")
-            newPasswordInput.classList.add("is-invalid")
-            newPasswordFeedback.textContent =
-                "Password must be between 8 and 31 characters including both."
-            isValid = false
-        }
-        if (!isValid) {
-            form.classList.add("was-validated")
-            return // stop submit
-        }
-
+    // Password: 8-31 characters
+    if (newPassword.length < 8 || newPassword.length > 32) {
+        newPasswordInput.classList.remove("is-valid")
+        newPasswordInput.classList.add("is-invalid")
+        newPasswordFeedback.textContent =
+            "Password must be between 8 and 31 characters including both."
+        isValid = false
+    }
+    if (!isValid) {
         form.classList.add("was-validated")
+        return // stop submit
+    }
 
-        try {
-            const response = await axios.post(
-                `${window.API_URL}/change-password`,
-                {
-                    newPassword,
-                },
-            )
-            console.log("Password has been changed succesfully:", response.data)
-            location.href = "password-update.html"
-        } catch (err) {
-            console.error("Unexpected error:", err)
-            alert(
-                "There was an error while changing your password. Please try again later.",
-            )
-        }
-    })
-})()
+    form.classList.add("was-validated")
+
+    try {
+        const response = await axios.post(
+            `${window.API_URL}/change-password`,
+            {
+                newPassword,
+            },
+        )
+        const params = new URLSearchParams({
+            type: "password-updated"
+        })
+        window.location.href = "info.html?" + params.toString()
+    } catch (err) {
+        console.error("Unexpected error:", err)
+        alert(
+            "There was an error while changing your password. Please try again later.",
+        )
+    }
+})
 
 document
     .getElementById("togglePassword")

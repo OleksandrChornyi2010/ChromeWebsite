@@ -16,7 +16,7 @@
             integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
             crossorigin="anonymous"
         />
-        <link rel="stylesheet" href="../css/style.css" />
+        <link rel="stylesheet" href="/src/styles/style.css" />
         <link
             href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"
             rel="stylesheet"
@@ -83,7 +83,7 @@
                             class="d-inline-flex link-body-emphasis text-decoration-none"
                         >
                             <img
-                                src="../images/chrome.svg"
+                                src="/src/assets/chrome.svg"
                                 alt="Chrome"
                                 width="40"
                                 height="32"
@@ -124,7 +124,7 @@
                         </li>
                         <li>
                             <a
-                                href="ask_a_question.html"
+                                href="question.html"
                                 class="nav-link px-2 link-body-emphasis"
                                 >Ask a question</a
                             >
@@ -133,13 +133,13 @@
 
                     <div class="col-lg text-end">
                         <a
-                            href="sign-in.html"
+                            href="auth.html?type=login"
                             class="btn btn-outline-primary me-2 d-none"
                             id="header-button"
                             >Sign-in</a
                         >
                         <a
-                            href="sign-up.html"
+                            href="auth.html?type=register"
                             class="btn btn-primary d-none"
                             id="header-button"
                             >Sign-up</a
@@ -186,7 +186,7 @@
                                     </p>
                                 </li>
                                 <li>
-                                    <a class="dropdown-item" href="account.html"
+                                    <a class="dropdown-item" href="profile.html"
                                         >Profile</a
                                     >
                                 </li>
@@ -218,7 +218,7 @@
                             </p>
                             <p>
                                 <a
-                                    href="ask_a_question.html"
+                                    href="question.html"
                                     class="btn btn-primary my-2"
                                     >Ask a question</a
                                 >
@@ -407,7 +407,7 @@
                         class="col-md-4 mb-0 text-body-secondary order-2 order-md-1"
                     >
                         <img
-                            src="../images/chrome.svg"
+                            src="/src/assets/chrome.svg"
                             alt="Chrome"
                             width="40"
                             height="32"
@@ -447,7 +447,7 @@
                         </li>
                         <li class="nav-item">
                             <a
-                                href="ask_a_question.html"
+                                href="question.html"
                                 class="nav-link px-2 link-body-emphasis"
                                 >Ask a question</a
                             >
@@ -474,7 +474,7 @@
             crossorigin="anonymous"
             referrerpolicy="no-referrer"
         ></script>
-        <script type="module" src="../js/main.js"></script>
-        <script type="module" src="../js/session-check.js"></script>
+        <script type="module" src="/src/main.js"></script>
+        <script type="module" src="/src/session.js"></script>
     </body>
 </html>

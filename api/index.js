@@ -229,23 +229,23 @@ app.post("/submit-question", async (req, res) => {
         }
     }
     if (!userSession) {
-        return res.status(204).send("No opened session at your IP address.")
+        return res.status(403).send("No opened session at your IP address.")
     }
-    // First name: 3-31 characters
+    // First name: 2-32 characters
     if (firstName.length < 2 || firstName.length > 32) {
         return res
             .status(400)
             .send(
-                "First name must be between 3 and 31 characters including both.",
+                "First name must be between 2 and 32 characters including both.",
             )
     }
 
-    // Last name: 9-31 characters
+    // Last name: 2-32 characters
     if (lastName.length < 2 || lastName.length > 32) {
         return res
             .status(400)
             .send(
-                "Last name must be between 3 and 31 characters including both.",
+                "Last name must be between 2 and 32 characters including both.",
             )
     }
     // Language must be not 0:
@@ -253,7 +253,7 @@ app.post("/submit-question", async (req, res) => {
         return res.status(400).send("Select valid language.")
     }
     // Question: 6-350 characters
-    if (question.length < 7 || question.length > 351) {
+    if (question.length < 6 || question.length > 350) {
         return res
             .status(400)
             .send(
@@ -358,7 +358,7 @@ app.get("/get-question", async (req, res) => {
         }
     }
     if (!userSession) {
-        return res.status(204).send("No opened session at your IP address.")
+        return res.status(403).send("No opened session at your IP address.")
     }
     try {
         const result = await pool.query(
@@ -385,7 +385,7 @@ app.delete("/delete-question", async (req, res) => {
         }
     }
     if (!userSession) {
-        return res.status(204).send("No opened session at your IP address.")
+        return res.status(403).send("No opened session at your IP address.")
     }
     try {
         const result = await pool.query(
@@ -403,7 +403,7 @@ app.delete("/delete-question", async (req, res) => {
         return res.status(500).send("Internal server error")
     }
 })
-app.post("/newsletter", async (req, res) => {
+app.post("/newsletter-subscribe", async (req, res) => {
     const email = req.body.email
     try {
         const result = await pool.query(

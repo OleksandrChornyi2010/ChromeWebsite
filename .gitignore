@@ -1,4 +1,3 @@
 node_modules
-server.json
-server_local.json
+server*.json
 .env
