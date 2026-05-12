@@ -21,12 +21,12 @@ document.querySelector("#downloadButton").addEventListener("click", () => {
 
 function detectOS() {
     const userAgent = navigator.userAgent
-
+    console.log("navig: " + userAgent)
+    if (/Android/.test(userAgent)) return "android"
+    if (/iPhone|iPad|iPod/.test(userAgent)) return "ios"
     if (/Windows NT/.test(userAgent)) return "win"
     if (/Mac OS X/.test(userAgent)) return "mac"
     if (/Linux/.test(userAgent)) return "linux"
-    if (/Android/.test(userAgent)) return "android"
-    if (/iPhone|iPad|iPod/.test(userAgent)) return "ios"
 
     return "Unknown"
 }

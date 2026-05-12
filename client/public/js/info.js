@@ -51,8 +51,8 @@ function passwordUpdated() {
 function submitted() {
     primaryText.textContent = "Your question has been succesfully submitted!"
     secondaryText.textContent = "You can now see it in your profile."
-    actionButton.textContent = "Back to home page"
-    actionButton.href = "index.html#home"
+    actionButton.textContent = "Profile page"
+    actionButton.href = "profile.html"
 }
 
 function download() {
