@@ -192,7 +192,7 @@
                                     <a
                                         id="logOutItem"
                                         class="dropdown-item"
-                                        href="#"
+                                        href="index.html"
                                         >Log out</a
                                     >
                                 </li>
@@ -226,6 +226,8 @@
                                                 type="text"
                                                 class="form-control"
                                                 id="firstName"
+                                                minlength="2"
+                                                maxlength="32"
                                                 placeholder=""
                                                 value=""
                                                 required=""
@@ -247,6 +249,8 @@
                                                 type="text"
                                                 class="form-control"
                                                 id="lastName"
+                                                minlength="2"
+                                                maxlength="32"
                                                 placeholder=""
                                                 value=""
                                                 required=""
@@ -305,6 +309,8 @@
                                                 id="question"
                                                 placeholder="Enter question"
                                                 rows="5"
+                                                minlength="6"
+                                                maxlength="350"
                                                 required
                                             ></textarea>
                                             <div
@@ -318,7 +324,6 @@
                                     <hr class="my-4" />
                                     <button
                                         class="w-100 btn btn-lg"
-                                        type="submit"
                                         id="action-button"
                                     >
                                         Button

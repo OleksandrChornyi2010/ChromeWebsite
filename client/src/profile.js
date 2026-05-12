@@ -23,7 +23,7 @@ document.querySelectorAll("#sidebar a").forEach((link) => {
             loadQuestions()
         }
         const sidebarMenu = document.getElementById("sidebarMenu");
-        const bsCollapse = bootstrap.Collapse.getOrCreateInstance(sidebarMenu);
+        const bsCollapse = bootstrap.Collapse.getInstance(sidebarMenu);
 
         if (sidebarMenu.classList.contains("collapsing")) {
             sidebarMenu.addEventListener("shown.bs.collapse", () => {
@@ -35,12 +35,82 @@ document.querySelectorAll("#sidebar a").forEach((link) => {
     })
 })
 
-window.addEventListener("userSessionReady", () => {
+if (window.userSession) {
+    changeHeaderText()
+    assignUnsubscribeEvent()
+    assignSubscribeEvent()
+} else {
+    window.addEventListener("userSessionReady", () => {
+        changeHeaderText()
+        assignUnsubscribeEvent()
+        assignSubscribeEvent()
+    })
+}
+
+
+function changeHeaderText() {
     console.log("UserSession:", window.userSession)
     const headerText = document.getElementById("header-text")
     headerText.textContent = window.userSession.username
     headerText.classList.remove("invisible")
-})
+}
+
+function assignUnsubscribeEvent() {
+    document.getElementById("unsubscribe-from-newsletter").addEventListener("click", async function () {
+        function redirectToInfoPage() {
+            const params = new URLSearchParams({
+                type: "unsubscribed"
+            })
+            window.location.href = "info.html?" + params.toString()
+        }
+        try {
+            const response = await axios.post(
+                `${window.API_URL}/newsletter-unsubscribe`,
+                {
+                    email: window.userSession.email,
+                },
+            )
+            redirectToInfoPage()
+        } catch (err) {
+            if (err.response && err.response.status === 404) {
+                console.log("You have already unsubscribed from our newsletter")
+                redirectToInfoPage()
+            } else {
+                console.error("Unexpected error:", err)
+                alert(
+                    "There was an error while unsubscribing you. Please try again later.",
+                )
+            }
+
+        }
+    })
+}
+function assignSubscribeEvent() {
+    document.getElementById("subscribe-to-newsletter").addEventListener("click", async function () {
+        function redirectToInfoPage() {
+            const params = new URLSearchParams({
+                type: "subscribed"
+            })
+            window.location.href = "info.html?" + params.toString()
+        }
+        try {
+            const response = await axios.post(`${window.API_URL}/newsletter-subscribe`, {
+                email: window.userSession.email,
+            })
+            redirectToInfoPage()
+        } catch (err) {
+            if (err.response && err.response.status === 409) {
+                console.log("You are already subscribed to our newsletter.")
+                redirectToInfoPage()
+            } else {
+                console.error("Unexpected error:", err)
+                alert(
+                    "There was an error subscribing you to our newsletter. Please try again later.",
+                )
+            }
+        }
+    })
+}
 
 async function loadQuestions() {
     let questions

@@ -429,6 +429,24 @@ app.post("/newsletter-subscribe", async (req, res) => {
     return res.status(200).send("You have successfully subscribed!")
 })
 
+app.post("/newsletter-unsubscribe", async (req, res) => {
+    const email = req.body.email
+    try {
+        const result = await pool.query(
+            "DELETE FROM newsletter_subscriptions WHERE email = $1",
+            [email],
+        )
+        if (result.rowCount === 0) {
+            return res.status(404).send("You have already unsubscribed")
+        }
+
+        return res.status(200).send("You have been unsubscribed from our newsletter subscribtion")
+    } catch (err) {
+        console.error("Database error:", err.stack)
+        return res.status(500).send("Internal server error")
+    }
+})
+
 function openSession(ip, username, email, rememberMe) {
     const session = { ip, username, email }
 

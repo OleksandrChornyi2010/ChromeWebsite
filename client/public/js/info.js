@@ -36,7 +36,10 @@ function subscribed() {
 }
 
 function unsubscribed() {
-
+    primaryText.textContent = "You have succesfully unsubscribed from our newsletter."
+    secondaryText.textContent = "You can ask a question about our browser if you wish."
+    actionButton.textContent = "Ask a question"
+    actionButton.href = "question.html"
 }
 function passwordUpdated() {
     primaryText.textContent = "Your password has been succesfully changed!"

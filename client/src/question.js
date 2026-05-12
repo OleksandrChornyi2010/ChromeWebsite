@@ -1,23 +1,18 @@
 import { checkName, checkQuestion } from "./utils/checks"
 
 // Get elements and values
-const firstNameInput = document.querySelector("#firstName")
-const lastNameInput = document.querySelector("#lastName")
-const languageInput = document.querySelector("#language")
-const questionInput = document.querySelector("#question")
-const titleText = document.querySelector("#title-text")
-const secondaryText = document.querySelector("#secondary-text")
+const firstNameInput = document.getElementById("firstName")
+const lastNameInput = document.getElementById("lastName")
+const languageInput = document.getElementById("language")
+const questionInput = document.getElementById("question")
+const titleText = document.getElementById("title-text")
+const secondaryText = document.getElementById("secondary-text")
 const actionButton = document.getElementById("action-button")
 
-const firstNameFeedback = document.querySelector("#firstName-feedback")
-const lastNameFeedback = document.querySelector("#lastName-feedback")
-const languageFeedback = document.querySelector("#language-feedback")
-const questionFeedback = document.querySelector("#question-feedback")
-
-const firstName = firstNameInput.value.trim()
-const lastName = lastNameInput.value.trim()
-const language = languageInput.value
-const question = questionInput.value.trim()
+const firstNameFeedback = document.getElementById("firstName-feedback")
+const lastNameFeedback = document.getElementById("lastName-feedback")
+const languageFeedback = document.getElementById("language-feedback")
+const questionFeedback = document.getElementById("question-feedback")
 
 const urlParams = new URLSearchParams(window.location.search)
 const type = urlParams.get("type")
@@ -30,16 +25,16 @@ else {
 }
 
 function init() {
-
     const form = document.querySelector(".needs-validation")
     form.addEventListener("submit", async (event) => {
         const firstName = firstNameInput.value.trim()
         const lastName = lastNameInput.value.trim()
         const language = languageInput.value
         const question = questionInput.value.trim()
+        actionButton.setAttribute("type", "submit")
         event.preventDefault()
         event.stopPropagation()
-
+        console.log("Language-input: " + languageInput.value + " lang: " + language)
         let isValid = true
 
         // Reset previous errors
@@ -64,9 +59,10 @@ function init() {
             isValid = false
         }
         // Language must be not 0:
-        if (language === 0) {
+        if (!language) {
             languageInput.classList.remove("is-valid")
             languageInput.classList.add("is-invalid")
+            languageFeedback
             isValid = false
         }
 
@@ -101,7 +97,6 @@ function init() {
                 })
                 window.location.href = "auth.html?" + params.toString()
             }
-            console.log("Question has been submitted succesfully")
             const params = new URLSearchParams({
                 type: "submitted"
             })

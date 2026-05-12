@@ -1,6 +1,6 @@
 import archBoosterUrl from "./assets/textures/arch.png"
 import debianBoosterUrl from "./assets/textures/debian.png"
-import mintBoosterUrl from "./assets/textures/mint.png"
+import opensuseBoosterUrl from "./assets/textures/opensuse.png"
 import clipchampSpriteUrl from "./assets/textures/enemies/clipchamp.svg"
 import copilotSpriteUrl from "./assets/textures/enemies/copilot.svg"
 import edgeSpriteUrl from "./assets/textures/enemies/edge.svg"
@@ -29,7 +29,7 @@ let enemyInterval
 let boosters = [
     archBoosterUrl,
     debianBoosterUrl,
-    mintBoosterUrl,
+    opensuseBoosterUrl,
 ]
 const enemies = {
     clipchamp: {
@@ -104,7 +104,7 @@ document.addEventListener("keydown", function (event) {
 
 const booster_1 = document.getElementById("booster-1") // Arch
 const booster_2 = document.getElementById("booster-2") // Debian
-const booster_3 = document.getElementById("booster-3") // Mint
+const booster_3 = document.getElementById("booster-3") // openSUSE
 
 let booster_1_count = 0
 let booster_2_count = 0

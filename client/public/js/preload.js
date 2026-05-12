@@ -1,7 +1,6 @@
 const path = window.location.pathname
 const fileName = path.substring(path.lastIndexOf("/") + 1)
 
-console.log(fileName)
 const urlParams = new URLSearchParams(window.location.search)
 const type = urlParams.get("type")
 
